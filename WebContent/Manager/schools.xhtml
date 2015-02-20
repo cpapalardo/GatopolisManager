@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Schools</title>
+</h:head>
+
+<h:body>
+	<h:form id="schools">
+		<h3><p:outputLabel value="Schools" /></h3>
+		
+		<p:dataTable id="list" var="school" value="#{schoolBean.schools}">
+			<p:column headerText="ObjectId">
+				<h:outputText value="#{school.objectId}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{school.name}" />
+			</p:column>
+
+			<p:column headerText="Sync Code">
+				<h:outputText value="#{school.sync_code}" />
+			</p:column>
+
+			<p:column headerText="Coordinator">
+				<h:outputText value="#{school.coordinator_code}" />
+			</p:column>
+
+			<p:column headerText="Public Id">
+				<h:outputText value="#{school.public_id}" />
+			</p:column>
+			
+			<p:column>
+				<p:commandLink id="Edit" ajax="false" action="#{schoolBean.edit}">
+        			<h:outputText value="Editar" />
+    			</p:commandLink>
+			</p:column>
+			
+		</p:dataTable>
+		
+		<p:commandButton value="Novo" type="submit" action="#{schoolBean.create}" />
+		<p:commandButton value="Voltar" type="submit" action="#{schoolBean.back}" />
+		
+	</h:form>
+	
+</h:body>
+
+</html>

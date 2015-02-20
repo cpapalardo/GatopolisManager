@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Alunos</title>
+</h:head>
+
+<h:body>
+	<h:form id="student">
+		<h3><p:outputLabel value="Editar Aluno" /></h3>
+		
+		<table>
+			<tr>
+				<td><p:outputLabel value="Nome:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Sobrenome:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Sexo:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Data Nasc:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Responsável:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Diagnosis Level:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Moedas:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Prédios:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Turma:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Escola:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+		</table>
+		
+		<p:commandButton value="Salvar" type="submit" action="#{studentManageBean.save}" />
+		<p:commandButton value="Voltar" type="submit" action="#{studentManageBean.back}" />
+	</h:form>
+</h:body>
+
+</html>

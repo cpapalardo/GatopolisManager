@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Turmas</title>
+</h:head>
+
+<h:body>
+	<h:form id="groups">
+		<h3><p:outputLabel value="Turmas"/></h3>
+		
+		<p:dataTable var="group" value="#{groupBean.groups}">
+			<p:column headerText="ObjectId">
+				<h:outputText value="#{group.objectId}" />
+			</p:column>
+			
+			<p:column headerText="Nome">
+				<h:outputText value="#{group.name}" />
+			</p:column>
+
+			<p:column headerText="Periodo">
+				<h:outputText value="#{group.period}" />
+			</p:column>
+
+			<p:column headerText="Escola">
+				<h:outputText value="#{group.school}" />
+			</p:column>
+
+			<p:column headerText="Serie">
+				<h:outputText value="#{group.series}" />
+			</p:column>
+			
+			<p:column>
+				<p:commandLink id="Edit" ajax="false" action="#{groupBean.edit}">
+        			<h:outputText value="Editar" />
+   				</p:commandLink>
+			</p:column>
+		</p:dataTable>
+		
+		<p:commandButton value="Novo" type="submit" action="#{groupBean.create}" />
+		<p:commandButton value="Voltar" type="submit" action="#{groupBean.back}" />
+		
+	</h:form>
+</h:body>
+
+</html>

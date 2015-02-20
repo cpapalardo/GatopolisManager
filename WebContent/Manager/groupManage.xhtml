@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Turma</title>
+</h:head>
+
+<h:body>
+	<h:form id="group">
+		<h3>
+			<p:outputLabel value="Editar Turma" />
+		</h3>
+		<table>
+			<tr>
+				<td><p:outputLabel value="Nome:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Serie:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Periodo:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Escola:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+			<tr>
+				<td><p:outputLabel value="Deletado:" /></td>
+				<td><p:inputText size="15" maxlength="10" /></td>
+			</tr>
+		</table>
+
+
+		<p:commandButton value="Salvar" type="submit" action="#{groupManageBean.save}" />
+		<p:commandButton value="Voltar" type="submit" action="#{groupManageBean.back}" />
+	</h:form>
+</h:body>
+
+</html>
