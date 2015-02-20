@@ -12,7 +12,9 @@ import br.com.motogatomanager.modelo.Teacher;
 @ManagedBean
 public class TeacherBean {
 	
+	private Teacher teacher;
 	private List<Teacher> teachers = new ArrayList<Teacher>();
+	
 	
 	@PostConstruct
 	public void init () {
@@ -27,6 +29,10 @@ public class TeacherBean {
 		return "teacherManage";
 	}
 	
+	public String addStudents () {
+		return "students";
+	}
+	
 	public String back () {
 		return "/home";
 	}
@@ -38,6 +44,15 @@ public class TeacherBean {
 	public void setTeachers(List<Teacher> teachers) {
 		this.teachers = teachers;
 	}
+
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
 
 
 }

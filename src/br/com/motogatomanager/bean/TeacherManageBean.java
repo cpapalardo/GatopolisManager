@@ -9,6 +9,8 @@ import br.com.motogatomanager.modelo.Teacher;
 @ManagedBean
 public class TeacherManageBean {
 	private Teacher teacher;
+	private String pass;
+	private String passConfirm;
 	
 	@PostConstruct
 	public void init () {
@@ -31,6 +33,22 @@ public class TeacherManageBean {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+
+	public String getPass() {
+		return pass;
+	}
+
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+
+	public String getPassConfirm() {
+		return passConfirm;
+	}
+
+	public void setPassConfirm(String passConfirm) {
+		this.passConfirm = passConfirm;
 	}
 
 }

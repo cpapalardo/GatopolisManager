@@ -11,46 +11,28 @@ xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<h:form id="teachers">
+		<h3><p:outputLabel value="Escola: #{sessionScope.schoolName}" /></h3>
+		<p:outputLabel value="Código de Sincronização: #{sessionScope.schoolSyncCode}" />
+	
 		<h3><p:outputLabel value="Professores" /></h3>
 
 		<p:dataTable var="teacher" value="#{teacherBean.teachers}">
-			<p:column headerText="ObjectId">
-				<h:outputText value="#{teacher.objectId}" />
-			</p:column>
-			
 			<p:column headerText="Nome">
-				<h:outputText value="#{teacher.name}" />
-			</p:column>
-
-			<p:column headerText="Sobrenome">
-				<h:outputText value="#{teacher.last_name}" />
-			</p:column>
-
-			<p:column headerText="Senha">
-				<h:outputText value="#{teacher.passcode}" />
-			</p:column>
-
-			<p:column headerText="Coordenador">
-				<h:outputText value="#{teacher.is_coordinator}" />
+				<h:outputText value="#{teacher.name} #{teacher.last_name}" />
 			</p:column>
 			
-			<p:column headerText="Pergunta">
-				<h:outputText value="#{teacher.question}" />
-			</p:column>
-			
-			<p:column headerText="Resposta">
-				<h:outputText value="#{teacher.answer}" />
-			</p:column>
-			
-			<p:column headerText="Escola">
-				<h:outputText value="#{teacher.school}" />
+			<p:column headerText="Email">
+        			<h:outputText value="#{teacher.email}" />
 			</p:column>
 			
 			<p:column>
 				<p:commandLink id="Edit" ajax="false" action="#{teacherBean.edit}">
         			<h:outputText value="Editar" />
     			</p:commandLink>
+				<p:commandButton value="Adicionar" type="submit" action="#{teacherBean.addStudents}" />
 			</p:column>
+			
+
 		</p:dataTable>
 
 		<p:commandButton value="Novo" type="submit" action="#{teacherBean.create}" />
