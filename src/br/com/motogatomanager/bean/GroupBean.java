@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.Group;
 
 @ManagedBean
@@ -16,7 +16,7 @@ public class GroupBean {
 	
 	@PostConstruct
 	public void init () {
-		groups = StaticDB.GROUPS;
+		groups = BancoLocal.GROUPS;
 	}
 	
 	public String create () {

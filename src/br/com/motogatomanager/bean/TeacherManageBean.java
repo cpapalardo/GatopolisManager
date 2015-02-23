@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
@@ -46,10 +46,10 @@ public class TeacherManageBean {
 		teacher.setLast_name(last_name);
 
 		// TODO Banco - alterar modo de salvar
-		if (!StaticDB.TEACHERS.contains(teacher))
-			StaticDB.TEACHERS.add(teacher);
+		if (!BancoLocal.TEACHERS.contains(teacher))
+			BancoLocal.TEACHERS.add(teacher);
 		else
-			StaticDB.TEACHERS.set(StaticDB.TEACHERS.indexOf(teacher), teacher);
+			BancoLocal.TEACHERS.set(BancoLocal.TEACHERS.indexOf(teacher), teacher);
 		return "teachers";
 	}
 

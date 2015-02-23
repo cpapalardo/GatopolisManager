@@ -8,7 +8,7 @@ import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Student;
 import br.com.motogatomanager.modelo.Teacher;
 
-public class StaticDB {
+public class BancoLocal {
 	public static List<School> SCHOOLS;
 	public static List<Teacher> TEACHERS;
 	public static List<Group> GROUPS;
@@ -21,15 +21,15 @@ public class StaticDB {
 		Group group = null;
 		Student student = null;
 
-		if (StaticDB.SCHOOLS == null) {
-			StaticDB.SCHOOLS = new ArrayList<School>();
+		if (BancoLocal.SCHOOLS == null) {
+			BancoLocal.SCHOOLS = new ArrayList<School>();
 			school = new School("1234", "Escola Teste", "1", "1");
 			school.setObjectId("x4iv8ky");
-			StaticDB.SCHOOLS.add(school);
+			BancoLocal.SCHOOLS.add(school);
 		}
 
-		if (StaticDB.TEACHERS == null) {
-			StaticDB.TEACHERS = new ArrayList<Teacher>();
+		if (BancoLocal.TEACHERS == null) {
+			BancoLocal.TEACHERS = new ArrayList<Teacher>();
 			teacher1 = new Teacher("Professor", "Xavier", "1234",
 					"email@email.com", true, "question", "answer", school,
 					new byte[3]);
@@ -38,23 +38,23 @@ public class StaticDB {
 					"asdf@email.com", true, "question", "answer", school,
 					new byte[3]);
 			teacher2.setObjectId("12reyqr4");
-			StaticDB.TEACHERS.add(teacher1);
-			StaticDB.TEACHERS.add(teacher2);
+			BancoLocal.TEACHERS.add(teacher1);
+			BancoLocal.TEACHERS.add(teacher2);
 		}
 
-		if (StaticDB.GROUPS == null) {
-			StaticDB.GROUPS = new ArrayList<Group>();
+		if (BancoLocal.GROUPS == null) {
+			BancoLocal.GROUPS = new ArrayList<Group>();
 			group = new Group("Turma Marota", "1º ano A", "Manhã", null, school);
 			group.setObjectId("1j902j3h");
-			StaticDB.GROUPS.add(group);
+			BancoLocal.GROUPS.add(group);
 		}
 
-		if (StaticDB.STUDENTS == null) {
-			StaticDB.STUDENTS = new ArrayList<Student>();
+		if (BancoLocal.STUDENTS == null) {
+			BancoLocal.STUDENTS = new ArrayList<Student>();
 			student = new Student("Aluno", "Sobrenome", "M", 1, "Pai", "xxx",
 					1, 1, school, group);
 			student.setObjectId("asdgdsa");
-			StaticDB.STUDENTS.add(student);
+			BancoLocal.STUDENTS.add(student);
 		}
 	}
 }

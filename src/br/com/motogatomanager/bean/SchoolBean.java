@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.School;
 
 @ManagedBean
@@ -15,7 +15,7 @@ public class SchoolBean {
 	
 	@PostConstruct
 	public void init () {
-		schools = StaticDB.SCHOOLS;
+		schools = BancoLocal.SCHOOLS;
 	}
 	
 	public String create () {

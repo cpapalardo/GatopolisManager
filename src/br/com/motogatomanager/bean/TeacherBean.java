@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
@@ -20,7 +20,7 @@ public class TeacherBean {
 	@PostConstruct
 	public void init () {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", null);
-		teachers = StaticDB.TEACHERS;
+		teachers = BancoLocal.TEACHERS;
 	}
 	
 	public String create () {

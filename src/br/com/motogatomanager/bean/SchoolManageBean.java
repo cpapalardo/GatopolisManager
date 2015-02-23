@@ -3,7 +3,7 @@ package br.com.motogatomanager.bean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.School;
 
 @ManagedBean
@@ -17,7 +17,7 @@ public class SchoolManageBean {
 	
 	public String save () {
 		school.setObjectId("objTeste");
-		StaticDB.SCHOOLS.add(school);
+		BancoLocal.SCHOOLS.add(school);
 		return "schools";
 	}
 	

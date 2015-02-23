@@ -5,8 +5,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.dao.SchoolDAO;
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.School;
 
 @ManagedBean
@@ -16,13 +15,13 @@ public class HomeBean {
 	@PostConstruct
 	public void init () {
 		//TODO db
-		StaticDB.instantiate();
+		BancoLocal.instantiate();
 	}
 	
 	public String access () {
 		if (syncCode != null && !syncCode.equals("")) {
 			//TODO db
-			School school = StaticDB.SCHOOLS.get(0);
+			School school = BancoLocal.SCHOOLS.get(0);
 			if (school.getSync_code().equals(syncCode)) {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("schoolName", school.getName());  
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("schoolSyncCode", school.getSync_code());  

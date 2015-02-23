@@ -11,7 +11,7 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.io.FileUtils;
 import org.primefaces.model.UploadedFile;
 
-import br.com.motogatomanager.db.StaticDB;
+import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.Group;
 import br.com.motogatomanager.modelo.Student;
 import br.com.motogatomanager.modelo.Teacher;
@@ -55,8 +55,8 @@ public class ImportBean {
 				
 				excel.read (file);
 				
-				StaticDB.STUDENTS.addAll(excel.getStudents());
-				StaticDB.GROUPS.addAll(excel.getGroups());
+				BancoLocal.STUDENTS.addAll(excel.getStudents());
+				BancoLocal.GROUPS.addAll(excel.getGroups());
 				
 				for (Student s : excel.getStudents())
 					System.out.println(s);
