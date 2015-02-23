@@ -11,16 +11,21 @@ xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<h:form id="home">
-		<h3><p:outputLabel value="Home" /></h3>
-		
-		<p:outputLabel value="Insira o código da escola para acessar o Manager." />
-		<br />
-		
-		<p:outputLabel value="Código da Escola" />
-		<p:inputText value="#{homeBean.syncCode}" /> 
-		<p:commandButton type="submit" value="Acessar" action="#{homeBean.access}" />
-	    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-	    
+		<p:panel>
+			<h3><p:outputLabel value="Home" /></h3>
+			
+			<p:outputLabel value="Insira o código da escola para acessar o Manager." />
+			<br />
+			<br />
+			<p:outputLabel value="Código da Escola" />
+			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px"/>
+			<br />
+			<p:commandButton type="submit" value="Acessar" action="#{homeBean.access}" />
+			<br />
+			<br />
+		    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+	    </p:panel>
 	</h:form>
 </h:body>
 

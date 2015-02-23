@@ -11,65 +11,37 @@
 
 <h:body>
 	<h:form id="students">
-		<h3>
-			<p:outputLabel value="Alunos" />
-		</h3>
+		<p:panel>
+			<h3>
+				<p:outputLabel value="Alunos" />
+			</h3>
+	
+			<p:dataTable var="student" value="#{studentBean.students}">
+				<p:column headerText="Nome">
+					<h:outputText value="#{student.name}" />
+				</p:column>
+	
+				<p:column headerText="Sobrenome">
+					<h:outputText value="#{student.last_name}" />
+				</p:column>
+	
+				<p:column headerText="Sexo">
+					<h:outputText value="#{student.gender}" />
+				</p:column>
+	
+				<p:column headerText="Data Nasc">
+					<h:outputText value="#{student.birth_date}" />
+				</p:column>
+	
+				<p:column headerText="Turma">
+					<h:outputText value="#{student.student_group.name}" />
+				</p:column>
+				
+			</p:dataTable>
+	
+			<p:commandButton value="Voltar" type="submit" action="#{studentBean.back}" />
 
-		<p:dataTable var="student" value="#{studentBean.students}">
-			<p:column headerText="ObjectId">
-				<h:outputText value="#{student.objectId}" />
-			</p:column>
-			
-			<p:column headerText="Nome">
-				<h:outputText value="#{student.name}" />
-			</p:column>
-
-			<p:column headerText="Sobrenome">
-				<h:outputText value="#{student.last_name}" />
-			</p:column>
-
-			<p:column headerText="Sexo">
-				<h:outputText value="#{student.gender}" />
-			</p:column>
-
-			<p:column headerText="Data Nasc">
-				<h:outputText value="#{student.birth_date}" />
-			</p:column>
-
-			<p:column headerText="Pai">
-				<h:outputText value="#{student.guardian}" />
-			</p:column>
-
-			<p:column headerText="Diagnosis Level">
-				<h:outputText value="#{student.diagnosis_level}" />
-			</p:column>
-
-			<p:column headerText="Moedas">
-				<h:outputText value="#{student.coins}" />
-			</p:column>
-
-			<p:column headerText="Prédios">
-				<h:outputText value="#{student.buildings_count}" />
-			</p:column>
-
-			<p:column headerText="Escola">
-				<h:outputText value="#{student.school}" />
-			</p:column>
-
-			<p:column headerText="Turma">
-				<h:outputText value="#{student.student_group}" />
-			</p:column>
-			
-			<p:column>
-				<p:commandLink id="Edit" ajax="false" action="#{studentBean.edit}">
-        			<h:outputText value="Editar" />
-    			</p:commandLink>
-			</p:column>
-		</p:dataTable>
-
-		<p:commandButton value="Novo" type="submit" action="#{studentBean.create}" />
-		<p:commandButton value="Voltar" type="submit" action="#{studentBean.back}" />
-
+		</p:panel>
 	</h:form>
 </h:body>
 

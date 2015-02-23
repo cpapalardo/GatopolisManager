@@ -11,39 +11,27 @@ xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<h:form id="groups">
-		<h3><p:outputLabel value="Turmas"/></h3>
-		
-		<p:dataTable var="group" value="#{groupBean.groups}">
-			<p:column headerText="ObjectId">
-				<h:outputText value="#{group.objectId}" />
-			</p:column>
+		<p:panel>
+			<h3><p:outputLabel value="Turmas"/></h3>
 			
-			<p:column headerText="Nome">
-				<h:outputText value="#{group.name}" />
-			</p:column>
-
-			<p:column headerText="Periodo">
-				<h:outputText value="#{group.period}" />
-			</p:column>
-
-			<p:column headerText="Escola">
-				<h:outputText value="#{group.school}" />
-			</p:column>
-
-			<p:column headerText="Serie">
-				<h:outputText value="#{group.series}" />
-			</p:column>
+			<p:dataTable var="group" value="#{groupBean.groups}">
+				<p:column headerText="Nome">
+					<h:outputText value="#{group.name}" />
+				</p:column>
+	
+				<p:column headerText="Periodo">
+					<h:outputText value="#{group.period}" />
+				</p:column>
+	
+				<p:column headerText="Serie">
+					<h:outputText value="#{group.series}" />
+				</p:column>
+				
+			</p:dataTable>
 			
-			<p:column>
-				<p:commandLink id="Edit" ajax="false" action="#{groupBean.edit}">
-        			<h:outputText value="Editar" />
-   				</p:commandLink>
-			</p:column>
-		</p:dataTable>
+			<p:commandButton value="Voltar" type="submit" action="#{groupBean.back}" />
 		
-		<p:commandButton value="Novo" type="submit" action="#{groupBean.create}" />
-		<p:commandButton value="Voltar" type="submit" action="#{groupBean.back}" />
-		
+		</p:panel>
 	</h:form>
 </h:body>
 

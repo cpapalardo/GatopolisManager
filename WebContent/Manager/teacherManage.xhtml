@@ -11,57 +11,50 @@
 
 <h:body>
 	<h:form id="teacher">
-		<h3>
-			<p:outputLabel value="Professor" />
-		</h3>
+		<p:panel>
+			<h3>
+				<p:outputLabel value="Professor" />
+			</h3>
+			
+			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
+				<p:outputLabel for="name" value="Nome Completo" />
+				<p:inputText id="name" maxlength="100" size="15" required="true" value="#{teacherManageBean.completeName}"/>
+				<p:message for="name" display="tooltip" />
+					
+				<p:outputLabel for="passcode" value="Senha" />
+				<p:password id="passcode" maxlength="4" size="4" required="true" value="#{teacherManageBean.teacher.passcode}" />
+				<p:message for="passcode" display="tooltip" />
+					
+				<p:outputLabel for="confirmPassword" value="Confirma Senha" />
+				<p:password id="confirmPassword" maxlength="4" size="4" required="true" value="#{teacherManageBean.confirmPassword}" />
+				<p:message for="confirmPassword" display="tooltip" />
+					
+				<p:outputLabel for="email" value="E-mail" />
+				<p:inputText id="email" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.email}" />
+				<p:message for="email" display="tooltip" />
+					
+				<p:outputLabel for="question" value="Pergunta Secreta" />
+				<p:selectOneMenu id="question" value="#{teacherManageBean.teacher.question}">
+					<f:selectItem itemLabel="Pergunta1" itemValue="A" />
+					<f:selectItem itemLabel="Pergunta2" itemValue="B" />
+					<f:selectItem itemLabel="Pergunta3" itemValue="C" />
+					<f:selectItem itemLabel="Pergunta4" itemValue="D" />
+					<f:selectItem itemLabel="Pergunta5" itemValue="E" />
+				</p:selectOneMenu>
+				<p:outputLabel value="" />
+					
+				<p:outputLabel for="answer" value="Resposta" />
+				<p:inputText id="answer" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.answer}" />
+				<p:message for="answer" display="tooltip" />
+	    	</h:panelGrid>
+	
+			<p:commandButton value="Salvar" type="submit" update="grid" action="#{teacherManageBean.save}" 
+				style="margin-top:10px"/>
+			<p:commandButton value="Voltar" action="#{teacherManageBean.back}"
+				immediate="true" style="margin-left:10px; margin-top:10px" />
+
+		</p:panel>
 		
-		<h:panelGrid columns="2" id="passwords" cellpadding="5"> 
-		<p:outputLabel value="Nome:" />
-		<p:inputText size="15" maxlength="10" />
-		                  
-        	<h:outputLabel for="pwd1" value="Senha:" />
-        	<p:password id="pwd1" value="#{teacherManageBean.pass}" match="pwd2" label="Password 1" required="true" />
- 
-	        <h:outputLabel for="pwd2" value="Confirmar Senha:" />
-	        <p:password id="pwd2" value="#{teacherManageBean.passConfirm}" label="Password 2" required="true" />
-    	</h:panelGrid>
-
-		<table>
-			<tr>
-				<td><p:outputLabel value="Nome:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Sobrenome:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Senha:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Confirma Senha:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="E-mail:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Pergunta Secreta:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Resposta:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-		</table>
-
-
-		<p:commandButton value="Salvar" type="submit"
-			action="#{teacherManageBean.save}" />
-		<p:commandButton value="Voltar" type="submit"
-			action="#{teacherManageBean.back}" />
 	</h:form>
 
 </h:body>

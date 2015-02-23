@@ -5,7 +5,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.DB.StaticDB;
+import br.com.motogatomanager.dao.SchoolDAO;
+import br.com.motogatomanager.db.StaticDB;
 import br.com.motogatomanager.modelo.School;
 
 @ManagedBean

@@ -39,10 +39,12 @@ public class ExcelUtil {
 	
 	private List<Student> students = new ArrayList<Student>();
 	private List<Group> groups = new ArrayList<Group>();
+	
+	public ExcelUtil () {}
 
 	public ExcelUtil (String path) {
 		if (!path.contains(".xls")) {
-			throw new RuntimeException("O arquivo deve conter a extesão .xls");
+			throw new RuntimeException ("O arquivo deve conter a extesão .xls");
 		}
 		this.path = path;
 	}
@@ -66,8 +68,8 @@ public class ExcelUtil {
 		workbook.close();
 	}
 	
-	public void read() throws IOException {
-		File inputWorkbook = new File(path);
+	public void read(File file) throws IOException {
+		File inputWorkbook = file;//new File(path);
 		Workbook w;
 		try {
 			w = Workbook.getWorkbook(inputWorkbook);

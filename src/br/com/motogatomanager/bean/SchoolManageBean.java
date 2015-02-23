@@ -3,7 +3,7 @@ package br.com.motogatomanager.bean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
-import br.com.motogatomanager.DB.StaticDB;
+import br.com.motogatomanager.db.StaticDB;
 import br.com.motogatomanager.modelo.School;
 
 @ManagedBean

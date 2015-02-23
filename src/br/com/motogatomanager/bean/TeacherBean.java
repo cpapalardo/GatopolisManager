@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.DB.StaticDB;
+import br.com.motogatomanager.db.StaticDB;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
@@ -18,24 +19,42 @@ public class TeacherBean {
 	
 	@PostConstruct
 	public void init () {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", null);
 		teachers = StaticDB.TEACHERS;
 	}
 	
 	public String create () {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", new Teacher ());
 		return "teacherManage";
 	}
 
-	public String edit () {
+	public String edit (Teacher teacher) {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", teacher);
 		return "teacherManage";
 	}
 	
-	public String addStudents () {
-		return "students";
+	public String addStudents (Teacher teacher) {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", teacher);
+		return "import";
 	}
 	
 	public String back () {
 		return "/home";
 	}
+	
+	
+	public String students () {
+		return "students";
+	}
+	
+	public String groups () {
+		return "groups";
+	}
+	
+	
+	
+	
+	
 
 	public List<Teacher> getTeachers() {
 		return teachers;

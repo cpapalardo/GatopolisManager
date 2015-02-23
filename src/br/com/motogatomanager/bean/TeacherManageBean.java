@@ -2,28 +2,58 @@ package br.com.motogatomanager.bean;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.DB.StaticDB;
+import br.com.motogatomanager.db.StaticDB;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
 public class TeacherManageBean {
 	private Teacher teacher;
-	private String pass;
-	private String passConfirm;
-	
+	private String completeName;
+	private String confirmPassword;
+
 	@PostConstruct
-	public void init () {
-		
+	public void init() {
+		teacher = (Teacher) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacher");
+		if (teacher != null) {
+			if (teacher.getName() != null) {
+				completeName = teacher.getName();
+				if (teacher.getLast_name() != null) {
+					completeName += " " + teacher.getLast_name();
+				}
+			}
+		}
 	}
-	
-	public String save () {
-		teacher.setObjectId("objTeste");
-		StaticDB.TEACHERS.add(teacher);
+
+	public String save() {
+		// TODO alterar para id e verificar se ao atualizar está salvando ou
+		// atualizando
+		teacher.setObjectId("new ID");
+
+		String name = "";
+		String last_name = "";
+
+		if (!completeName.contains(" ")) {
+			name = completeName;
+		} else {
+			name = completeName.substring(0, completeName.indexOf(" "));
+			last_name = completeName.substring(completeName.indexOf(" ") + 1,
+					completeName.length());
+		}
+
+		teacher.setName(name);
+		teacher.setLast_name(last_name);
+
+		// TODO Banco - alterar modo de salvar
+		if (!StaticDB.TEACHERS.contains(teacher))
+			StaticDB.TEACHERS.add(teacher);
+		else
+			StaticDB.TEACHERS.set(StaticDB.TEACHERS.indexOf(teacher), teacher);
 		return "teachers";
 	}
-	
-	public String back () {
+
+	public String back() {
 		return "teachers";
 	}
 
@@ -35,20 +65,19 @@ public class TeacherManageBean {
 		this.teacher = teacher;
 	}
 
-	public String getPass() {
-		return pass;
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setPass(String pass) {
-		this.pass = pass;
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
-	public String getPassConfirm() {
-		return passConfirm;
+	public String getCompleteName() {
+		return completeName;
 	}
 
-	public void setPassConfirm(String passConfirm) {
-		this.passConfirm = passConfirm;
+	public void setCompleteName(String completeName) {
+		this.completeName = completeName;
 	}
-
 }

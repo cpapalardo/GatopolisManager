@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
-import br.com.motogatomanager.DB.StaticDB;
+import br.com.motogatomanager.db.StaticDB;
 import br.com.motogatomanager.modelo.Student;
 
 @ManagedBean
@@ -28,7 +28,7 @@ public class StudentBean {
 	}
 	
 	public String back () {
-		return "/home";
+		return "teachers";
 	}
 
 	public List<Student> getStudents() {
