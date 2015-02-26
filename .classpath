@@ -23,7 +23,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javax.faces-2.0.10.jar"/>
-	<classpathentry kind="lib" path="Microsoft JDBC Driver 4.1 for SQL Server/sqljdbc_4.1/ptb/sqljdbc4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

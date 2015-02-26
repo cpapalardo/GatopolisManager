@@ -5,18 +5,21 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.db.BancoLocal;
+import br.com.motogatomanager.dao.StudentDAO;
+import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Student;
 
 @ManagedBean
 public class StudentBean {
-	
+	private School school;
 	private List<Student> students = new ArrayList<Student>();
 	
 	@PostConstruct
 	public void init () {
-		students = BancoLocal.STUDENTS;
+		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
+		students = new StudentDAO ().fetchBySchool(school);
 	}
 	
 	public String create () {

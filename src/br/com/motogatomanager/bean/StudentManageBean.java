@@ -15,7 +15,7 @@ public class StudentManageBean {
 	}
 	
 	public String save () {
-		student.setObjectId("objTeste");
+		//student.setObjectId("objTeste");
 		return "students";
 	}
 	

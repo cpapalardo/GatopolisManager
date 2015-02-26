@@ -15,8 +15,6 @@ public class School extends Generic {
 		this.sync_code = sync_code;
 	}
 
-
-
 	public String getCoordinator_code() {
 		return coordinator_code;
 	}
@@ -53,11 +51,10 @@ public class School extends Generic {
 	public String toString() {
 		return "School [coordinator_code=" + coordinator_code + ", name="
 				+ name + ", public_id=" + public_id + ", sync_code="
-				+ sync_code + ", getObjectId()=" + getObjectId()
-				+ ", getCreatedAt()=" + getCreatedAt() + ", getUpdatedAt()="
-				+ getUpdatedAt() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ sync_code + ", getId()=" + getId() + ", getCreatedAt()="
+				+ getCreatedAt() + ", getUpdatedAt()=" + getUpdatedAt()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
-	
+
 }

@@ -7,20 +7,23 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.db.BancoLocal;
+import br.com.motogatomanager.dao.TeacherDAO;
+import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
 public class TeacherBean {
-	
+	private School school;
 	private Teacher teacher;
 	private List<Teacher> teachers = new ArrayList<Teacher>();
 	
 	
 	@PostConstruct
 	public void init () {
+		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", null);
-		teachers = BancoLocal.TEACHERS;
+		//teachers = BancoLocal.TEACHERS;
+		teachers = new TeacherDAO ().fetchBySchool(school);
 	}
 	
 	public String create () {

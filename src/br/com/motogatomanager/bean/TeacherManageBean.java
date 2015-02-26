@@ -4,17 +4,20 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.db.BancoLocal;
+import br.com.motogatomanager.dao.TeacherDAO;
+import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
 public class TeacherManageBean {
+	private School school;
 	private Teacher teacher;
 	private String completeName;
 	private String confirmPassword;
 
 	@PostConstruct
 	public void init() {
+		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
 		teacher = (Teacher) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacher");
 		if (teacher != null) {
 			if (teacher.getName() != null) {
@@ -27,10 +30,6 @@ public class TeacherManageBean {
 	}
 
 	public String save() {
-		// TODO alterar para id e verificar se ao atualizar está salvando ou
-		// atualizando
-		teacher.setObjectId("new ID");
-
 		String name = "";
 		String last_name = "";
 
@@ -44,12 +43,13 @@ public class TeacherManageBean {
 
 		teacher.setName(name);
 		teacher.setLast_name(last_name);
+		teacher.setSchool(school);
 
-		// TODO Banco - alterar modo de salvar
-		if (!BancoLocal.TEACHERS.contains(teacher))
-			BancoLocal.TEACHERS.add(teacher);
-		else
-			BancoLocal.TEACHERS.set(BancoLocal.TEACHERS.indexOf(teacher), teacher);
+		if (teacher.getId() == 0) {
+			new TeacherDAO ().save(teacher);
+		} else {
+			new TeacherDAO ().update (teacher);
+		}
 		return "teachers";
 	}
 

@@ -5,18 +5,21 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 
-import br.com.motogatomanager.db.BancoLocal;
-import br.com.motogatomanager.modelo.Group;
+import br.com.motogatomanager.dao.StudentGroupDAO;
+import br.com.motogatomanager.modelo.School;
+import br.com.motogatomanager.modelo.StudentGroup;
 
 @ManagedBean
 public class GroupBean {
-	
-	private List<Group> groups = new ArrayList<Group>();
+	private School school;
+	private List<StudentGroup> groups = new ArrayList<StudentGroup>();
 	
 	@PostConstruct
 	public void init () {
-		groups = BancoLocal.GROUPS;
+		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
+		groups = new StudentGroupDAO().fetchBySchool(school);
 	}
 	
 	public String create () {
@@ -31,11 +34,11 @@ public class GroupBean {
 		return "teachers";
 	}
 
-	public List<Group> getGroups() {
+	public List<StudentGroup> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(List<StudentGroup> groups) {
 		this.groups = groups;
 	}
 }

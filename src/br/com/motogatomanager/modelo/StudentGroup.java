@@ -2,16 +2,16 @@ package br.com.motogatomanager.modelo;
 
 import java.util.Date;
 
-public class Group extends Generic {
+public class StudentGroup extends Generic {
 	private String name;
 	private String series;
 	private String period;
 	private Date deletedAt;
 	private School school;
 	
-	public Group () {}
+	public StudentGroup () {}
 	
-	public Group(String name, String series, String period, Date deletedAt,
+	public StudentGroup(String name, String series, String period, Date deletedAt,
 			School school) {
 		this.name = name;
 		this.series = series;
@@ -53,12 +53,13 @@ public class Group extends Generic {
 
 	@Override
 	public String toString() {
-		return "Group [name=" + name + ", series=" + series + ", period="
-				+ period + ", deletedAt=" + deletedAt + ", school=" + school
-				+ ", getObjectId()=" + getObjectId() + ", getCreatedAt()="
-				+ getCreatedAt() + ", getUpdatedAt()=" + getUpdatedAt()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+		return "StudentGroup [name=" + name + ", series=" + series
+				+ ", period=" + period + ", deletedAt=" + deletedAt
+				+ ", school=" + school + ", getId()=" + getId()
+				+ ", getCreatedAt()=" + getCreatedAt() + ", getUpdatedAt()="
+				+ getUpdatedAt() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
 	}
 	
 }

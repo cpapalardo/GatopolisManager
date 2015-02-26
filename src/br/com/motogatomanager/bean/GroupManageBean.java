@@ -3,11 +3,11 @@ package br.com.motogatomanager.bean;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
-import br.com.motogatomanager.modelo.Group;
+import br.com.motogatomanager.modelo.StudentGroup;
 
 @ManagedBean
 public class GroupManageBean {
-	private Group group;
+	private StudentGroup group;
 	
 	@PostConstruct
 	public void init () {
@@ -15,7 +15,7 @@ public class GroupManageBean {
 	}
 	
 	public String save () {
-		group.setObjectId("objTeste");
+		//group.setObjectId("objTeste");
 		return "groups";
 	}
 	
@@ -23,11 +23,11 @@ public class GroupManageBean {
 		return "groups";
 	}
 
-	public Group getGroup() {
+	public StudentGroup getGroup() {
 		return group;
 	}
 
-	public void setGroup(Group group) {
+	public void setGroup(StudentGroup group) {
 		this.group = group;
 	}
 	

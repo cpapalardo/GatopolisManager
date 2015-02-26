@@ -34,7 +34,7 @@
 				<p:message for="email" display="tooltip" />
 					
 				<p:outputLabel for="question" value="Pergunta Secreta" />
-				<p:selectOneMenu id="question" value="#{teacherManageBean.teacher.question}">
+				<p:selectOneMenu id="question" maxlength="15" value="#{teacherManageBean.teacher.question}">
 					<f:selectItem itemLabel="Pergunta1" itemValue="A" />
 					<f:selectItem itemLabel="Pergunta2" itemValue="B" />
 					<f:selectItem itemLabel="Pergunta3" itemValue="C" />

@@ -21,8 +21,8 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-import br.com.motogatomanager.modelo.Group;
 import br.com.motogatomanager.modelo.Student;
+import br.com.motogatomanager.modelo.StudentGroup;
 
 public class ExcelUtil {
 	private static int MAX_COLUMNS = 6;
@@ -38,7 +38,7 @@ public class ExcelUtil {
 	private String path;
 	
 	private List<Student> students = new ArrayList<Student>();
-	private List<Group> groups = new ArrayList<Group>();
+	private List<StudentGroup> groups = new ArrayList<StudentGroup>();
 	
 	public ExcelUtil () {}
 
@@ -79,7 +79,7 @@ public class ExcelUtil {
 
 			for (int i = 1; i < sheet.getRows(); i++) {
 				Student student = new Student ();
-				Group group = new Group ();
+				StudentGroup group = new StudentGroup ();
 				
 				for (int j = 0; j < MAX_COLUMNS; j++) {
 					
@@ -97,7 +97,7 @@ public class ExcelUtil {
 					if (BIRTHDAY == j) {
 						try {
 							Date date = new SimpleDateFormat("dd/MM/yyyy").parse(cell.getContents());
-							student.setBirth_date((int)date.getTime());
+							student.setBirth_date(date);
 						} catch (ParseException e) {
 							e.printStackTrace();
 						}
@@ -118,6 +118,22 @@ public class ExcelUtil {
 				students.add(student);
 				groups.add(group);
 			}
+			
+			int aux = 1;
+			for (int i = 0; i < groups.size(); i++) {
+				if (groups.get(i).getId() == 0) {
+					groups.get(i).setId(aux++);
+				}else{
+					continue;
+				}
+				for (int j = groups.size() - 1; j > 0; j--) {
+					if (compareGroup (groups.get(i), groups.get(j))) {
+						int id = groups.get(i).getId();
+						groups.get(j).setId(id);
+					}
+				}
+			}
+			
 		} catch (BiffException e) {
 			e.printStackTrace();
 		}
@@ -132,6 +148,16 @@ public class ExcelUtil {
 		Label label = new Label(column, row, s, cell);
 		sheet.addCell(label);
 	}
+	
+	private boolean compareGroup (StudentGroup g1, StudentGroup g2) {
+		if (g1.getName().trim().equals(g2.getName().trim()) && 
+				g1.getPeriod().trim().equals(g2.getPeriod().trim()) && 
+				g1.getSeries().trim().equals(g2.getSeries().trim())) {
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	public List<Student> getStudents() {
 		return students;
@@ -141,11 +167,11 @@ public class ExcelUtil {
 		this.students = students;
 	}
 
-	public List<Group> getGroups() {
+	public List<StudentGroup> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(List<StudentGroup> groups) {
 		this.groups = groups;
 	}
 	

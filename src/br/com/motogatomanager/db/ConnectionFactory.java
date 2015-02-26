@@ -1,7 +1,7 @@
 package br.com.motogatomanager.db;
 
-import java.sql.*;
-import com.microsoft.sqlserver.jdbc.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
 
 public class ConnectionFactory {
 	

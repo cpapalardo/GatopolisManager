@@ -16,7 +16,7 @@ public class SchoolManageBean {
 	}
 	
 	public String save () {
-		school.setObjectId("objTeste");
+		//school.setObjectId("objTeste");
 		BancoLocal.SCHOOLS.add(school);
 		return "schools";
 	}

@@ -2,6 +2,7 @@ package br.com.motogatomanager.modelo;
 
 import java.util.Arrays;
 
+
 public class Teacher extends Generic {
 	private String name;
 	private String last_name;
@@ -17,7 +18,7 @@ public class Teacher extends Generic {
 	
 	public Teacher(String name, String last_name, String passcode,
 			String email, boolean is_coordinator, String question,
-			String answer, School school, byte[] picture) {
+			String answer, School school) {
 		this.name = name;
 		this.last_name = last_name;
 		this.passcode = passcode;
@@ -26,7 +27,6 @@ public class Teacher extends Generic {
 		this.question = question;
 		this.answer = answer;
 		this.school = school;
-		this.picture = picture;
 	}
 	public String getAnswer() {
 		return answer;
@@ -89,10 +89,11 @@ public class Teacher extends Generic {
 				+ ", passcode=" + passcode + ", email=" + email
 				+ ", is_coordinator=" + is_coordinator + ", question="
 				+ question + ", answer=" + answer + ", school=" + school
-				+ ", picture=" + Arrays.toString(picture) + ", getObjectId()="
-				+ getObjectId() + ", getCreatedAt()=" + getCreatedAt()
+				+ ", picture=" + Arrays.toString(picture) + ", getId()="
+				+ getId() + ", getCreatedAt()=" + getCreatedAt()
 				+ ", getUpdatedAt()=" + getUpdatedAt() + ", getClass()="
 				+ getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
 	}
+
 }

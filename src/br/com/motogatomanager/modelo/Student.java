@@ -1,24 +1,26 @@
 package br.com.motogatomanager.modelo;
 
+import java.util.Date;
+
 
 public class Student extends Generic {
 	private String name;
 	private String last_name;
 	private String gender;
-	private int birth_date;
+	private Date birth_date;
 	private String guardian;
 	private String diagnosis_level;
 	private int coins;
 	private int buildings_count;
 	
 	private School school;
-	private Group student_group;
+	private StudentGroup student_group;
 	
 	public Student () {}
 	
 	public Student(String name, String last_name, String gender,
-			int birth_date, String guardian, String diagnosis_level, int coins,
-			int buildings_count, School school, Group student_group) {
+			Date birth_date, String guardian, String diagnosis_level, int coins,
+			int buildings_count, School school, StudentGroup student_group) {
 		this.name = name;
 		this.last_name = last_name;
 		this.gender = gender;
@@ -48,12 +50,15 @@ public class Student extends Generic {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public int getBirth_date() {
+	
+	public Date getBirth_date() {
 		return birth_date;
 	}
-	public void setBirth_date(int birth_date) {
+
+	public void setBirth_date(Date birth_date) {
 		this.birth_date = birth_date;
 	}
+
 	public String getGuardian() {
 		return guardian;
 	}
@@ -84,10 +89,10 @@ public class Student extends Generic {
 	public void setSchool(School school) {
 		this.school = school;
 	}
-	public Group getStudent_group() {
+	public StudentGroup getStudent_group() {
 		return student_group;
 	}
-	public void setStudent_group(Group student_group) {
+	public void setStudent_group(StudentGroup student_group) {
 		this.student_group = student_group;
 	}
 
@@ -98,11 +103,9 @@ public class Student extends Generic {
 				+ ", guardian=" + guardian + ", diagnosis_level="
 				+ diagnosis_level + ", coins=" + coins + ", buildings_count="
 				+ buildings_count + ", school=" + school + ", student_group="
-				+ student_group + ", getObjectId()=" + getObjectId()
-				+ ", getCreatedAt()=" + getCreatedAt() + ", getUpdatedAt()="
-				+ getUpdatedAt() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ student_group + ", getId()=" + getId() + ", getCreatedAt()="
+				+ getCreatedAt() + ", getUpdatedAt()=" + getUpdatedAt()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
-	
 }

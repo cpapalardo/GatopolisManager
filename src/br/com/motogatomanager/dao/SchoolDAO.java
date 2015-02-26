@@ -1,92 +1,94 @@
 package br.com.motogatomanager.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-import br.com.motogatomanager.db.ConnectionFactory;
+import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
 
 public class SchoolDAO {
-	
-	public SchoolDAO () {
-		
+
+	private Connection connection;
+
+	public SchoolDAO() {
+		connection = new ConnectionFactory().getConnection();
+	}
+
+	public void save(School school) {
+		String sql = "insert into school "
+				+ "(name,sync_code,coordinator_code,public_id)" + " values (?,?,?,?)";
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+
+			stmt.setString(1, school.getName());
+			stmt.setString(2, school.getSync_code());
+			stmt.setString(3, school.getCoordinator_code());
+			stmt.setString(4, school.getPublic_id());
+
+			stmt.execute();
+			stmt.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
-	public void saveSchool (School school) {
-		String s = "jdbc:sqlserver://daci0gzkgl.database.windows.net:1433;"
-				+ "database=gatopolis_db;"
-				+ "user=GPAdmin@daci0gzkgl;"
-				+ "password={GPserver2015};"
-				+ "encrypt=true;"
-				+ "hostNameInCertificate=*.database.windows.net;"
-				+ "loginTimeout=30;";
-		
-		// Connection string for your SQL Database server.
-				// Change the values assigned to your_server, 
-				// your_user@your_server,
-				// and your_password.
-				String connectionString = s;
-
-				// The types for the following variables are
-				// defined in the java.sql library.
-				Connection connection = null;  // For making the connection
-				Statement statement = null;    // For the SQL statement
-				ResultSet resultSet = null;    // For the result set, if applicable
-
-				try
-				{
-					com.microsoft.sqlserver.jdbc.SQLServerDriver driver = new com.microsoft.sqlserver.jdbc.SQLServerDriver ();
-					
-				    // Ensure the SQL Server driver class is available.
-				    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-				    // Establish the connection.
-				    connection = DriverManager.getConnection(connectionString);
-
-				    // Define the SQL string.
-				    String sqlString = 
-				        "SET IDENTITY_INSERT Person ON " + 
-				            "INSERT INTO Person " + 
-				            "(PersonID, LastName, FirstName) " + 
-				            "VALUES(1, 'Abercrombie', 'Kim')," + 
-				                  "(2, 'Goeschl', 'Gerhard')," + 
-				                  "(3, 'Grachev', 'Nikolay')," + 
-				                  "(4, 'Yee', 'Tai')," + 
-				                  "(5, 'Wilson', 'Jim')";
-
-				    // Use the connection to create the SQL statement.
-				    statement = connection.createStatement();
-
-				    // Execute the statement.
-				    statement.executeUpdate(sqlString);
-
-				    // Provide a message when processing is complete.
-				    System.out.println("Processing complete.");
-
-				}catch (Exception e)
-		        {
-		            System.out.println("Exception " + e.getMessage());
-		            e.printStackTrace();
-		        }
-		        finally
-		        {
-		            try
-		            {
-		                // Close resources.
-		                if (null != connection) connection.close();
-		                if (null != statement) statement.close();
-		                if (null != resultSet) resultSet.close();
-		            }
-		            catch (SQLException sqlException)
-		            {
-		                // No additional action if close() statements fail.
-		            }
-		        }
+	public List<School> fetchAll () {
+		try {
+			List<School> schools = new ArrayList<School>();
+			
+			String sql = "select * from school";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				School school = new School ();
+				school.setId(rs.getInt("school_id"));
+				school.setName(rs.getString("name"));
+				school.setSync_code(rs.getString("sync_code"));
+				school.setCoordinator_code(rs.getString("coordinator_code"));
+				school.setPublic_id(rs.getString("public_id"));
+				
+				schools.add (school);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return schools;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
+	public School fetchBySyncCode (String syncCode) {
+		try {
+			String sql = "select * from school where school.sync_code = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, syncCode);
+			
+			ResultSet rs = stmt.executeQuery();
+			School school = new School ();
+			while (rs.next()) {
+				school.setId(rs.getInt("school_id"));
+				school.setName(rs.getString("name"));
+				school.setSync_code(rs.getString("sync_code"));
+				school.setCoordinator_code(rs.getString("coordinator_code"));
+				school.setPublic_id(rs.getString("public_id"));
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return school;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 }
