@@ -22,7 +22,6 @@ public class TeacherBean {
 	public void init () {
 		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", null);
-		//teachers = BancoLocal.TEACHERS;
 		teachers = new TeacherDAO ().fetchBySchool(school);
 	}
 	

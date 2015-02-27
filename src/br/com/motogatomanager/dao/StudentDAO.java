@@ -21,18 +21,16 @@ public class StudentDAO {
 
 	public void save(Student student) {
 		String sql = "insert into student "
-				+ "(name,last_name,birth_date,guardian,diagnosis_level,coins,buildings_count,school_id,student_group_id)" 
+				+ "(name,last_name,birth_date,gender,diagnosis_level,coins,buildings_count,school_id,student_group_id)" 
 				+ " values (?,?,?,?,?,?,?,?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setString(1, student.getName());
 			stmt.setString(2, student.getLast_name());
-			//TODO Problemas com char
-			//stmt.set(3, student.getGender().charAt(0));
 			java.sql.Date birthDate = new java.sql.Date (student.getBirth_date().getTime());
 			stmt.setDate(3, birthDate);
-			stmt.setString(4, student.getGuardian());
+			stmt.setString(4, student.getGender());
 			stmt.setString(5, student.getDiagnosis_level());
 			stmt.setInt(6, student.getCoins());
 			stmt.setInt(7, student.getBuildings_count());
@@ -40,7 +38,16 @@ public class StudentDAO {
 			stmt.setInt(9, student.getStudent_group().getId());
 
 			stmt.execute();
+			
+			String lastId = "select LAST_INSERT_ID()";
+			stmt = connection.prepareStatement(lastId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				student.setId(rs.getInt("LAST_INSERT_ID()"));
+			}
+			rs.close();
 			stmt.close();
+			
 			connection.close();
 			
 		} catch (SQLException e) {
@@ -50,18 +57,16 @@ public class StudentDAO {
 	
 	public void update(Student student) {
 		String sql = "update student "
-				+ "set name = ?,last_name = ?,birth_date = ?,guardian = ?,diagnosis_level = ?,coins = ?,buildings_count = ?,school_id = ?,student_group_id = ? " 
+				+ "set name = ?,last_name = ?,birth_date = ?,gender = ?,diagnosis_level = ?,coins = ?,buildings_count = ?,school_id = ?,student_group_id = ? " 
 				+ "where student.student_id = ?";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setString(1, student.getName());
 			stmt.setString(2, student.getLast_name());
-			//TODO Problemas com char
-			//stmt.set(3, student.getGender().charAt(0));
 			java.sql.Date birthDate = new java.sql.Date (student.getBirth_date().getTime());
 			stmt.setDate(3, birthDate);
-			stmt.setString(4, student.getGuardian());
+			stmt.setString(4, student.getGender());
 			stmt.setString(5, student.getDiagnosis_level());
 			stmt.setInt(6, student.getCoins());
 			stmt.setInt(7, student.getBuildings_count());

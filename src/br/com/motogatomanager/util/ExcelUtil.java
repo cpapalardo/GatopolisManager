@@ -2,6 +2,7 @@ package br.com.motogatomanager.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,11 +69,11 @@ public class ExcelUtil {
 		workbook.close();
 	}
 	
-	public void read(File file) throws IOException {
-		File inputWorkbook = file;//new File(path);
+	public void read(InputStream stream) throws IOException {
+		//File inputWorkbook = file;//new File(path);
 		Workbook w;
 		try {
-			w = Workbook.getWorkbook(inputWorkbook);
+			w = Workbook.getWorkbook(stream);
 			// Get the first sheet
 			Sheet sheet = w.getSheet(0);
 			// Loop over first 10 column and lines
@@ -119,18 +120,30 @@ public class ExcelUtil {
 				groups.add(group);
 			}
 			
-			int aux = 1;
+			
+			//Resolvendo redundancia com referencias
 			for (int i = 0; i < groups.size(); i++) {
-				if (groups.get(i).getId() == 0) {
-					groups.get(i).setId(aux++);
-				}else{
-					continue;
-				}
 				for (int j = groups.size() - 1; j > 0; j--) {
 					if (compareGroup (groups.get(i), groups.get(j))) {
-						int id = groups.get(i).getId();
-						groups.get(j).setId(id);
+						groups.set(j, groups.get(i));
 					}
+				}
+			}
+			
+			//Atribui os respectivos relacionamentos conforme a linha do excel
+			for (int i = 0; i < groups.size(); i++) {
+				students.get(i).setStudent_group(groups.get(i));
+			}
+			
+			//Ajusta Nome e Sobrenome
+			for (Student student : students) {				
+				String completeName = student.getName();
+				
+				if (!completeName.contains(" ")) {
+					student.setName(completeName);
+				} else {
+					student.setName(completeName.substring(0, completeName.indexOf(" ")));
+					student.setLast_name(completeName.substring(completeName.indexOf(" ") + 1, completeName.length()));
 				}
 			}
 			

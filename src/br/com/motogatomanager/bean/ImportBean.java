@@ -1,13 +1,10 @@
 package br.com.motogatomanager.bean;
 
-import java.io.File;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import org.apache.commons.io.FileUtils;
 import org.primefaces.model.UploadedFile;
 
 import br.com.motogatomanager.dao.StudentDAO;
@@ -47,47 +44,25 @@ public class ImportBean {
         this.uploadedFile = file;
     }
      
+    
     public void upload() {
         if (uploadedFile != null) {
-        	ExcelUtil excel = new ExcelUtil();
-        	
-        	File file = new File(uploadedFile.getFileName());
-        	
-        	try {
-        		FileUtils.copyInputStreamToFile(uploadedFile.getInputstream(), file);
-				excel.read (file);
-				
-				/*//Removendo redundancia
-				int aux = 1;
-				for (int i = 0; i < excel.getGroups().size(); i++) {
-					if (excel.getGroups().get(i).getId() != aux) 
-						excel.getGroups().remove(i);
-					else
-						aux++;
-				}
-				
-				//Realoca as Classes na lista de Alunos após salva-las no banco
-				for (StudentGroup sg : excel.getGroups()) {
-					int tmp = sg.getId();
-					sg.setSchool(school);
-					new StudentGroupDAO ().save(sg);
-					
-					//Realocando
-					for (Student s : excel.getStudents()) {
-						if (s.getStudent_group().getId() == tmp) {
-							s.setStudent_group(sg);
-						}
-					}
-				}*/
-				
-				for (Student s : excel.getStudents()) {
-					//TODO Alterar isso
-					StudentGroup sg = new StudentGroup();
-					sg.setId(1);
-					s.setStudent_group(sg);
-					s.setSchool(school);
-					new StudentDAO ().save (s);
-				}
+        	try {    
+        		ExcelUtil excel = new ExcelUtil();
+    			excel.read (uploadedFile.getInputstream());
+    			
+    			//Salva Turma
+    			for (StudentGroup group : excel.getGroups()) {
+    				group.setSchool(school);
+    				if (group != null && group.getId() == 0)
+    					new StudentGroupDAO ().save(group);
+    			}
+    			
+    			//Salva Alunos
+    			for (Student student : excel.getStudents()) {
+    				student.setSchool(school);
+    				new StudentDAO ().save(student);
+    			}
 				
 				FacesMessage message = new FacesMessage("Sucesso!", uploadedFile.getFileName() + " foi adicionado.");
 				FacesContext.getCurrentInstance().addMessage(null, message);

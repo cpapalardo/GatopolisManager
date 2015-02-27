@@ -19,14 +19,13 @@ public class TeacherManageBean {
 	public void init() {
 		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
 		teacher = (Teacher) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacher");
-		if (teacher != null) {
-			if (teacher.getName() != null) {
-				completeName = teacher.getName();
-				if (teacher.getLast_name() != null) {
-					completeName += " " + teacher.getLast_name();
-				}
-			}
+		
+		if (teacher != null && teacher.getName() != null) {
+			completeName = teacher.getName();
+			if (teacher.getLast_name() != null)
+				completeName += " " + teacher.getLast_name();
 		}
+		
 	}
 
 	public String save() {
