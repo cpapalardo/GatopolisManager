@@ -133,5 +133,33 @@ public class StudentGroupDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public StudentGroup fetchById (int id) {
+		try {
+			String sql = "select * from student_group where student_group.student_group_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, id);
+			
+			ResultSet rs = stmt.executeQuery();
+			StudentGroup group = new StudentGroup ();
+			while (rs.next()) {
+				group.setId(rs.getInt("student_group_id"));
+				group.setName(rs.getString("name"));
+				group.setSeries(rs.getString("series"));
+				group.setPeriod(rs.getString("period"));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				group.setSchool(s);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return group;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

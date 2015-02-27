@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
 import br.com.motogatomanager.dao.StudentDAO;
+import br.com.motogatomanager.dao.StudentGroupDAO;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Student;
 
@@ -40,6 +41,10 @@ public class StudentBean {
 
 	public void setStudents(List<Student> students) {
 		this.students = students;
+	}
+	
+	public String groupName (int id) {
+		return new StudentGroupDAO ().fetchById(id).getName();
 	}
 	
 }
