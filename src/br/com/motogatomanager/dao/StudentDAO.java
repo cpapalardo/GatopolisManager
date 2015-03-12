@@ -99,7 +99,6 @@ public class StudentDAO {
 				student.setGender(rs.getString("gender"));
 				java.util.Date birthDate = new java.util.Date (rs.getDate("birth_date").getTime());
 				student.setBirth_date(birthDate);
-				student.setGuardian(rs.getString("guardian"));
 				student.setDiagnosis_level(rs.getString("diagnosis_level"));
 				student.setCoins(rs.getInt("coins"));
 				student.setBuildings_count(rs.getInt("buildings_count"));
@@ -141,7 +140,6 @@ public class StudentDAO {
 				student.setGender(rs.getString("gender"));
 				java.util.Date birthDate = new java.util.Date (rs.getDate("birth_date").getTime());
 				student.setBirth_date(birthDate);
-				student.setGuardian(rs.getString("guardian"));
 				student.setDiagnosis_level(rs.getString("diagnosis_level"));
 				student.setCoins(rs.getInt("coins"));
 				student.setBuildings_count(rs.getInt("buildings_count"));

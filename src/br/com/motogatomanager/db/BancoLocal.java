@@ -23,7 +23,7 @@ public class BancoLocal {
 
 		if (BancoLocal.SCHOOLS == null) {
 			BancoLocal.SCHOOLS = new ArrayList<School>();
-			school = new School("1234", "Escola Teste", "1", "1");
+			school = new School("Escola Teste", "1234");
 			//school.setObjectId("x4iv8ky");
 			BancoLocal.SCHOOLS.add(school);
 		}
@@ -44,7 +44,7 @@ public class BancoLocal {
 
 		if (BancoLocal.GROUPS == null) {
 			BancoLocal.GROUPS = new ArrayList<StudentGroup>();
-			group = new StudentGroup("Turma Marota", "1º ano A", "Manhã", null, school);
+			group = new StudentGroup("Turma Marota", "1ï¿½ ano A", "Manhï¿½", school);
 			//group.setObjectId("1j902j3h");
 			BancoLocal.GROUPS.add(group);
 		}

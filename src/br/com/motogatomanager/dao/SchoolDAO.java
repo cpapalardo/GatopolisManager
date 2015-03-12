@@ -20,14 +20,12 @@ public class SchoolDAO {
 
 	public void save(School school) {
 		String sql = "insert into school "
-				+ "(name,sync_code,coordinator_code,public_id)" + " values (?,?,?,?)";
+				+ "(name,sync_code)" + " values (?,?)";
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setString(1, school.getName());
 			stmt.setString(2, school.getSync_code());
-			stmt.setString(3, school.getCoordinator_code());
-			stmt.setString(4, school.getPublic_id());
 
 			stmt.execute();
 			stmt.close();
@@ -51,8 +49,6 @@ public class SchoolDAO {
 				school.setId(rs.getInt("school_id"));
 				school.setName(rs.getString("name"));
 				school.setSync_code(rs.getString("sync_code"));
-				school.setCoordinator_code(rs.getString("coordinator_code"));
-				school.setPublic_id(rs.getString("public_id"));
 				
 				schools.add (school);
 			}
@@ -78,8 +74,6 @@ public class SchoolDAO {
 				school.setId(rs.getInt("school_id"));
 				school.setName(rs.getString("name"));
 				school.setSync_code(rs.getString("sync_code"));
-				school.setCoordinator_code(rs.getString("coordinator_code"));
-				school.setPublic_id(rs.getString("public_id"));
 			}
 			rs.close();
 			stmt.close();

@@ -117,7 +117,6 @@ public class TeacherDAO {
 				teacher.setLast_name(rs.getString("last_name"));
 				teacher.setPasscode(rs.getString("passcode"));
 				teacher.setEmail(rs.getString("email"));
-				teacher.setIs_coordinator(rs.getBoolean("is_coordinator"));
 				teacher.setQuestion(rs.getString("question"));
 				teacher.setAnswer(rs.getString("answer"));
 				
