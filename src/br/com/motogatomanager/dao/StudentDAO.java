@@ -127,7 +127,10 @@ public class StudentDAO {
 		try {
 			List<Student> students = new ArrayList<Student>();
 			
-			String sql = "select * from student where student.school_id = ?";
+			String sql = "select s.*, sg.name from student s"
+					+ " left join student_group sg"
+					+ " on s.student_group_id = sg.student_group_id"
+					+ " where s.school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, school.getId());
 			
@@ -149,7 +152,8 @@ public class StudentDAO {
 				student.setSchool(s);
 				
 				StudentGroup g = new StudentGroup ();
-				s.setId(rs.getInt("student_group_id"));
+				g.setId(rs.getInt("s.student_group_id"));
+				g.setName(rs.getString("sg.name"));
 				student.setStudent_group(g);
 				
 				students.add (student);
