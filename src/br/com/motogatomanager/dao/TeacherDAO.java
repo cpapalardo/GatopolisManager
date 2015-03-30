@@ -136,5 +136,45 @@ public class TeacherDAO {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public Teacher fetchByNameAndSchool (String name, String lastName, School school) {
+		
+		try {
+			Teacher teacher = new Teacher();
+			
+			String sql = "select * from teacher where teacher.school_id = ? and teacher.name = ? and teacher.last_name = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, school.getId());
+			stmt.setString(2, name);
+			stmt.setString(3, lastName);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				//Teacher teacher = new Teacher ();
+				teacher.setId(rs.getInt("teacher_id"));
+				teacher.setName(rs.getString("name"));
+				teacher.setLast_name(rs.getString("last_name"));
+				teacher.setPasscode(rs.getString("passcode"));
+				teacher.setEmail(rs.getString("email"));
+				teacher.setQuestion(rs.getString("question"));
+				teacher.setAnswer(rs.getString("answer"));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				teacher.setSchool(s);
+				//teacher.setPicture(rs.getString("picture"));
+				
+				//teachers.add (teacher);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return teacher;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
 
 }

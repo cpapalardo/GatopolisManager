@@ -85,4 +85,27 @@ public class SchoolDAO {
 		}
 	}
 	
+	public School fetchByName (String name) {
+		try {
+			String sql = "select * from school where school.name = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, name);
+			
+			ResultSet rs = stmt.executeQuery();
+			School school = new School ();
+			while (rs.next()) {
+				school.setId(rs.getInt("school_id"));
+				school.setName(rs.getString("name"));
+				school.setSync_code(rs.getString("sync_code"));
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return school;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 }

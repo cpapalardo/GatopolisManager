@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Importar Geral</title>
+</h:head>
+
+<h:body>
+	<h:form id="geralImport" enctype="multipart/form-data">
+		<p:panel>
+			<h3><p:outputLabel value="Importar Geral" /></h3>
+			
+			<p:growl id="messages" showDetail="true" />
+			<p:outputLabel value="Upload do arquivo excel:" />
+			<br /> 
+			<p:fileUpload value="#{geralImportBean.file}" mode="simple" skinSimple="true"/>
+			
+		    <!-- <br />
+		    <br />
+		    <p:outputLabel value="Faça o download do arquivo para adicionar alunos: " />
+		    <h:outputLink value="GatopolisManager.xls">GatopolisManage.xls</h:outputLink>
+			<br />
+			 -->
+			
+			<p:commandButton value="Importar" ajax="false" actionListener="#{geralImportBean.upload}" style="margin-top:10px" />
+			<p:commandButton value="Voltar" type="submit" action="#{geralImportBean.back}" style="margin-top:10px; margin-left:10px" />
+					
+			<br />
+
+	    </p:panel>
+	</h:form>
+</h:body>
+
+</html>

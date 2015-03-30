@@ -134,6 +134,37 @@ public class StudentGroupDAO {
 		}
 	}
 	
+	public StudentGroup fetchBySchoolAndPeriodAndSeries (School school, String period, String series) {
+		try {
+			StudentGroup group = new StudentGroup();
+			
+			String sql = "select * from student_group where student_group.school_id = ? and student_group.period = ? and student_group.series = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, school.getId());
+			stmt.setString(2, period);
+			stmt.setString(3, series);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				group.setId(rs.getInt("student_group_id"));
+				group.setName(rs.getString("name"));
+				group.setSeries(rs.getString("series"));
+				group.setPeriod(rs.getString("period"));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				group.setSchool(s);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return group;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public StudentGroup fetchById (int id) {
 		try {
 			String sql = "select * from student_group where student_group.student_group_id = ?";
