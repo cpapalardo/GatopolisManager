@@ -117,7 +117,6 @@ public class GeralImportBean {
 							studentGroupDao.save(s);
 							studentGroup = studentGroupDao.fetchBySchoolAndPeriodAndSeries(school, periodCell.getContents(), classCell.getContents());
 						}
-					
 					}
 					
 					
