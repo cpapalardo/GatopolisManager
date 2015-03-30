@@ -30,11 +30,13 @@
 				</p:column>
 	
 				<p:column headerText="Data Nasc">
-					<h:outputText value="#{student.birth_date}" />
+					<h:outputText value="#{student.birth_date}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>  
+					</h:outputText>  
 				</p:column>
 	
 				<p:column headerText="Turma">
-					<h:outputText value="#{student.student_group.id}" />
+					<h:outputText value="#{student.student_group.name}" />
 				</p:column>
 				
 			</p:dataTable>
