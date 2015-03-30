@@ -2,18 +2,25 @@ package br.com.gatopolismanager.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import com.microsoft.sqlserver.jdbc.*;
 
 public class ConnectionFactory {
 	public Connection getConnection () {
-		try {  
-            Class.forName("com.mysql.jdbc.Driver");  
+		String connectionString = "jdbc:sqlserver://daci0gzkgl.database.windows.net:1433" + ";" +  
+		        "database=gatopolis_db" + ";" + 
+		        "user=GPAdmin@daci0gzkgl.database.windows.net" + ";" +  
+		        "password=GPserver2015";
+		
+		try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            //Class.forName("com.mysql.jdbc.Driver");
         } catch (Exception e) {  
-            System.out.println("ERRO");  
+            System.out.println("Driver not found!");
             e.printStackTrace();  
         }  
 		
 		try {
-			return DriverManager.getConnection("jdbc:mysql://br-cdbr-azure-south-a.cloudapp.net:3306/gatopolisphpdb", "b33f81945fc541", "a2536739");
+			return DriverManager.getConnection(connectionString);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

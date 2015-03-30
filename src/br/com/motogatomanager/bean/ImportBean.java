@@ -61,6 +61,7 @@ public class ImportBean {
     			//Salva Alunos
     			for (Student student : excel.getStudents()) {
     				student.setSchool(school);
+    				student.setDiagnosis_level("NOT_ENOUGH_INPUT");
     				new StudentDAO ().save(student);
     			}
 				
@@ -74,7 +75,7 @@ public class ImportBean {
 				FacesContext.getCurrentInstance().addMessage(null, message);
 			}
         } else {
-        	FacesMessage message = new FacesMessage("Erro!", "O Upload não foi enviado para o servidor!");
+        	FacesMessage message = new FacesMessage("Erro!", "O Upload nï¿½o foi enviado para o servidor!");
         	FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
