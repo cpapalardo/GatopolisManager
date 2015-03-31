@@ -28,6 +28,14 @@ public class SchoolDAO {
 			stmt.setString(2, school.getSync_code());
 
 			stmt.execute();
+			
+			String lastId = "select SCOPE_IDENTITY()";
+			stmt = connection.prepareStatement(lastId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				school.setId(rs.getInt("SCOPE_IDENTITY()"));
+			}
+			
 			stmt.close();
 			connection.close();
 			

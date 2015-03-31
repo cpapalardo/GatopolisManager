@@ -39,11 +39,11 @@ public class StudentDAO {
 
 			stmt.execute();
 			
-			String lastId = "select LAST_INSERT_ID()";
+			String lastId = "select SCOPE_IDENTITY()";
 			stmt = connection.prepareStatement(lastId);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				student.setId(rs.getInt("LAST_INSERT_ID()"));
+				student.setId(rs.getInt("SCOPE_IDENTITY()"));
 			}
 			rs.close();
 			stmt.close();
@@ -127,7 +127,7 @@ public class StudentDAO {
 		try {
 			List<Student> students = new ArrayList<Student>();
 			
-			String sql = "select s.*, sg.name from student s"
+			String sql = "select s.*, sg.name as sg_name from student s"
 					+ " left join student_group sg"
 					+ " on s.student_group_id = sg.student_group_id"
 					+ " where s.school_id = ?";
@@ -152,8 +152,8 @@ public class StudentDAO {
 				student.setSchool(s);
 				
 				StudentGroup g = new StudentGroup ();
-				g.setId(rs.getInt("s.student_group_id"));
-				g.setName(rs.getString("sg.name"));
+				g.setId(rs.getInt("student_group_id"));
+				g.setName(rs.getString("sg_name"));
 				student.setStudent_group(g);
 				
 				students.add (student);

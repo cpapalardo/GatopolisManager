@@ -34,6 +34,14 @@ public class TeacherDAO {
 			stmt.setInt(7, teacher.getSchool().getId());
 
 			stmt.execute();
+			
+			String lastId = "select SCOPE_IDENTITY()";
+			stmt = connection.prepareStatement(lastId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				teacher.setId(rs.getInt("SCOPE_IDENTITY()"));
+			}
+			
 			stmt.close();
 			connection.close();
 			
@@ -176,5 +184,33 @@ public class TeacherDAO {
 		}
 		
 	}
-
+	
+	public Teacher fetchByNameAndLastName (String name, String lastName) {
+		try {
+			String sql = "select * from teacher where teacher.name = ? and teacher.name = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, name);
+			stmt.setString(2, lastName);
+			
+			ResultSet rs = stmt.executeQuery();
+			Teacher teacher = new Teacher ();
+			while (rs.next()) {
+				teacher.setId(rs.getInt("teacher_id"));
+				teacher.setName(rs.getString("name"));
+				teacher.setLast_name(rs.getString("last_name"));
+				teacher.setPasscode(rs.getString("passcode"));
+				teacher.setEmail(rs.getString("email"));
+				teacher.setQuestion(rs.getString("question"));
+				teacher.setAnswer(rs.getString("answer"));;
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return teacher;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 }

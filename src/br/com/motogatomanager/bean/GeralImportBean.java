@@ -1,5 +1,8 @@
 package br.com.motogatomanager.bean;
 
+import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import javax.faces.application.FacesMessage;
@@ -16,10 +19,12 @@ import org.primefaces.model.UploadedFile;
 import br.com.motogatomanager.dao.SchoolDAO;
 import br.com.motogatomanager.dao.StudentDAO;
 import br.com.motogatomanager.dao.StudentGroupDAO;
+import br.com.motogatomanager.dao.StudentGroup_TeacherDAO;
 import br.com.motogatomanager.dao.TeacherDAO;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Student;
 import br.com.motogatomanager.modelo.StudentGroup;
+import br.com.motogatomanager.modelo.StudentGroup_Teacher;
 import br.com.motogatomanager.modelo.Teacher;
 import br.com.motogatomanager.util.ExcelUtil;
 
@@ -50,18 +55,10 @@ public class GeralImportBean {
     public void upload() {
         if (uploadedFile != null) {
         	Workbook w;
-        	try {    
-        		
-        		w = Workbook.getWorkbook(uploadedFile.getInputstream());
+        	try {
+        		InputStream stream = uploadedFile.getInputstream();
+        		w = Workbook.getWorkbook(stream);
     			Sheet sheet = w.getSheet(0);
-    			
-    			School school = null;
-    			Teacher teacher = null;
-    			StudentGroup studentGroup = null;
-    			
-    			SchoolDAO schoolDao = new SchoolDAO();
-    			TeacherDAO teacherDao = new TeacherDAO();
-    			StudentGroupDAO studentGroupDao = new StudentGroupDAO();
     			
     			for (int i = 1; i < sheet.getRows(); i++) {
     				
@@ -73,70 +70,54 @@ public class GeralImportBean {
 					Cell birthCell = sheet.getCell(5, i);
 					Cell genderCell = sheet.getCell(6, i);
 					
-					if(school == null || !school.getName().equals(schoolCell.getContents())) {
-						school = schoolDao.fetchByName(schoolCell.getContents());
-						if(school.getName().isEmpty()) {
-							School s = new School();
-							s.setName(schoolCell.getContents());
-							s.setSync_code(String.valueOf(10000000 + rand.nextInt(90000000)));
-							schoolDao.save(s);
-							school = schoolDao.fetchByName(schoolCell.getContents());
-						}
-					}
-					if(teacher == null || teacher.getName().equals(professorCell.getContents())) {
-						
-						String fullName = professorCell.getContents().trim();
-						String firstName = fullName.split(" ")[0];
-						String lastName = fullName.split(" ").length > 1 ? fullName.substring(fullName.indexOf(' ')+1) : "";
-						
-						teacher = teacherDao.fetchByNameAndSchool(firstName, lastName, school);
-						
-						if(teacher.getName().isEmpty()) {
-							Teacher t = new Teacher();
-							t.setName(firstName);
-							t.setLast_name(lastName);
-							t.setSchool(school);
-							
-							teacherDao.save(teacher);
-							teacher = teacherDao.fetchByNameAndSchool(firstName, lastName, school);
-						}
+					if (schoolCell.getContents().equals(""))
+						continue;
+					
+					//School
+					String schoolName = schoolCell.getContents();
+					School school = new SchoolDAO().fetchByName(schoolCell.getContents());
+					if (school != null && school.getId() == 0) {
+						String sync_code = String.valueOf(10000000 + rand.nextInt(90000000));
+						school = new School (schoolName, sync_code);
+						new SchoolDAO().save(school);
 					}
 					
-					if(studentGroup == null || 
-							studentGroup.getPeriod() != periodCell.getContents() || 
-							studentGroup.getSeries() != classCell.getContents()) 
-					{
-						studentGroup = studentGroupDao.fetchBySchoolAndPeriodAndSeries(school, periodCell.getContents(), classCell.getContents());
+					//Teacher
+					String fullName = professorCell.getContents();
+					String firstName = fullName.split(" ")[0];
+					String lastName = fullName.split(" ").length > 1 ? fullName.substring(fullName.indexOf(' ')+1) : "";
 					
-						if(studentGroup.getPeriod().isEmpty()) {
-							StudentGroup s = new StudentGroup();
-							s.setPeriod(periodCell.getContents());
-							s.setSeries(classCell.getContents());
-							s.setSchool(school);
-							
-							studentGroupDao.save(s);
-							studentGroup = studentGroupDao.fetchBySchoolAndPeriodAndSeries(school, periodCell.getContents(), classCell.getContents());
-						}
+					Teacher teacher = new TeacherDAO ().fetchByNameAndLastName(firstName, lastName);
+					if (teacher != null && teacher.getId() == 0) {
+						teacher = new Teacher (firstName, lastName, "1234", "", "", "", school);
+						new TeacherDAO ().save(teacher);
 					}
 					
+					//Student Group
+					String serie = classCell.getContents();
+					String period = periodCell.getContents();
+					StudentGroup group = new StudentGroupDAO ().fetchBySerie(serie);
+					if (group != null && group.getId() == 0) {
+						group = new StudentGroup ("", serie, period, school);
+					}
 					
+					//Student Group Teacher
+					StudentGroup_Teacher sg_t = new StudentGroup_TeacherDAO().fetchByTeacherAndGroup(teacher, group);
+					if (sg_t == null && sg_t.getId() == 0) {
+						sg_t = new StudentGroup_Teacher(school, group, teacher);
+						new StudentGroup_TeacherDAO().save(sg_t); 
+					}
+					
+					//Student
+					String fullNameAluno = nameCell.getContents();
+					String firstNameAluno = fullNameAluno.split(" ")[0];
+					String lastNameAluno = fullNameAluno.split(" ").length > 1 ? fullName.substring(fullName.indexOf(' ')+1) : "";
+					String birthDate = birthCell.getContents();
+					String gender = genderCell.getContents();
+					Date date = new SimpleDateFormat().parse(birthDate);
+					Student student = new Student (firstNameAluno, lastNameAluno, gender, date, "NOT_ENOUGH_INPUT", 0, 0, school, group);
+					new StudentDAO ().save(student);
     			}
-        		
-        		/*ExcelUtil excel = new ExcelUtil();
-    			excel.read (uploadedFile.getInputstream());
-    			
-    			//Salva Turma
-    			for (StudentGroup group : excel.getGroups()) {
-    				group.setSchool(school);
-    				if (group != null && group.getId() == 0)
-    					new StudentGroupDAO ().save(group);
-    			}
-    			
-    			//Salva Alunos
-    			for (Student student : excel.getStudents()) {
-    				student.setSchool(school);
-    				new StudentDAO ().save(student);
-    			}*/
 				
 				FacesMessage message = new FacesMessage("Sucesso!", uploadedFile.getFileName() + " foi adicionado.");
 				FacesContext.getCurrentInstance().addMessage(null, message);

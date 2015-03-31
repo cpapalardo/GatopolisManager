@@ -136,7 +136,7 @@ public class ExcelUtil {
 			}
 			
 			//Ajusta Nome e Sobrenome
-			for (Student student : students) {				
+			for (Student student : students) {
 				String completeName = student.getName();
 				
 				if (!completeName.contains(" ")) {

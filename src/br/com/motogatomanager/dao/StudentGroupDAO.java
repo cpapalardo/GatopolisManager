@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.StudentGroup;
+import br.com.motogatomanager.modelo.Teacher;
 
 public class StudentGroupDAO {
 	private Connection connection;
@@ -193,4 +194,28 @@ public class StudentGroupDAO {
 		}
 	}
 
+	public StudentGroup fetchBySerie (String serie) {
+		try {
+			String sql = "select * from student_group where student_group.series = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setString(1, serie);
+			
+			ResultSet rs = stmt.executeQuery();
+			StudentGroup group = new StudentGroup ();
+			while (rs.next()) {
+				group.setId(rs.getInt("student_group_id"));
+				group.setName(rs.getString("name"));
+				group.setSeries(rs.getString("series"));
+				group.setPeriod(rs.getString("period"));
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return group;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 }
