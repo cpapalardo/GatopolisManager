@@ -19,17 +19,29 @@ xmlns:p="http://primefaces.org/ui">
 			<br /> 
 			<p:fileUpload value="#{geralImportBean.file}" mode="simple" skinSimple="true"/>
 			
-		    <!-- <br />
+		   <br />
 		    <br />
 		    <p:outputLabel value="Faça o download do arquivo para adicionar alunos: " />
-		    <h:outputLink value="GatopolisManager.xls">GatopolisManage.xls</h:outputLink>
+		    <h:outputLink value="ListaAlunos.xls">ListaAlunos.xls</h:outputLink>
 			<br />
-			 -->
 			
 			<p:commandButton value="Importar" ajax="false" actionListener="#{geralImportBean.upload}" style="margin-top:10px" />
 			<p:commandButton value="Voltar" type="submit" action="#{geralImportBean.back}" style="margin-top:10px; margin-left:10px" />
 					
 			<br />
+			
+			<h3><p:outputLabel value="Escolas Adicionadas" /></h3>
+	
+			<p:dataTable var="school" value="#{geralImportBean.schoolsAdded}">
+				<p:column headerText="Nome">
+					<h:outputText value="#{school.name}" />
+				</p:column>
+				
+				<p:column headerText="Codigo">
+	       			<h:outputText value="#{school.sync_code}" />
+				</p:column>
+				
+			</p:dataTable>
 
 	    </p:panel>
 	</h:form>

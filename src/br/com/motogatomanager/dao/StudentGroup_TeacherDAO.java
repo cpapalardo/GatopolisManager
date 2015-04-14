@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +23,10 @@ public class StudentGroup_TeacherDAO {
 
 	public void save(StudentGroup_Teacher sg_t) {
 		String sql = "insert into student_group_teacher "
-				+ "(school,student_group_id,teacher_id)" 
+				+ "(school_id,student_group_id,teacher_id)" 
 				+ " values (?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, sg_t.getSchool().getId());
 			stmt.setInt(2, sg_t.getStudent_group_id().getId());
@@ -33,12 +34,11 @@ public class StudentGroup_TeacherDAO {
 
 			stmt.execute();
 			
-			String lastId = "select SCOPE_IDENTITY()";
-			stmt = connection.prepareStatement(lastId);
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.getGeneratedKeys();
 			while (rs.next()) {
-				sg_t.setId(rs.getInt("SCOPE_IDENTITY()"));
+				sg_t.setId(rs.getInt(1));
 			}
+			rs.close();
 			
 			stmt.close();
 			connection.close();
@@ -121,12 +121,13 @@ public class StudentGroup_TeacherDAO {
 		}
 	}
 	
-	public StudentGroup_Teacher fetchByTeacherAndGroup (Teacher teacher, StudentGroup group) {
+	public StudentGroup_Teacher fetchByTeacherAndGroupAndSchool (Teacher teacher, StudentGroup group, School school) {
 		try {
-			String sql = "select * from student_group_teacher sg_t where sg_t.teacher_id = ? and sg_t.student_group_id = ?";
+			String sql = "select * from student_group_teacher sg_t where sg_t.teacher_id = ? and sg_t.student_group_id = ? and school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, teacher.getId());
 			stmt.setInt(2, group.getId());
+			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
 			StudentGroup_Teacher sg_t = new StudentGroup_Teacher ();

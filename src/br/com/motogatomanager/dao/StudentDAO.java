@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class StudentDAO {
 				+ "(name,last_name,birth_date,gender,diagnosis_level,coins,buildings_count,school_id,student_group_id)" 
 				+ " values (?,?,?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, student.getName());
 			stmt.setString(2, student.getLast_name());
@@ -39,15 +40,13 @@ public class StudentDAO {
 
 			stmt.execute();
 			
-			String lastId = "select SCOPE_IDENTITY()";
-			stmt = connection.prepareStatement(lastId);
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.getGeneratedKeys();
 			while (rs.next()) {
-				student.setId(rs.getInt("SCOPE_IDENTITY()"));
+				student.setId(rs.getInt(1));
 			}
 			rs.close();
-			stmt.close();
 			
+			stmt.close();
 			connection.close();
 			
 		} catch (SQLException e) {

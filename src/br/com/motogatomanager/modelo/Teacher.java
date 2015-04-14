@@ -88,4 +88,13 @@ public class Teacher extends Generic {
 		this.picture = picture;
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + "Teacher [name=" + name + ", last_name=" + last_name
+				+ ", passcode=" + passcode + ", email=" + email + ", question="
+				+ question + ", answer=" + answer + ", school=" + school
+				+ ", picture=" + picture + "]";
+	}
+
+	
 }

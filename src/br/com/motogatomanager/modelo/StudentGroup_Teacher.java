@@ -39,12 +39,10 @@ public class StudentGroup_Teacher extends Generic {
 
 	@Override
 	public String toString() {
-		return "StudentGroup_Teacher [school=" + school + ", student_group_id="
-				+ student_group_id + ", teacher_id=" + teacher_id
-				+ ", getId()=" + getId() + ", getCreatedAt()=" + getCreatedAt()
-				+ ", getUpdatedAt()=" + getUpdatedAt() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return super.toString() + "StudentGroup_Teacher [school=" + school + ", student_group_id="
+				+ student_group_id + ", teacher_id=" + teacher_id + "]";
 	}
+
+	
 	
 }

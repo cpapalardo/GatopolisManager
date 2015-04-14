@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class TeacherDAO {
 				+ "(name,last_name,passcode,email,question,answer,school_id)" 
 				+ " values (?,?,?,?,?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, teacher.getName());
 			stmt.setString(2, teacher.getLast_name());
@@ -35,12 +36,11 @@ public class TeacherDAO {
 
 			stmt.execute();
 			
-			String lastId = "select SCOPE_IDENTITY()";
-			stmt = connection.prepareStatement(lastId);
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.getGeneratedKeys();
 			while (rs.next()) {
-				teacher.setId(rs.getInt("SCOPE_IDENTITY()"));
+				teacher.setId(rs.getInt(1));
 			}
+			rs.close();
 			
 			stmt.close();
 			connection.close();
@@ -83,6 +83,7 @@ public class TeacherDAO {
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			
 			ResultSet rs = stmt.executeQuery();
+			
 			while (rs.next()) {
 				Teacher teacher = new Teacher ();
 				teacher.setId(rs.getInt("teacher_id"));
@@ -185,12 +186,13 @@ public class TeacherDAO {
 		
 	}
 	
-	public Teacher fetchByNameAndLastName (String name, String lastName) {
+	public Teacher fetchByNameAndLastNameAndSchool (String name, String lastName, School school) {
 		try {
-			String sql = "select * from teacher where teacher.name = ? and teacher.name = ?";
+			String sql = "select * from teacher where teacher.name = ? and teacher.last_name = ? and teacher.school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setString(1, name);
 			stmt.setString(2, lastName);
+			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
 			Teacher teacher = new Teacher ();

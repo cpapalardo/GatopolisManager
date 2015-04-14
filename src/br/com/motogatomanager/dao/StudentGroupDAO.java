@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class StudentGroupDAO {
 				+ "(name,series,period,school_id)" 
 				+ " values (?,?,?,?)";
 		try {
-			PreparedStatement stmt = connection.prepareStatement(sql);
+			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setString(1, group.getName());
 			stmt.setString(2, group.getSeries());
@@ -34,15 +35,13 @@ public class StudentGroupDAO {
 
 			stmt.execute();
 			
-			String lastId = "select LAST_INSERT_ID()";
-			stmt = connection.prepareStatement(lastId);
-			ResultSet rs = stmt.executeQuery();
+			ResultSet rs = stmt.getGeneratedKeys();
 			while (rs.next()) {
-				group.setId(rs.getInt("LAST_INSERT_ID()"));
+				group.setId(rs.getInt(1));
 			}
 			rs.close();
-			stmt.close();
 			
+			stmt.close();
 			connection.close();
 			
 		} catch (SQLException e) {
@@ -194,11 +193,13 @@ public class StudentGroupDAO {
 		}
 	}
 
-	public StudentGroup fetchBySerie (String serie) {
+	public StudentGroup fetchByNameAndSerieAndSchool (String name, String serie, School school) {
 		try {
-			String sql = "select * from student_group where student_group.series = ?";
+			String sql = "select * from student_group where student_group.name = ? and student_group.series = ? and school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, serie);
+			stmt.setString(1, name);
+			stmt.setString(2, serie);
+			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
 			StudentGroup group = new StudentGroup ();

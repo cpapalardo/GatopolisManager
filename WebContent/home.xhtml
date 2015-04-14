@@ -21,14 +21,30 @@ xmlns:p="http://primefaces.org/ui">
 			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px"/>
 			<br />
 			<p:commandButton type="submit" value="Acessar" action="#{homeBean.access}" />
+
 			<br />
 			<br />
+
+			<p:commandLink id="geralImport" ajax="false" action="Manager/geralImport.xhtml" value="Importar Excel de Escolas"/>
+			
+			<br />
+			<br />
+			<br />
+			<br />			
+			
+			
+			<h4><p:outputLabel value="Acesso aos Relatórios"/></h4>
+			<p:password value="#{homeBean.password}" style="margin-left:20px"/>
+			<p:commandButton type="submit" value="Entrar" action="#{homeBean.entering}" style="margin-left:20px"/>
+			<br />
+			<br />
+			
+			<!-- Error Messages -->
 		    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
-
-			<p:commandLink id="geralImport" ajax="false" action="Manager/geralImport.xhtml" value="Importar Geral"/>
-
 	    </p:panel>
+	    
+	    
 	</h:form>
 </h:body>
 
