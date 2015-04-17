@@ -11,6 +11,7 @@ import java.util.List;
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Teacher;
+import br.com.motogatomanager.util.EncodingUtil;
 
 public class TeacherDAO {
 	private Connection connection;
@@ -26,12 +27,12 @@ public class TeacherDAO {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			stmt.setString(1, teacher.getName());
-			stmt.setString(2, teacher.getLast_name());
+			stmt.setString(1, EncodingUtil.ConvertToISO(teacher.getName()));//TODO encoding
+			stmt.setString(2, EncodingUtil.ConvertToISO(teacher.getLast_name()));//TODO encoding
 			stmt.setString(3, teacher.getPasscode());
 			stmt.setString(4, teacher.getEmail());
-			stmt.setString(5, teacher.getQuestion());
-			stmt.setString(6, teacher.getAnswer());
+			stmt.setString(5, EncodingUtil.ConvertToISO(teacher.getQuestion()));//TODO encoding
+			stmt.setString(6, EncodingUtil.ConvertToISO(teacher.getAnswer()));//TODO encoding
 			stmt.setInt(7, teacher.getSchool().getId());
 
 			stmt.execute();
@@ -57,12 +58,12 @@ public class TeacherDAO {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			
-			stmt.setString(1, teacher.getName());
-			stmt.setString(2, teacher.getLast_name());
+			stmt.setString(1, EncodingUtil.ConvertToISO(teacher.getName()));//TODO encoding
+			stmt.setString(2, EncodingUtil.ConvertToISO(teacher.getLast_name()));//TODO encoding
 			stmt.setString(3, teacher.getPasscode());
 			stmt.setString(4, teacher.getEmail());
-			stmt.setString(5, teacher.getQuestion());
-			stmt.setString(6, teacher.getAnswer());
+			stmt.setString(5, EncodingUtil.ConvertToISO(teacher.getQuestion()));//TODO encoding
+			stmt.setString(6, EncodingUtil.ConvertToISO(teacher.getAnswer()));//TODO encoding
 			stmt.setInt(7, teacher.getSchool().getId());
 			stmt.setInt(8, teacher.getId());
 			
@@ -87,12 +88,12 @@ public class TeacherDAO {
 			while (rs.next()) {
 				Teacher teacher = new Teacher ();
 				teacher.setId(rs.getInt("teacher_id"));
-				teacher.setName(rs.getString("name"));
-				teacher.setLast_name(rs.getString("last_name"));
+				teacher.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				teacher.setLast_name(EncodingUtil.ConvertToUTF8(rs.getString("last_name")));//TODO encoding
 				teacher.setPasscode(rs.getString("passcode"));
 				teacher.setEmail(rs.getString("email"));
-				teacher.setQuestion(rs.getString("question"));
-				teacher.setAnswer(rs.getString("answer"));
+				teacher.setQuestion(EncodingUtil.ConvertToUTF8(rs.getString("question")));//TODO encoding
+				teacher.setAnswer(EncodingUtil.ConvertToUTF8(rs.getString("answer")));//TODO encoding
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
@@ -122,12 +123,12 @@ public class TeacherDAO {
 			while (rs.next()) {
 				Teacher teacher = new Teacher ();
 				teacher.setId(rs.getInt("teacher_id"));
-				teacher.setName(rs.getString("name"));
-				teacher.setLast_name(rs.getString("last_name"));
+				teacher.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				teacher.setLast_name(EncodingUtil.ConvertToUTF8(rs.getString("last_name")));//TODO encoding
 				teacher.setPasscode(rs.getString("passcode"));
 				teacher.setEmail(rs.getString("email"));
-				teacher.setQuestion(rs.getString("question"));
-				teacher.setAnswer(rs.getString("answer"));
+				teacher.setQuestion(EncodingUtil.ConvertToUTF8(rs.getString("question")));//TODO encoding
+				teacher.setAnswer(EncodingUtil.ConvertToUTF8(rs.getString("answer")));//TODO encoding
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
@@ -154,19 +155,19 @@ public class TeacherDAO {
 			String sql = "select * from teacher where teacher.school_id = ? and teacher.name = ? and teacher.last_name = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, school.getId());
-			stmt.setString(2, name);
-			stmt.setString(3, lastName);
+			stmt.setString(2, EncodingUtil.ConvertToISO(name));//TODO encoding
+			stmt.setString(3, EncodingUtil.ConvertToISO(lastName));//TODO encoding
 			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				//Teacher teacher = new Teacher ();
 				teacher.setId(rs.getInt("teacher_id"));
-				teacher.setName(rs.getString("name"));
-				teacher.setLast_name(rs.getString("last_name"));
+				teacher.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				teacher.setLast_name(EncodingUtil.ConvertToUTF8(rs.getString("last_name")));//TODO encoding
 				teacher.setPasscode(rs.getString("passcode"));
 				teacher.setEmail(rs.getString("email"));
-				teacher.setQuestion(rs.getString("question"));
-				teacher.setAnswer(rs.getString("answer"));
+				teacher.setQuestion(EncodingUtil.ConvertToUTF8(rs.getString("question")));//TODO encoding
+				teacher.setAnswer(EncodingUtil.ConvertToUTF8(rs.getString("answer")));//TODO encoding
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
@@ -190,20 +191,20 @@ public class TeacherDAO {
 		try {
 			String sql = "select * from teacher where teacher.name = ? and teacher.last_name = ? and teacher.school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, name);
-			stmt.setString(2, lastName);
+			stmt.setString(1, EncodingUtil.ConvertToISO(name));//TODO encoding
+			stmt.setString(2, EncodingUtil.ConvertToISO(lastName));//TODO encoding
 			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
 			Teacher teacher = new Teacher ();
 			while (rs.next()) {
 				teacher.setId(rs.getInt("teacher_id"));
-				teacher.setName(rs.getString("name"));
-				teacher.setLast_name(rs.getString("last_name"));
+				teacher.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				teacher.setLast_name(EncodingUtil.ConvertToUTF8(rs.getString("last_name")));//TODO encoding
 				teacher.setPasscode(rs.getString("passcode"));
 				teacher.setEmail(rs.getString("email"));
-				teacher.setQuestion(rs.getString("question"));
-				teacher.setAnswer(rs.getString("answer"));;
+				teacher.setQuestion(EncodingUtil.ConvertToUTF8(rs.getString("question")));//TODO encoding
+				teacher.setAnswer(EncodingUtil.ConvertToUTF8(rs.getString("answer")));//TODO encoding
 			}
 			rs.close();
 			stmt.close();

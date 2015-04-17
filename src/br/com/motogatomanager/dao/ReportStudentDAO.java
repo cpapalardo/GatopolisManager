@@ -10,7 +10,6 @@ import java.util.List;
 
 import br.com.gatopolismanager.item.ReportStudentItem;
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
-import br.com.motogatomanager.modelo.School;
 
 public class ReportStudentDAO {
 	private Connection connection;
@@ -19,7 +18,7 @@ public class ReportStudentDAO {
 		connection = new ConnectionFactory().getConnection();
 	}
 	
-	public List<ReportStudentItem> getReportStudentItensBySchool (School school) {
+	public List<ReportStudentItem> getReportStudentItensBySchool (int schoolId) {
 		try {
 			List<ReportStudentItem> rsiList = new ArrayList<ReportStudentItem>();
 			
@@ -62,7 +61,7 @@ public class ReportStudentDAO {
 			stmt.setDate(5, new Date(thisYear1.getTimeInMillis()));
 			stmt.setDate(6, new Date(thisYear2.getTimeInMillis()));
 			
-			stmt.setInt(7, school.getId());
+			stmt.setInt(7, schoolId);
 			
 			ResultSet rs = stmt.executeQuery();
 			

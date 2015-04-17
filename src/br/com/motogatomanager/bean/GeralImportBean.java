@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 
 import org.primefaces.model.UploadedFile;
 
@@ -30,6 +31,7 @@ import br.com.motogatomanager.modelo.Student;
 import br.com.motogatomanager.modelo.StudentGroup;
 import br.com.motogatomanager.modelo.StudentGroup_Teacher;
 import br.com.motogatomanager.modelo.Teacher;
+import br.com.motogatomanager.util.EncodingUtil;
 
 @ManagedBean
 public class GeralImportBean {
@@ -77,7 +79,12 @@ public class GeralImportBean {
         	Workbook w;
         	try {
         		InputStream stream = uploadedFile.getInputstream();
-        		w = Workbook.getWorkbook(stream);
+        		
+        		WorkbookSettings ws = new WorkbookSettings();
+        		ws.setEncoding("Cp1252");
+        		
+        		w = Workbook.getWorkbook(stream, ws);
+        		
     			Sheet sheet = w.getSheet(0);
     			
     			
@@ -89,9 +96,10 @@ public class GeralImportBean {
 					Cell serieCell = sheet.getCell(2, i);
 					Cell periodCell = sheet.getCell(3, i);
 					Cell professorCell = sheet.getCell(4, i);
-					Cell nameCell = sheet.getCell(5, i);
-					Cell birthCell = sheet.getCell(6, i);
-					Cell genderCell = sheet.getCell(7, i);
+					Cell professorEmailCell = sheet.getCell(5,i);
+					Cell nameCell = sheet.getCell(6, i);
+					Cell birthCell = sheet.getCell(7, i);
+					Cell genderCell = sheet.getCell(8, i);
 					
 					if (schoolCell.getContents().equals(""))
 						continue;
@@ -117,11 +125,12 @@ public class GeralImportBean {
 					String fullName = professorCell.getContents();
 					String firstName = fullName.split(" ")[0];
 					String lastName = fullName.split(" ").length > 1 ? fullName.substring(fullName.indexOf(' ')+1).trim() : "";
+					String email = professorEmailCell.getContents();
 					
 					if (!teacherFullNameSet.contains(fullName)) {
 						teacher = new TeacherDAO ().fetchByNameAndLastNameAndSchool(firstName, lastName, school);
 						if (teacher.getId() == 0) {
-							teacher = new Teacher (firstName, lastName, "1234", "", "", "", school);
+							teacher = new Teacher (firstName, lastName, "1234", email, "", "", school);
 							new TeacherDAO ().save(teacher);
 						}
 					}

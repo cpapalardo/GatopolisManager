@@ -8,7 +8,6 @@ import java.util.List;
 
 import br.com.gatopolismanager.item.ReportTeacherItem;
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
-import br.com.motogatomanager.modelo.School;
 
 public class ReportTeacherDAO {
 	private Connection connection;
@@ -17,10 +16,7 @@ public class ReportTeacherDAO {
 		connection = new ConnectionFactory().getConnection();
 	}
 	
-	public List<ReportTeacherItem> getReportTeacherItensBySchool (School school) {
-		if (school == null)
-			return null;
-		
+	public List<ReportTeacherItem> getReportTeacherItensBySchool (int schoolId) {
 		try {
 			List<ReportTeacherItem> rtiList = new ArrayList<ReportTeacherItem>();
 			
@@ -44,7 +40,7 @@ public class ReportTeacherDAO {
 					+ "group by s.school_id, s.name, t.teacher_id, t.name";
 			
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setInt(1, school.getId());
+			stmt.setInt(1, schoolId);
 			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {

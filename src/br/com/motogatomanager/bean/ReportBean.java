@@ -12,34 +12,29 @@ import br.com.gatopolismanager.item.ReportTeacherItem;
 import br.com.motogatomanager.dao.ReportStudentDAO;
 import br.com.motogatomanager.dao.ReportTeacherDAO;
 import br.com.motogatomanager.dao.SchoolDAO;
-import br.com.motogatomanager.modelo.ReportStudent;
-import br.com.motogatomanager.modelo.ReportTeacher;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.ViewedStudent;
 
 @ManagedBean
 public class ReportBean {
-	private School schoolSelected;
+	public int schoolId;
 	private List <SelectItem> schoolItens;
 	
 	private List <ViewedStudent> viewedStudents;
-	private List <ReportTeacher> rtList;
-	private List <ReportStudent> rsList;
 	
 	private List <ReportTeacherItem> rtiList;
 	private List <ReportStudentItem> rsiList;
 
 	@PostConstruct
 	public void init () {
-		schoolItens = new ArrayList<SelectItem> (); 
-		for (School school : new SchoolDAO ().fetchAll()) {
-			schoolItens.add(new SelectItem (school, school.getName ()));
-		}
+		schoolItens = new ArrayList<SelectItem> ();
+		for (School school : new SchoolDAO ().fetchAll())
+			schoolItens.add (new SelectItem (school.getId(), school.getName()));
 	}
 	
 	public void showReport () {
-		rtiList = new ReportTeacherDAO().getReportTeacherItensBySchool(schoolSelected);
-		rsiList = new ReportStudentDAO().getReportStudentItensBySchool(schoolSelected);
+		rtiList = new ReportTeacherDAO().getReportTeacherItensBySchool(schoolId);
+		rsiList = new ReportStudentDAO().getReportStudentItensBySchool(schoolId);
 	}
 
 	public List<ViewedStudent> getViewedStudents() {
@@ -50,21 +45,6 @@ public class ReportBean {
 		this.viewedStudents = viewedStudents;
 	}
 
-	public List<ReportTeacher> getRtList() {
-		return rtList;
-	}
-
-	public void setRtList(List<ReportTeacher> rtList) {
-		this.rtList = rtList;
-	}
-
-	public List<ReportStudent> getRsList() {
-		return rsList;
-	}
-
-	public void setRsList(List<ReportStudent> rsList) {
-		this.rsList = rsList;
-	}
 	public List<ReportTeacherItem> getRtiList() {
 		return rtiList;
 	}
@@ -80,21 +60,21 @@ public class ReportBean {
 	public void setRsiList(List<ReportStudentItem> rsiList) {
 		this.rsiList = rsiList;
 	}
-
-	public School getSchoolSelected() {
-		return schoolSelected;
-	}
-
-	public void setSchoolSelected(School schoolSelected) {
-		this.schoolSelected = schoolSelected;
-	}
-
+	
 	public List<SelectItem> getSchoolItens() {
 		return schoolItens;
 	}
 
 	public void setSchoolItens(List<SelectItem> schoolItens) {
 		this.schoolItens = schoolItens;
+	}
+
+	public int getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(int schoolId) {
+		this.schoolId = schoolId;
 	}
 
 }

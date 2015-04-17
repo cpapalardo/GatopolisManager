@@ -13,13 +13,11 @@ xmlns:p="http://primefaces.org/ui">
 	<h:form id="report">
 		<p:panel>
 			<p:outputLabel for="escola" value="Escola:" />
-			<p:selectOneMenu id="escola" value="#{reportBean.schoolSelected}" style="margin-left:20px; width:400px" >
+			<p:selectOneMenu id="escola" value="#{reportBean.schoolId}" style="margin-left:20px; width:400px" >
 				<f:selectItem itemValue="" />
 			    <f:selectItems value="#{reportBean.schoolItens}" />
 			</p:selectOneMenu>
-			<p:commandButton type="submit" value="Ver" actionListener="#{reportBean.showReport}" ajax="true" update="reportTeacher" style="margin-left:20px"/>
-		
-			<h3><p:outputLabel value="Vezes que o aluno foi visualizado" /></h3>
+			<p:commandButton value="Ver" actionListener="#{reportBean.showReport}" update="report" style="margin-left:20px"/>
 
 			<h3><p:outputLabel value="Relatório do Professor" /></h3>
 	
@@ -60,7 +58,7 @@ xmlns:p="http://primefaces.org/ui">
 			
 			<h3><p:outputLabel value="Relatório do Aluno" /></h3>
 	
-			<p:dataTable var="rsi" value="#{reportBean.rsiList}">
+			<p:dataTable id="reportStudent" var="rsi" value="#{reportBean.rsiList}">
 				<p:column headerText="Nome do Aluno">
 					<h:outputText value="#{rsi.studentName}" />
 				</p:column>

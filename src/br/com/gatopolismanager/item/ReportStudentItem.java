@@ -1,6 +1,7 @@
 package br.com.gatopolismanager.item;
 
 public class ReportStudentItem {
+	private String teacherName;
 	private String studentName;
 	private int accessedThisWeek;
 	private int accessedThisMonth;
@@ -36,6 +37,12 @@ public class ReportStudentItem {
 	}
 	public void setViewedCount(int viewedCount) {
 		this.viewedCount = viewedCount;
+	}
+	public String getTeacherName() {
+		return teacherName;
+	}
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
 	}
 	
 }

@@ -45,7 +45,7 @@ public class ExcelUtil {
 
 	public ExcelUtil (String path) {
 		if (!path.contains(".xls")) {
-			throw new RuntimeException ("O arquivo deve conter a extesão .xls");
+			throw new RuntimeException ("O arquivo deve conter a extesï¿½o .xls");
 		}
 		this.path = path;
 	}
@@ -54,6 +54,7 @@ public class ExcelUtil {
 		File file = new File(path + FILE_NAME);
 		
 		WorkbookSettings wbSettings = new WorkbookSettings();
+		wbSettings.setEncoding("Cp1252");
 		WritableWorkbook workbook = Workbook.createWorkbook(file, wbSettings);
 		workbook.createSheet("Manager", 0);
 		WritableSheet excelSheet = workbook.getSheet(0);
@@ -87,9 +88,9 @@ public class ExcelUtil {
 					Cell cell = sheet.getCell(j, i);
 					CellType type = cell.getType();
 					
-					//Preenchimento obrigatório
+					//Preenchimento obrigatï¿½rio
 					if (type == CellType.EMPTY) {
-						throw new RuntimeException ("Campo vazio na coluna = "+ (j+1) + ", linha = " + (i+1) + " de preenchimento obrigatório");
+						throw new RuntimeException ("Campo vazio na coluna = "+ (j+1) + ", linha = " + (i+1) + " de preenchimento obrigatï¿½rio");
 					}
 					
 					if (STUDENT_NAME == j) {

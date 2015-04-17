@@ -16,6 +16,9 @@ public class Student extends Generic {
 	private School school;
 	private StudentGroup student_group;
 	
+	//Not in data base!
+	private String teachers;
+	
 	public Student () {}
 	
 	public Student(String name, String last_name, String gender,
@@ -110,6 +113,14 @@ public class Student extends Generic {
 
 	public void setStudent_group(StudentGroup student_group) {
 		this.student_group = student_group;
+	}
+
+	public String getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(String teachers) {
+		this.teachers = teachers;
 	}
 	
 }

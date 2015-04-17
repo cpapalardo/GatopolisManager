@@ -5,8 +5,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
-import br.com.gatopolismanager.item.ReportTeacherItem;
-import br.com.motogatomanager.dao.ReportTeacherDAO;
 import br.com.motogatomanager.dao.SchoolDAO;
 import br.com.motogatomanager.modelo.School;
 
