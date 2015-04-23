@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
@@ -21,9 +22,38 @@ public class SchoolDAO {
 	}
 
 	public void save(School school) {
-		String sql = "insert into school "
-				+ "(name,sync_code)" + " values (?,?)";
+		//Gera um novo sync code
 		try {
+			String sql = "select IDENT_CURRENT('school') + IDENT_INCR('school') as last_id";
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.execute();
+			
+			String lastId = null;
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				lastId = String.valueOf(rs.getInt("last_id"));
+			}
+			rs.close();
+			stmt.close();
+			
+			int max = (int) Math.pow(10, lastId.length());
+			String syncCode = String.valueOf (new Random ().nextInt(max));
+			if (syncCode.length() < lastId.length()) {
+				syncCode = "0" + syncCode;
+			}
+			syncCode = syncCode + lastId;
+			
+			//Setting the new Sync Code in school object
+			school.setSync_code(syncCode);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		try {
+			String sql = "insert into school "
+					+ "(name,sync_code)" + " values (?,?)";
+			
 			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
 			stmt.setString(1, EncodingUtil.ConvertToISO (school.getName()));//TODO encoding

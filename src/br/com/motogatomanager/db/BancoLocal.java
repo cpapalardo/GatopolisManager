@@ -3,9 +3,9 @@ package br.com.motogatomanager.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.motogatomanager.modelo.StudentGroup;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Student;
+import br.com.motogatomanager.modelo.StudentGroup;
 import br.com.motogatomanager.modelo.Teacher;
 
 public class BancoLocal {
@@ -23,7 +23,7 @@ public class BancoLocal {
 
 		if (BancoLocal.SCHOOLS == null) {
 			BancoLocal.SCHOOLS = new ArrayList<School>();
-			school = new School("Escola Teste", "1234");
+			school = new School("Escola Teste");
 			//school.setObjectId("x4iv8ky");
 			BancoLocal.SCHOOLS.add(school);
 		}

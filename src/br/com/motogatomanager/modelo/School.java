@@ -6,9 +6,8 @@ public class School extends Generic {
 
 	public School() {}
 
-	public School(String name, String sync_code) {
+	public School(String name) {
 		this.name = name;
-		this.sync_code = sync_code;
 	}
 
 	public String getName() {

@@ -17,7 +17,6 @@ public class HomeBean {
 	@PostConstruct
 	public void init () {
 		access = "farofa2015";
-		
 	}
 	
 	public String access () {

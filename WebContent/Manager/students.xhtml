@@ -39,6 +39,10 @@
 					<h:outputText value="#{student.student_group.name}" />
 				</p:column>
 				
+				<p:column headerText="Professores">
+					<h:outputText value="#{student.teachers}" />
+				</p:column>
+				
 			</p:dataTable>
 	
 			<p:commandButton value="Voltar" type="submit" action="#{studentBean.back}" />

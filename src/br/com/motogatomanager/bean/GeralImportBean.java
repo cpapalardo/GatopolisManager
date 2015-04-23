@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -37,7 +36,6 @@ public class GeralImportBean {
 	
 	private boolean rendered;
 	private List<School> schoolsAdded;
-	private Random rand = new Random();
 	private UploadedFile uploadedFile;
 	
 	private School school;
@@ -181,8 +179,8 @@ public class GeralImportBean {
 		if (!schoolNameSet.contains(schoolName)) {
 			school = new SchoolDAO ().fetchByName(schoolName);
 			if (school.getId() == 0) {
-				String sync_code = String.valueOf(10000000 + rand.nextInt(90000000));
-				school = new School (schoolName, sync_code);
+				
+				school = new School (schoolName);
 				new SchoolDAO().save(school);
 				
 				teacherFullNameSet = new HashSet<String> ();

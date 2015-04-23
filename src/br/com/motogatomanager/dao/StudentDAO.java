@@ -156,22 +156,25 @@ public class StudentDAO {
 				g.setName(EncodingUtil.ConvertToUTF8(rs.getString("sg_name")));
 				student.setStudent_group(g);
 				
-				students.add (student);
-			}
-			
-			//Inner join dos professores do aluno
-			/*for (Student student : students) { //TODO nome do professor
-				sql = "";
-				stmt = this.connection.prepareStatement(sql);
-				stmt.setInt(1, student.getId());
-				rs = stmt.executeQuery();
+				//Preencher nome dos professores do aluno
+				String subSQL = "select t.name as teacher_name"
+						+ " from teacher t"
+						+ " inner join student_group_teacher sgt"
+						+ " on sgt.teacher_id = t.teacher_id"
+						+ " where sgt.student_group_id = ?";
+				PreparedStatement subSTMT = this.connection.prepareStatement(subSQL);
+				subSTMT.setInt(1, student.getStudent_group().getId());
+				ResultSet subRS = subSTMT.executeQuery();
 				String teachers = "";
-				while (rs.next()) {
-					teachers += rs.getString("teacher_name");
+				while (subRS.next()) {
+					teachers += EncodingUtil.ConvertToUTF8(subRS.getString("teacher_name"));//TODO encoding
 					teachers += " ";
 				}
 				student.setTeachers(teachers.trim());
-			}*/
+				//end
+				
+				students.add (student);
+			}
 			
 			rs.close();
 			stmt.close();
