@@ -10,7 +10,7 @@ import br.com.motogatomanager.db.BancoLocal;
 import br.com.motogatomanager.modelo.School;
 
 @ManagedBean
-public class SchoolBean {
+public class SchoolsBean {
 	private List<School> schools = new ArrayList<School>();
 	
 	@PostConstruct

@@ -11,53 +11,37 @@ xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<h:form id="student">
-		<h3><p:outputLabel value="Editar Aluno" /></h3>
-		
-		<table>
-			<tr>
-				<td><p:outputLabel value="Nome:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Sobrenome:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Sexo:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Data Nasc:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Responsável:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Diagnosis Level:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Moedas:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Prédios:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Turma:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Escola:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-		</table>
-		
-		<p:commandButton value="Salvar" type="submit" action="#{studentManageBean.save}" />
-		<p:commandButton value="Voltar" type="submit" action="#{studentManageBean.back}" />
+		<p:panel>
+			<h3><p:outputLabel value="Aluno" /></h3>
+			
+			<h:panelGrid id="grid" columns="3" cellpadding="2"> 
+				<p:outputLabel for="name" value="Nome Completo" />
+				<p:inputText id="name" value="#{studentManageBean.completeName}" required="true" size="25" maxlength="100" />
+				<p:message for="name" display="tooltip" />
+			
+				<p:outputLabel for="birthDate" value="Data de Nascimento" />
+				<p:calendar id="birthDate" value="#{studentManageBean.student.birth_date}" required="true" pattern="dd-MM-yyyy" mask="true" size="10" />
+				<p:message for="birthDate" display="tooltip" />
+			
+				<p:outputLabel for="gender" value="Sexo" />
+				<p:selectOneRadio id="gender" value="#{studentManageBean.student.gender}">
+		            <f:selectItem itemLabel="Menino" itemValue="Menino" />
+		            <f:selectItem itemLabel="Menina" itemValue="Menina" />
+		        </p:selectOneRadio>
+				<p:outputLabel value="" />
+			
+				<p:outputLabel for="group" value="Turma" />
+				<p:selectOneMenu id="group" maxlength="15" value="#{studentManageBean.studentGroupId}">
+					<f:selectItem itemLabel="" itemValue="" />
+					<f:selectItems value="#{studentManageBean.studentGroupItens}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="" />
+			
+			</h:panelGrid>
+			
+			<p:commandButton value="Salvar" type="submit" action="#{studentManageBean.save}" />
+			<p:commandButton value="Voltar" action="#{studentManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px"/>
+		</p:panel>
 	</h:form>
 </h:body>
 

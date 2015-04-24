@@ -1,24 +1,35 @@
 package br.com.motogatomanager.bean;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.motogatomanager.dao.StudentDAO;
 import br.com.motogatomanager.dao.TeacherDAO;
 import br.com.motogatomanager.modelo.School;
+import br.com.motogatomanager.modelo.Student;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
 public class TeacherManageBean {
 	private School school;
 	private Teacher teacher;
+	private List<Student> students;
+	
 	private String completeName;
 	private String confirmPassword;
+	
+	private Map<String,Object> sessionMap;
 
 	@PostConstruct
 	public void init() {
-		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
-		teacher = (Teacher) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("teacher");
+		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		school = (School) sessionMap.get("school");
+		teacher = (Teacher) sessionMap.get("teacher");
+		students = new StudentDAO ().fetchByTeacher (teacher);
 		
 		if (teacher != null && teacher.getName() != null) {
 			completeName = teacher.getName();
@@ -49,13 +60,23 @@ public class TeacherManageBean {
 		} else {
 			new TeacherDAO ().update (teacher);
 		}
+		
+		sessionMap.remove("teacher");
 		return "teachers";
 	}
 
 	public String back() {
+		sessionMap.remove("teacher");
 		return "teachers";
 	}
+	
+	public String novoAluno () {
+		return "studentManage";
+	}
+	
 
+	//Getters and Setters
+	
 	public Teacher getTeacher() {
 		return teacher;
 	}
@@ -79,4 +100,13 @@ public class TeacherManageBean {
 	public void setCompleteName(String completeName) {
 		this.completeName = completeName;
 	}
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+	
 }

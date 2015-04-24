@@ -14,7 +14,7 @@ xmlns:p="http://primefaces.org/ui">
 		<p:panel>
 			<h3><p:outputLabel value="Turmas"/></h3>
 			
-			<p:dataTable var="group" value="#{groupBean.groups}">
+			<p:dataTable var="group" value="#{groupsBean.groups}">
 				<p:column headerText="Nome">
 					<h:outputText value="#{group.name}" />
 				</p:column>
@@ -27,10 +27,19 @@ xmlns:p="http://primefaces.org/ui">
 					<h:outputText value="#{group.series}" />
 				</p:column>
 				
+				<p:column headerText="Professores">
+					<h:outputText value="#{group.professores}" />
+				</p:column>
+				
+				<p:column headerText="Qtde Alunos">
+					<h:outputText value="#{group.qtdeAlunos}" />
+				</p:column>
+				
 			</p:dataTable>
 			
-			<p:commandButton value="Voltar" type="submit" action="#{groupBean.back}" />
-		
+			<p:commandButton value="Nova Turma" type="submit" action="#{groupsBean.novaTurma}" style="margin-top:10px"/>
+			<p:commandButton value="Voltar" action="#{groupsBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
+			
 		</p:panel>
 	</h:form>
 </h:body>

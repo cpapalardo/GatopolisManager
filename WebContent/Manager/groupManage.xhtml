@@ -11,35 +11,29 @@
 
 <h:body>
 	<h:form id="group">
-		<h3>
-			<p:outputLabel value="Editar Turma" />
-		</h3>
-		<table>
-			<tr>
-				<td><p:outputLabel value="Nome:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Serie:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Periodo:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Escola:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-			<tr>
-				<td><p:outputLabel value="Deletado:" /></td>
-				<td><p:inputText size="15" maxlength="10" /></td>
-			</tr>
-		</table>
-
-
-		<p:commandButton value="Salvar" type="submit" action="#{groupManageBean.save}" />
-		<p:commandButton value="Voltar" type="submit" action="#{groupManageBean.back}" />
+		<p:panel>
+			<h3>
+				<p:outputLabel value="Editar Turma" />
+			</h3>
+			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
+				
+				<p:outputLabel for="name" value="Nome" />
+				<p:inputText id="name" size="15" maxlength="10" />
+				<p:message for="name" display="tooltip" />
+				
+				<p:outputLabel for="serie" value="Serie" />
+				<p:inputText id="serie" size="15" maxlength="10" />
+				<p:message for="serie" display="tooltip" />
+				
+				<p:outputLabel for="period" value="Periodo" />
+				<p:inputText id="period" size="15" maxlength="10" />
+				<p:message for="period" display="tooltip" />
+				
+			</h:panelGrid>
+	
+			<p:commandButton value="Salvar" type="submit" action="#{groupManageBean.save}" />
+			<p:commandButton value="Voltar" action="#{groupManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
+		</p:panel>
 	</h:form>
 </h:body>
 

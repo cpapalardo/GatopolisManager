@@ -114,23 +114,23 @@ public class GeralImportBean {
     					int columnIndex = cell.getColumnIndex();
     					
     					if (columnIndex == 0) {
-    						schoolName = cell.getStringCellValue();
+    						schoolName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 1) {
-    						studentGroupName = cell.getStringCellValue();
+    						studentGroupName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 2) {
-    						serie = cell.getStringCellValue();
+    						serie = cell.getStringCellValue().trim();
     					} else if (columnIndex == 3) {
-    						period = cell.getStringCellValue();
+    						period = cell.getStringCellValue().trim();
     					} else if (columnIndex == 4) {
-    						teacherName = cell.getStringCellValue();
+    						teacherName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 5) {
-    						teacherEmail = cell.getStringCellValue();
+    						teacherEmail = cell.getStringCellValue().trim();
     					} else if (columnIndex == 6) {
-    						studentName = cell.getStringCellValue();
+    						studentName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 7) {
     						birthDate = String.valueOf((int)cell.getNumericCellValue());
     					} else if (columnIndex == 8) {
-    						gender = cell.getStringCellValue();
+    						gender = cell.getStringCellValue().trim();
     					}
     					
     					if (columnIndex == 9) {
@@ -194,45 +194,47 @@ public class GeralImportBean {
 		//Teacher
 		String firstName = teacherName.split(" ")[0];
 		String lastName = teacherName.split(" ").length > 1 ? teacherName.substring(teacherName.indexOf(' ')+1).trim() : "";
+		String teacherKey = teacherName + "-" + school.getId();
 		
-		if (!teacherFullNameSet.contains(teacherName)) {
+		if (!teacherFullNameSet.contains(teacherKey)) {
 			teacher = new TeacherDAO ().fetchByNameAndLastNameAndSchool(firstName, lastName, school);
 			if (teacher.getId() == 0) {
 				teacher = new Teacher (firstName, lastName, "1234", teacherEmail, "", "", school);
 				new TeacherDAO ().save(teacher);
 			}
 		}
-		teacherFullNameSet.add(teacherName);
+		teacherFullNameSet.add(teacherKey);
 		
 		//Student Group
-		String keyGroup = studentGroupName + "-" + serie + "-" + period;
+		String groupKey = studentGroupName + "-" + serie + "-" + period + "-" + school.getId();
 		
-		if (!groupSerieSet.contains(keyGroup)) {
+		if (!groupSerieSet.contains(groupKey)) {
 			group = new StudentGroupDAO ().fetchByNameAndSerieAndSchool(studentGroupName, serie, school);
 			if (group.getId() == 0) {
 				group = new StudentGroup (studentGroupName, serie, period, school);
 				new StudentGroupDAO ().save(group);
 			}
 		}
-		groupSerieSet.add(keyGroup);
+		groupSerieSet.add(groupKey);
 		
 		//StudentGroup_Teacher
 		String teacherId = String.valueOf (teacher.getId());
 		String groupId = String.valueOf(group.getId());
-		String keySG_T = teacherId + "-" + groupId;
+		String sg_tKey = teacherId + "-" + groupId + "-" + school.getId();
 		
-		if (!sg_tSet.contains(keySG_T)) {
+		if (!sg_tSet.contains(sg_tKey)) {
 			sg_t = new StudentGroup_TeacherDAO().fetchByTeacherAndGroupAndSchool(teacher, group, school);
 			if (sg_t.getId() == 0) {
 				sg_t = new StudentGroup_Teacher(school, group, teacher);
 				new StudentGroup_TeacherDAO().save(sg_t); 
 			}
 		}
-		sg_tSet.add(keySG_T);
+		sg_tSet.add(sg_tKey);
 		
 		//Student
 		String firstNameAluno = studentName.split(" ")[0];
 		String lastNameAluno = studentName.split(" ").length > 1 ? studentName.substring(studentName.indexOf(' ')+1) : "";
+		
 		Date date = null;
 		if (birthDate.length() == 8) {
 			date = new SimpleDateFormat("ddMMyyyy").parse(birthDate);

@@ -7,38 +7,44 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.motogatomanager.dao.StudentDAO;
 import br.com.motogatomanager.dao.StudentGroupDAO;
 import br.com.motogatomanager.modelo.School;
-import br.com.motogatomanager.modelo.StudentGroup;
+import br.com.motogatomanager.modelo.Student;
 
 @ManagedBean
-public class GroupBean {
+public class StudentsBean {
 	private School school;
-	private List<StudentGroup> groups = new ArrayList<StudentGroup>();
+	private List<Student> students = new ArrayList<Student>();
 	
 	@PostConstruct
 	public void init () {
 		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
-		groups = new StudentGroupDAO().fetchBySchool(school);
+		students = new StudentDAO ().fetchBySchool(school);
 	}
 	
-	public String create () {
-		return "groupManage";
+	public String novoAluno () {
+		return "studentManage";
 	}
 	
 	public String edit () {
-		return "groupManage";
+		return "studentManage";
 	}
 	
 	public String back () {
 		return "teachers";
 	}
 
-	public List<StudentGroup> getGroups() {
-		return groups;
+	public List<Student> getStudents() {
+		return students;
 	}
 
-	public void setGroups(List<StudentGroup> groups) {
-		this.groups = groups;
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
+	
+	public String groupName (int id) {
+		return new StudentGroupDAO ().fetchById(id).getName();
+	}
+	
 }

@@ -7,6 +7,10 @@ public class StudentGroup extends Generic {
 	private String period;
 	private School school;
 	
+	//This is not in DB
+	private String professores;
+	private int qtdeAlunos;
+	
 	public StudentGroup () {}
 	
 	public StudentGroup(String name, String series, String period, School school) {
@@ -46,6 +50,22 @@ public class StudentGroup extends Generic {
 
 	public void setSchool(School school) {
 		this.school = school;
+	}
+
+	public int getQtdeAlunos() {
+		return qtdeAlunos;
+	}
+
+	public void setQtdeAlunos(int qtdeAlunos) {
+		this.qtdeAlunos = qtdeAlunos;
+	}
+
+	public String getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(String professores) {
+		this.professores = professores;
 	}
 	
 }

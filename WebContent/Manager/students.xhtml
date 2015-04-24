@@ -16,7 +16,7 @@
 				<p:outputLabel value="Alunos" />
 			</h3>
 	
-			<p:dataTable var="student" value="#{studentBean.students}">
+			<p:dataTable var="student" value="#{studentsBean.students}">
 				<p:column headerText="Nome">
 					<h:outputText value="#{student.name}" />
 				</p:column>
@@ -45,7 +45,8 @@
 				
 			</p:dataTable>
 	
-			<p:commandButton value="Voltar" type="submit" action="#{studentBean.back}" />
+			<p:commandButton value="Novo Aluno" type="submit" action="#{studentsBean.novoAluno}" style="margin-top:10px"/>
+			<p:commandButton value="Voltar" action="#{studentsBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
 
 		</p:panel>
 	</h:form>

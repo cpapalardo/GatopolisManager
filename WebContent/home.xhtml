@@ -6,19 +6,26 @@ xmlns:h="http://java.sun.com/jsf/html"
 xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-  <title>Home</title>
+     <link rel="shortcut icon" href="http://gatopolismanager.azurewebsites.net/GatopolisManager/favicon.ico"/>
+    <title>Gatópolis</title>
 </h:head>
 
 <h:body>
 	<h:form id="home">
 		<p:panel>
-			<h3><p:outputLabel value="Home" /></h3>
+            <div align="center">
+            
+            <p><img src="Android_4.png" width="128" height="128" /></p>
+		
+			<h3><p:outputLabel value="Gatópolis - Sistema de Cadastro e Consulta Online" /></h3>
 			
-			<p:outputLabel value="Insira o código da escola para acessar o Manager." />
+			
+			<p:outputLabel value="Insira o código da escola para acessar o gerenciador." />
 			<br />
 			<br />
 			<p:outputLabel value="Código da Escola" />
 			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px"/>
+			<br />
 			<br />
 			<p:commandButton type="submit" value="Acessar" action="#{homeBean.access}" />
 
@@ -28,9 +35,7 @@ xmlns:p="http://primefaces.org/ui">
 			<p:commandLink id="geralImport" ajax="false" action="geralImport.xhtml" value="Importar Excel de Escolas"/>
 			
 			<br />
-			<br />
-			<br />
-			<br />			
+			<br />	
 			
 			
 			<h4><p:outputLabel value="Acesso aos Relatórios"/></h4>
@@ -41,6 +46,8 @@ xmlns:p="http://primefaces.org/ui">
 			
 			<!-- Error Messages -->
 		    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		    
+		    </div>
 
 	    </p:panel>
 	    

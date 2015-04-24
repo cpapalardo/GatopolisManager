@@ -12,7 +12,7 @@ import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Student;
 import br.com.motogatomanager.modelo.StudentGroup;
-import br.com.motogatomanager.util.EncodingUtil;
+import br.com.motogatomanager.modelo.Teacher;
 
 public class StudentDAO {
 	private Connection connection;
@@ -28,8 +28,8 @@ public class StudentDAO {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			stmt.setString(1, EncodingUtil.ConvertToISO(student.getName()));//TODO encoding
-			stmt.setString(2, EncodingUtil.ConvertToISO(student.getLast_name()));//TODO encoding
+			stmt.setString(1, (student.getName()));
+			stmt.setString(2, (student.getLast_name()));
 			java.sql.Date birthDate = new java.sql.Date (student.getBirth_date().getTime());
 			stmt.setDate(3, birthDate);
 			stmt.setString(4, student.getGender());
@@ -62,8 +62,8 @@ public class StudentDAO {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
-			stmt.setString(1, EncodingUtil.ConvertToISO(student.getName()));//TODO encoding
-			stmt.setString(2, EncodingUtil.ConvertToISO(student.getLast_name()));//TODO encoding
+			stmt.setString(1, (student.getName()));
+			stmt.setString(2, (student.getLast_name()));
 			java.sql.Date birthDate = new java.sql.Date (student.getBirth_date().getTime());
 			stmt.setDate(3, birthDate);
 			stmt.setString(4, student.getGender());
@@ -94,8 +94,8 @@ public class StudentDAO {
 			while (rs.next()) {
 				Student student = new Student ();
 				student.setId(rs.getInt("student_id"));
-				student.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				student.setLast_name(EncodingUtil.ConvertToISO(rs.getString("last_name")));//TODO encoding
+				student.setName((rs.getString("name")));
+				student.setLast_name((rs.getString("last_name")));
 				student.setGender(rs.getString("gender"));
 				java.util.Date birthDate = new java.util.Date (rs.getDate("birth_date").getTime());
 				student.setBirth_date(birthDate);
@@ -138,8 +138,8 @@ public class StudentDAO {
 			while (rs.next()) {
 				Student student = new Student ();
 				student.setId(rs.getInt("student_id"));
-				student.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				student.setLast_name(EncodingUtil.ConvertToUTF8(rs.getString("last_name")));//TODO encoding
+				student.setName((rs.getString("name")));
+				student.setLast_name((rs.getString("last_name")));
 				student.setGender(rs.getString("gender"));
 				java.util.Date birthDate = new java.util.Date (rs.getDate("birth_date").getTime());
 				student.setBirth_date(birthDate);
@@ -153,7 +153,7 @@ public class StudentDAO {
 				
 				StudentGroup g = new StudentGroup ();
 				g.setId(rs.getInt("student_group_id"));
-				g.setName(EncodingUtil.ConvertToUTF8(rs.getString("sg_name")));
+				g.setName((rs.getString("sg_name")));
 				student.setStudent_group(g);
 				
 				//Preencher nome dos professores do aluno
@@ -167,11 +167,59 @@ public class StudentDAO {
 				ResultSet subRS = subSTMT.executeQuery();
 				String teachers = "";
 				while (subRS.next()) {
-					teachers += EncodingUtil.ConvertToUTF8(subRS.getString("teacher_name"));//TODO encoding
+					teachers += (subRS.getString("teacher_name"));
 					teachers += " ";
 				}
 				student.setTeachers(teachers.trim());
 				//end
+				
+				students.add (student);
+			}
+			
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return students;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Student> fetchByTeacher(Teacher teacher) {
+		try {
+			List<Student> students = new ArrayList<Student>();
+			
+			String sql = "select s.*, sg.name as sg_name from student s"
+					+ " left join student_group sg"
+					+ " on sg.student_group_id = s.student_group_id"
+					+ " inner join student_group_teacher sgt"
+					+ " on s.student_group_id = sgt.student_group_id"
+					+ " where sgt.teacher_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, teacher.getId());
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Student student = new Student ();
+				student.setId(rs.getInt("student_id"));
+				student.setName((rs.getString("name")));
+				student.setLast_name((rs.getString("last_name")));
+				student.setGender(rs.getString("gender"));
+				java.util.Date birthDate = new java.util.Date (rs.getDate("birth_date").getTime());
+				student.setBirth_date(birthDate);
+				student.setDiagnosis_level(rs.getString("diagnosis_level"));
+				student.setCoins(rs.getInt("coins"));
+				student.setBuildings_count(rs.getInt("buildings_count"));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				student.setSchool(s);
+				
+				StudentGroup g = new StudentGroup ();
+				g.setId(rs.getInt("student_group_id"));
+				g.setName((rs.getString("sg_name")));
+				student.setStudent_group(g);
 				
 				students.add (student);
 			}

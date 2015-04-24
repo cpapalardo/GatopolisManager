@@ -11,6 +11,7 @@
 
 <h:body>
 	<h:form id="teacher">
+		<!-- Campos para edição do Professor -->
 		<p:panel>
 			<h3>
 				<p:outputLabel value="Professor" />
@@ -56,9 +57,48 @@
 				immediate="true" style="margin-left:10px; margin-top:10px" />
 
 		</p:panel>
-		
 	</h:form>
-
+		
+	<br/>
+	<br/>
+	<br/>
+		
+	<h:form id="students">
+		<!-- Lista de Alunos do Professor -->
+		<p:panel>
+			<h3>
+				<p:outputLabel value="Alunos do Professor" />
+			</h3>
+			
+			<p:dataTable var="student" value="#{teacherManageBean.students}">
+				<p:column headerText="Nome">
+					<h:outputText value="#{student.name}" />
+				</p:column>
+	
+				<p:column headerText="Sobrenome">
+					<h:outputText value="#{student.last_name}" />
+				</p:column>
+	
+				<p:column headerText="Sexo">
+					<h:outputText value="#{student.gender}" />
+				</p:column>
+	
+				<p:column headerText="Data Nasc">
+					<h:outputText value="#{student.birth_date}">
+						<f:convertDateTime pattern="dd/MM/yyyy"/>  
+					</h:outputText>  
+				</p:column>
+	
+				<p:column headerText="Turma">
+					<h:outputText value="#{student.student_group.name}" />
+				</p:column>
+			</p:dataTable>
+			
+			<p:commandButton value="Novo Aluno" type="submit" action="#{teacherManageBean.novoAluno}" style="margin-top:10px"/>
+			
+		</p:panel>
+	</h:form>
+	
 </h:body>
 
 </html>

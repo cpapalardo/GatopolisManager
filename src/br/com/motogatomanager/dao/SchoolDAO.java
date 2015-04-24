@@ -11,7 +11,6 @@ import java.util.Random;
 
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
-import br.com.motogatomanager.util.EncodingUtil;
 
 public class SchoolDAO {
 
@@ -56,7 +55,7 @@ public class SchoolDAO {
 			
 			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			
-			stmt.setString(1, EncodingUtil.ConvertToISO (school.getName()));//TODO encoding
+			stmt.setString(1, (school.getName()));
 			stmt.setString(2, school.getSync_code());
 
 			stmt.execute();
@@ -86,7 +85,7 @@ public class SchoolDAO {
 			while (rs.next()) {
 				School school = new School ();
 				school.setId(rs.getInt("school_id"));
-				school.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				school.setName((rs.getString("name")));
 				school.setSync_code(rs.getString("sync_code"));
 				
 				schools.add (school);
@@ -111,7 +110,7 @@ public class SchoolDAO {
 			School school = new School ();
 			while (rs.next()) {
 				school.setId(rs.getInt("school_id"));
-				school.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				school.setName((rs.getString("name")));
 				school.setSync_code(rs.getString("sync_code"));
 			}
 			rs.close();
@@ -128,13 +127,13 @@ public class SchoolDAO {
 		try {
 			String sql = "select * from school where school.name = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, EncodingUtil.ConvertToISO(name));//TODO encoding
+			stmt.setString(1, (name));
 			
 			ResultSet rs = stmt.executeQuery();
 			School school = new School ();
 			while (rs.next()) {
 				school.setId(rs.getInt("school_id"));
-				school.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
+				school.setName((rs.getString("name")));
 				school.setSync_code(rs.getString("sync_code"));
 			}
 			rs.close();

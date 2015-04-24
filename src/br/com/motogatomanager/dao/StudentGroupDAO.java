@@ -11,7 +11,7 @@ import java.util.List;
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.StudentGroup;
-import br.com.motogatomanager.util.EncodingUtil;
+import br.com.motogatomanager.modelo.Teacher;
 
 public class StudentGroupDAO {
 	private Connection connection;
@@ -28,9 +28,9 @@ public class StudentGroupDAO {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			stmt.setString(1, EncodingUtil.ConvertToISO(group.getName()));//TODO encoding
-			stmt.setString(2, EncodingUtil.ConvertToISO(group.getSeries()));//TODO encoding
-			stmt.setString(3, EncodingUtil.ConvertToISO(group.getPeriod()));//TODO encoding
+			stmt.setString(1, (group.getName()));
+			stmt.setString(2, (group.getSeries()));
+			stmt.setString(3, (group.getPeriod()));
 			stmt.setInt(4, group.getSchool().getId());
 
 			stmt.execute();
@@ -56,9 +56,9 @@ public class StudentGroupDAO {
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
-			stmt.setString(1, EncodingUtil.ConvertToISO(group.getName()));//TODO encoding
-			stmt.setString(2, EncodingUtil.ConvertToISO(group.getSeries()));//TODO encoding
-			stmt.setString(3, EncodingUtil.ConvertToISO(group.getPeriod()));//TODO encoding
+			stmt.setString(1, (group.getName()));
+			stmt.setString(2, (group.getSeries()));
+			stmt.setString(3, (group.getPeriod()));
 			stmt.setInt(4, group.getSchool().getId());
 			stmt.setInt(5, group.getId());
 
@@ -82,9 +82,9 @@ public class StudentGroupDAO {
 			while (rs.next()) {
 				StudentGroup group = new StudentGroup ();
 				group.setId(rs.getInt("student_group_id"));
-				group.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				group.setSeries(EncodingUtil.ConvertToUTF8(rs.getString("series")));//TODO encoding
-				group.setPeriod(EncodingUtil.ConvertToUTF8(rs.getString("period")));//TODO encoding
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
@@ -106,7 +106,10 @@ public class StudentGroupDAO {
 		try {
 			List<StudentGroup> groups = new ArrayList<StudentGroup>();
 			
-			String sql = "select * from student_group where student_group.school_id = ?";
+			String sql = "select sg.*, "
+					+ " (select count(*) from student st where st.student_group_id = sg.student_group_id) as alunos "
+					+ " from student_group sg "
+					+ " where sg.school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, school.getId());
 			
@@ -114,13 +117,32 @@ public class StudentGroupDAO {
 			while (rs.next()) {
 				StudentGroup group = new StudentGroup ();
 				group.setId(rs.getInt("student_group_id"));
-				group.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				group.setSeries(EncodingUtil.ConvertToUTF8(rs.getString("series")));//TODO encoding
-				group.setPeriod(EncodingUtil.ConvertToUTF8(rs.getString("period")));//TODO encoding
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
 				group.setSchool(s);
+				
+				group.setQtdeAlunos(rs.getInt("alunos"));  
+				
+				//Inner join professores das turmas
+				String subSQL = "select t.name as teacher_name"
+						+ " from teacher t"
+						+ " inner join student_group_teacher sgt"
+						+ " on sgt.teacher_id = t.teacher_id"
+						+ " where sgt.student_group_id = ?";
+				PreparedStatement subSTMT = this.connection.prepareStatement(subSQL);
+				subSTMT.setInt(1, group.getId());
+				ResultSet subRS = subSTMT.executeQuery();
+				String teachers = "";
+				while (subRS.next()) {
+					teachers += (subRS.getString("teacher_name"));
+					teachers += " ";
+				}
+				group.setProfessores(teachers.trim());
+				//end
 				
 				groups.add (group);
 			}
@@ -141,15 +163,15 @@ public class StudentGroupDAO {
 			String sql = "select * from student_group where student_group.school_id = ? and student_group.period = ? and student_group.series = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, school.getId());
-			stmt.setString(2, EncodingUtil.ConvertToISO(period));//TODO encoding
-			stmt.setString(3, EncodingUtil.ConvertToISO(series));//TODO encoding
+			stmt.setString(2, (period));
+			stmt.setString(3, (series));
 			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				group.setId(rs.getInt("student_group_id"));
-				group.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				group.setSeries(EncodingUtil.ConvertToUTF8(rs.getString("series")));//TODO encoding
-				group.setPeriod(EncodingUtil.ConvertToUTF8(rs.getString("period")));//TODO encoding
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
@@ -175,9 +197,9 @@ public class StudentGroupDAO {
 			StudentGroup group = new StudentGroup ();
 			while (rs.next()) {
 				group.setId(rs.getInt("student_group_id"));
-				group.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				group.setSeries(EncodingUtil.ConvertToUTF8(rs.getString("series")));//TODO encoding
-				group.setPeriod(EncodingUtil.ConvertToUTF8(rs.getString("period")));//TODO encoding
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
 				
 				School s = new School ();
 				s.setId(rs.getInt("school_id"));
@@ -197,23 +219,58 @@ public class StudentGroupDAO {
 		try {
 			String sql = "select * from student_group where student_group.name = ? and student_group.series = ? and school_id = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
-			stmt.setString(1, EncodingUtil.ConvertToISO(name));//TODO encoding
-			stmt.setString(2, EncodingUtil.ConvertToISO(serie));//TODO encoding
+			stmt.setString(1, (name));
+			stmt.setString(2, (serie));
 			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
 			StudentGroup group = new StudentGroup ();
 			while (rs.next()) {
 				group.setId(rs.getInt("student_group_id"));
-				group.setName(EncodingUtil.ConvertToUTF8(rs.getString("name")));//TODO encoding
-				group.setSeries(EncodingUtil.ConvertToUTF8(rs.getString("series")));//TODO encoding
-				group.setPeriod(EncodingUtil.ConvertToUTF8(rs.getString("period")));//TODO encoding
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
 			}
 			rs.close();
 			stmt.close();
 			connection.close();
 			
 			return group;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<StudentGroup> fetchByTeacher(Teacher teacher) {
+		try {
+			List<StudentGroup> groups = new ArrayList<StudentGroup>();
+			
+			String sql = "select sg.* from student_group sg"
+					+ " inner join student_group_teacher sgt"
+					+ " on sgt.student_group_id = sg.student_group_id"
+					+ " where sgt.teacher_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, teacher.getId());
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				StudentGroup group = new StudentGroup ();
+				group.setId(rs.getInt("student_group_id"));
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				group.setSchool(s);
+				
+				groups.add (group);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return groups;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

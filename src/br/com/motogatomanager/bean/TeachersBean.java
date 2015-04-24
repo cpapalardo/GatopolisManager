@@ -2,6 +2,7 @@ package br.com.motogatomanager.bean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -12,31 +13,33 @@ import br.com.motogatomanager.modelo.School;
 import br.com.motogatomanager.modelo.Teacher;
 
 @ManagedBean
-public class TeacherBean {
+public class TeachersBean {
 	private School school;
 	private Teacher teacher;
 	private List<Teacher> teachers = new ArrayList<Teacher>();
 	
+	private Map<String, Object> sessionMap;
 	
 	@PostConstruct
 	public void init () {
-		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", null);
+		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		school = (School) sessionMap.get("school");
+		sessionMap.remove ("teacher");
 		teachers = new TeacherDAO ().fetchBySchool(school);
 	}
 	
 	public String create () {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", new Teacher ());
+		sessionMap.put ("teacher", new Teacher ());
 		return "teacherManage";
 	}
 
 	public String edit (Teacher teacher) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", teacher);
+		sessionMap.put ("teacher", teacher);
 		return "teacherManage";
 	}
 	
 	public String addStudents (Teacher teacher) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put ("teacher", teacher);
+		sessionMap.put ("teacher", teacher);
 		return "import";
 	}
 	
@@ -54,9 +57,7 @@ public class TeacherBean {
 	}
 	
 	
-	
-	
-	
+	//Getters and Setters
 
 	public List<Teacher> getTeachers() {
 		return teachers;
@@ -73,7 +74,5 @@ public class TeacherBean {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-
-
 
 }
