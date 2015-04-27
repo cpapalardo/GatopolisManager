@@ -13,21 +13,31 @@
 	<h:form id="group">
 		<p:panel>
 			<h3>
-				<p:outputLabel value="Editar Turma" />
+				<p:outputLabel value="Turma" />
 			</h3>
 			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
 				
 				<p:outputLabel for="name" value="Nome" />
-				<p:inputText id="name" size="15" maxlength="10" />
+				<p:inputText id="name" size="25" maxlength="75" value="#{groupManageBean.group.name}" />
 				<p:message for="name" display="tooltip" />
 				
 				<p:outputLabel for="serie" value="Serie" />
-				<p:inputText id="serie" size="15" maxlength="10" />
+				<p:inputText id="serie" size="25" maxlength="75" value="#{groupManageBean.group.series}" />
 				<p:message for="serie" display="tooltip" />
 				
 				<p:outputLabel for="period" value="Periodo" />
-				<p:inputText id="period" size="15" maxlength="10" />
-				<p:message for="period" display="tooltip" />
+				<p:selectOneRadio id="period" value="#{groupManageBean.group.period}">
+		            <f:selectItem itemLabel="Manhã" itemValue="MANHÃ" />
+		            <f:selectItem itemLabel="Tarde" itemValue="TARDE" />
+		        </p:selectOneRadio>
+				<p:outputLabel value="" />
+				
+				<p:outputLabel for="teacher" value="Professor" />
+				<p:selectOneMenu id="teacher" value="#{groupManageBean.teacherId}">
+					<f:selectItem itemLabel="" />
+					<f:selectItems value="#{groupManageBean.teacherItens}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="" />
 				
 			</h:panelGrid>
 	
