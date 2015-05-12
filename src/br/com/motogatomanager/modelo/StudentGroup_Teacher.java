@@ -2,15 +2,15 @@ package br.com.motogatomanager.modelo;
 
 public class StudentGroup_Teacher extends Generic {
 	private School school;
-	private StudentGroup student_group_id;
-	private Teacher teacher_id;
+	private StudentGroup studentGroup;
+	private Teacher teacher;
 	
 	public StudentGroup_Teacher() {}
 	
-	public StudentGroup_Teacher(School school, StudentGroup student_group_id, Teacher teacher_id) {
+	public StudentGroup_Teacher(School school, StudentGroup studentGroup, Teacher teacher) {
 		this.school = school;
-		this.student_group_id = student_group_id;
-		this.teacher_id = teacher_id;
+		this.studentGroup = studentGroup;
+		this.teacher = teacher;
 	}
 
 	public School getSchool() {
@@ -21,26 +21,26 @@ public class StudentGroup_Teacher extends Generic {
 		this.school = school;
 	}
 
-	public StudentGroup getStudent_group_id() {
-		return student_group_id;
+	public StudentGroup getStudentGroup() {
+		return studentGroup;
 	}
 
-	public void setStudent_group_id(StudentGroup student_group_id) {
-		this.student_group_id = student_group_id;
+	public void setStudentGroup(StudentGroup studentGroup) {
+		this.studentGroup = studentGroup;
 	}
 
-	public Teacher getTeacher_id() {
-		return teacher_id;
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public void setTeacher_id(Teacher teacher_id) {
-		this.teacher_id = teacher_id;
+	public void setTeacher_id(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	@Override
 	public String toString() {
 		return super.toString() + "StudentGroup_Teacher [school=" + school + ", student_group_id="
-				+ student_group_id + ", teacher_id=" + teacher_id + "]";
+				+ studentGroup + ", teacher_id=" + teacher + "]";
 	}
 
 	

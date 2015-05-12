@@ -1,5 +1,7 @@
 package br.com.motogatomanager.modelo;
 
+import java.util.List;
+
 public class Teacher extends Generic {
 	private String name;
 	private String last_name;
@@ -9,6 +11,9 @@ public class Teacher extends Generic {
 	private String answer;
 	private School school;
 	private String picture;
+	
+	//Not in database
+	private List<StudentGroup> teacherGroups;
 	
 	public Teacher () {}
 	
@@ -88,6 +93,14 @@ public class Teacher extends Generic {
 		this.picture = picture;
 	}
 
+	public List<StudentGroup> getTeacherGroups() {
+		return teacherGroups;
+	}
+
+	public void setTeacherGroups(List<StudentGroup> teacherGroups) {
+		this.teacherGroups = teacherGroups;
+	}
+
 	@Override
 	public String toString() {
 		return super.toString() + "Teacher [name=" + name + ", last_name=" + last_name
@@ -95,6 +108,4 @@ public class Teacher extends Generic {
 				+ question + ", answer=" + answer + ", school=" + school
 				+ ", picture=" + picture + "]";
 	}
-
-	
 }

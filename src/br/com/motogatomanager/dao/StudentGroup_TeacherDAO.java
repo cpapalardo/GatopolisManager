@@ -29,8 +29,8 @@ public class StudentGroup_TeacherDAO {
 			PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			stmt.setInt(1, sg_t.getSchool().getId());
-			stmt.setInt(2, sg_t.getStudent_group_id().getId());
-			stmt.setInt(3, sg_t.getTeacher_id().getId());
+			stmt.setInt(2, sg_t.getStudentGroup().getId());
+			stmt.setInt(3, sg_t.getTeacher().getId());
 
 			stmt.execute();
 			
@@ -40,6 +40,23 @@ public class StudentGroup_TeacherDAO {
 			}
 			rs.close();
 			
+			stmt.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public void Delete (StudentGroup_Teacher sg_t) {
+		try {
+			String sql = "delete student_group_teacher"
+					+ " where student_group_teacher_id = ?";
+			
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setInt(1, sg_t.getId());
+
+			stmt.execute();
 			stmt.close();
 			connection.close();
 			
@@ -66,7 +83,7 @@ public class StudentGroup_TeacherDAO {
 				
 				StudentGroup sg = new StudentGroup ();
 				sg.setId(rs.getInt("student_group_id"));
-				sg_t.setStudent_group_id(sg);
+				sg_t.setStudentGroup(sg);
 				
 				Teacher t = new Teacher ();
 				t.setId(rs.getInt("teacher_id"));
@@ -103,7 +120,7 @@ public class StudentGroup_TeacherDAO {
 				
 				StudentGroup sg = new StudentGroup ();
 				sg.setId(rs.getInt("student_group_id"));
-				sg_t.setStudent_group_id(sg);
+				sg_t.setStudentGroup(sg);
 				
 				Teacher t = new Teacher ();
 				t.setId(rs.getInt("teacher_id"));
@@ -130,8 +147,9 @@ public class StudentGroup_TeacherDAO {
 			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
-			StudentGroup_Teacher sg_t = new StudentGroup_Teacher ();
+			StudentGroup_Teacher sg_t = null;
 			while (rs.next()) {
+				sg_t = new StudentGroup_Teacher ();
 				sg_t.setId(rs.getInt("student_group_teacher_id"));
 				
 				School s = new School ();
@@ -140,7 +158,7 @@ public class StudentGroup_TeacherDAO {
 				
 				StudentGroup sg = new StudentGroup ();
 				sg.setId(rs.getInt("student_group_id"));
-				sg_t.setStudent_group_id(sg);
+				sg_t.setStudentGroup(sg);
 				
 				Teacher t = new Teacher ();
 				t.setId(rs.getInt("teacher_id"));
@@ -151,6 +169,42 @@ public class StudentGroup_TeacherDAO {
 			connection.close();
 			
 			return sg_t;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public List<StudentGroup_Teacher> fetchByTeacher (Teacher teacher) {
+		try {
+			String sql = "select * from student_group_teacher sg_t where sg_t.teacher_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, teacher.getId());
+			
+			ResultSet rs = stmt.executeQuery();
+			List<StudentGroup_Teacher> sg_tList = new ArrayList<StudentGroup_Teacher> ();
+			while (rs.next()) {
+				StudentGroup_Teacher sg_t = new StudentGroup_Teacher ();
+				sg_t.setId(rs.getInt("student_group_teacher_id"));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				sg_t.setSchool(s);
+				
+				StudentGroup sg = new StudentGroup ();
+				sg.setId(rs.getInt("student_group_id"));
+				sg_t.setStudentGroup(sg);
+				
+				Teacher t = new Teacher ();
+				t.setId(rs.getInt("teacher_id"));
+				sg_t.setTeacher_id(t);
+				
+				sg_tList.add(sg_t);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+			
+			return sg_tList;
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

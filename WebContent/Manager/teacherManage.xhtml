@@ -7,35 +7,61 @@
 
 <h:head>
 	<title>Adicionar Professor</title>
+	
+	<script type="text/javascript">	
+        //<![CDATA[
+        function validateAlphabet (e) {
+        	var event = e || window.event;
+        	var key = event.keyCode || event.which;
+        	key = String.fromCharCode (key);
+        	
+        	var regex = /[A-Za-z]/;
+        	return regex.test(key);
+        }
+        
+        function validateNumbers (e) {
+        	var event = e || window.event;
+        	var key = event.keyCode || event.which;
+        	key = String.fromCharCode (key);
+        	
+        	var regex = /[0-9]/;
+        	return regex.test(key);
+        }
+        //]]>
+    </script>
 </h:head>
+
 
 <h:body>
 	<h:form id="teacher">
 		<!-- Campos para edição do Professor -->
 		<p:panel>
-			<h3>
-				<p:outputLabel value="Professor" />
-			</h3>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			
+			<h3><p:outputLabel value="Professor" /></h3>
 			
 			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
 				<p:outputLabel for="name" value="Nome Completo" />
-				<p:inputText id="name" maxlength="100" size="15" required="true" value="#{teacherManageBean.completeName}"/>
+				<p:inputText id="name" maxlength="100" size="15" required="true" value="#{teacherManageBean.completeName}" 
+						onkeypress="return validateAlphabet (event)" requiredMessage="O campo nome deve ser preenchido!"/>
 				<p:message for="name" display="tooltip" />
 					
 				<p:outputLabel for="passcode" value="Senha" />
-				<p:password id="passcode" maxlength="4" size="4" required="true" value="#{teacherManageBean.teacher.passcode}" />
+				<p:password id="passcode" maxlength="4" size="4" required="true" value="#{teacherManageBean.teacher.passcode}" 
+						onkeypress="return validateNumbers (event)" requiredMessage="O campo senha deve ser preenchido!" />
 				<p:message for="passcode" display="tooltip" />
 					
 				<p:outputLabel for="confirmPassword" value="Confirma Senha" />
-				<p:password id="confirmPassword" maxlength="4" size="4" required="true" value="#{teacherManageBean.confirmPassword}" />
+				<p:password id="confirmPassword" maxlength="4" size="4" required="true" value="#{teacherManageBean.confirmPassword}" 
+						onkeypress="return validateNumbers (event)" requiredMessage="O campo confirma senha deve ser preenchido!" />
 				<p:message for="confirmPassword" display="tooltip" />
 					
 				<p:outputLabel for="email" value="E-mail" />
-				<p:inputText id="email" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.email}" />
+				<p:inputText id="email" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.email}" requiredMessage="O campo e-mail deve ser preenchido!" />
 				<p:message for="email" display="tooltip" />
 					
 				<p:outputLabel for="question" value="Pergunta Secreta" />
-				<p:selectOneMenu id="question" maxlength="15" value="#{teacherManageBean.teacher.question}">
+				<p:selectOneMenu id="question" maxlength="15" value="#{teacherManageBean.teacher.question}" required="true">
 					<f:selectItem itemLabel="Qual é o nome do seu amigo de infância favorito?" itemValue="A" />
 					<f:selectItem itemLabel="Qual o nome da escola que você estudou na 6a série?" itemValue="B" />
 					<f:selectItem itemLabel="Qual era o número do telefone de casa quando você era criança?" itemValue="C" />
@@ -47,14 +73,26 @@
 				<p:outputLabel value="" />
 					
 				<p:outputLabel for="answer" value="Resposta" />
-				<p:inputText id="answer" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.answer}" />
+				<p:inputText id="answer" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.answer}" requiredMessage="O campo resposta deve ser preenchido!" />
 				<p:message for="answer" display="tooltip" />
+				
+				<p:outputLabel for="schoolGroups" value="Turmas da Escola" />
+				<p:selectOneMenu id="schoolGroups" value="#{teacherManageBean.selectedGroup}">
+					<f:selectItems value="#{teacherManageBean.groupItens}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="" />
+				
 	    	</h:panelGrid>
+	    	
+	    	<!-- Exibe as turmas vinculadas à este professor -->
+			<p:dataTable id="teacherGroups" var="group" value="#{teacherManageBean.teacher.teacherGroups}">
+				<p:column headerText="Turmas do Professor">
+					<h:outputText value="#{group.name} #{group.series} #{group.period}" />
+				</p:column>
+			</p:dataTable>
 	
-			<p:commandButton value="Salvar" type="submit" update="grid" action="#{teacherManageBean.save}" 
-				style="margin-top:10px"/>
-			<p:commandButton value="Voltar" action="#{teacherManageBean.back}"
-				immediate="true" style="margin-left:10px; margin-top:10px" />
+			<p:commandButton value="Salvar" type="submit" update="grid" action="#{teacherManageBean.save}" style="margin-top:10px" />
+			<p:commandButton value="Voltar" action="#{teacherManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
 
 		</p:panel>
 	</h:form>
@@ -63,7 +101,7 @@
 	<br/>
 	<br/>
 		
-	<h:form id="students">
+	<h:form id="students" rendered="#{teacherManageBean.isEdited}">
 		<!-- Lista de Alunos do Professor -->
 		<p:panel>
 			<h3>
@@ -92,6 +130,7 @@
 				<p:column headerText="Turma">
 					<h:outputText value="#{student.student_group.name}" />
 				</p:column>
+				
 			</p:dataTable>
 			
 			<p:commandButton value="Novo Aluno" type="submit" action="#{teacherManageBean.novoAluno}" style="margin-top:10px"/>

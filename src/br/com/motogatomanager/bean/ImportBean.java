@@ -1,5 +1,7 @@
 package br.com.motogatomanager.bean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -12,8 +14,9 @@ import javax.faces.context.FacesContext;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
 import br.com.motogatomanager.dao.StudentDAO;
@@ -65,11 +68,10 @@ public class ImportBean {
         if (uploadedFile != null) {
         	try {
         		// Finds the workbook instance for XLSX file
-    			@SuppressWarnings("resource")
-    			XSSFWorkbook myWorkBook = new XSSFWorkbook(uploadedFile.getInputstream());
+    			Workbook myWorkBook = WorkbookFactory.create(uploadedFile.getInputstream());
     			
     			// Return first sheet from the XLSX workbook
-    			XSSFSheet mySheet = myWorkBook.getSheetAt(0);
+    			Sheet mySheet = myWorkBook.getSheetAt(0);
     			
     			// Get iterator to all the rows in current sheet
     			Iterator<Row> rowIterator = mySheet.iterator();
@@ -84,13 +86,11 @@ public class ImportBean {
     				Row row = rowIterator.next();
 					
 					String studentName = null;
-					Date birthDate = null;
+					String birthDate = null;
 					String gender = null;
 					String groupName = null;
 					String period = null;
 					String serie = null;
-					
-					boolean linhaAMais = false;
 					
 					// For each row, iterate through each columns
 					Iterator<Cell> cellIterator = row.cellIterator();
@@ -101,7 +101,11 @@ public class ImportBean {
     					if (columnIndex == 0) {
     						studentName = cell.getStringCellValue();
     					} else if (columnIndex == 1) {
-    						birthDate = cell.getDateCellValue();
+    						if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+    							birthDate = cell.getStringCellValue();
+    						} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+    							birthDate = String.valueOf((int)cell.getNumericCellValue());
+    						}
     					} else if (columnIndex == 2) {
     						gender = cell.getStringCellValue();
     					} else if (columnIndex == 3) {
@@ -111,26 +115,17 @@ public class ImportBean {
     					} else if (columnIndex == 5) {
     						serie = cell.getStringCellValue();
     					}
-    					
-    					if (columnIndex == 6) {
-    						System.out.println("Excel tem linha de mais de 6 colunas!");
-    						linhaAMais = true;
-    					}
     				}
     				
-    				if (!linhaAMais) {
-    					System.out.print(studentName + "\t");
-    					System.out.print(birthDate + "\t");
-    					System.out.print(gender + "\t");
-    					System.out.print(groupName + "\t");
-    					System.out.print(period + "\t");
-    					System.out.print(serie + "\t");
-    					System.out.println();
-    					
-    					tratarLinha(groupName, serie, period, studentName, birthDate, gender);
-    				}
-    				
-    				linhaAMais = false;
+					System.out.print(studentName + "\t");
+					System.out.print(birthDate + "\t");
+					System.out.print(gender + "\t");
+					System.out.print(groupName + "\t");
+					System.out.print(period + "\t");
+					System.out.print(serie + "\t");
+					System.out.println();
+					
+					tratarLinha(groupName, serie, period, studentName, birthDate, gender);
     			}
 				
 				FacesMessage message = new FacesMessage("Sucesso!", uploadedFile.getFileName() + " foi adicionado.");
@@ -148,15 +143,18 @@ public class ImportBean {
         }
     }
     
-    public void tratarLinha (String groupName, String serie, String period, String studentName, Date birthDate, String gender) {
+    public void tratarLinha (String groupName, String serie, String period, String studentName, String birthDate, String gender) throws ParseException{
     	
+    	if (groupName == null || serie == null || period == null || studentName == null || birthDate == null || gender == null) {
+    		return;
+    	}
     	
     	//Student Group
-		String keyGroup = groupName + "-" + serie + "-" + period;
+		String keyGroup = groupName + "-" + serie + "-" + period + "-" + school.getId();
 		
 		if (!groupSet.contains(keyGroup)) {
 			group = new StudentGroupDAO ().fetchByNameAndSerieAndSchool(groupName, serie, school);
-			if (group.getId() == 0) {
+			if (group == null) {
 				group = new StudentGroup (groupName, serie, period, school);
 				new StudentGroupDAO ().save(group);
 			}
@@ -166,11 +164,11 @@ public class ImportBean {
 		//StudentGroup_Teacher
 		String teacherId = String.valueOf (teacher.getId());
 		String groupId = String.valueOf(group.getId());
-		String keySG_T = teacherId + "-" + groupId;
+		String keySG_T = teacherId + "-" + groupId + "-" + school.getId();
 		
 		if (!sg_tSet.contains(keySG_T)) {
 			sg_t = new StudentGroup_TeacherDAO().fetchByTeacherAndGroupAndSchool(teacher, group, school);
-			if (sg_t.getId() == 0) {
+			if (sg_t == null) {
 				sg_t = new StudentGroup_Teacher(school, group, teacher);
 				new StudentGroup_TeacherDAO().save(sg_t); 
 			}
@@ -180,8 +178,19 @@ public class ImportBean {
 		//Student
 		String firstNameAluno = studentName.split(" ")[0];
 		String lastNameAluno = studentName.split(" ").length > 1 ? studentName.substring(studentName.indexOf(' ')+1) : "";
+		
+		Date date = null;
+		if (birthDate.length() == 8) {
+			date = new SimpleDateFormat("ddMMyyyy").parse(birthDate);
+		} else if (birthDate.length() == 7) {
+			date = new SimpleDateFormat("dMMyyyy").parse(birthDate);
+		} else if (birthDate.length() == 10) {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
+		} else {
+			throw new RuntimeException("Formato da celula de data incorreta!");
+		}
 			
-		Student student = new Student (firstNameAluno, lastNameAluno, gender, birthDate, "NOT_ENOUGH_INPUT", 0, 0, school, group);
+		Student student = new Student (firstNameAluno, lastNameAluno, gender, date, "NOT_ENOUGH_INPUT", 0, 0, school, group);
 		new StudentDAO ().save(student);
     }
 	

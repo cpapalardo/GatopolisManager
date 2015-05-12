@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.gatopolismanager.jdbc.ConnectionFactory;
 import br.com.motogatomanager.modelo.School;
+import br.com.motogatomanager.modelo.StudentGroup;
 import br.com.motogatomanager.modelo.Teacher;
 
 public class TeacherDAO {
@@ -134,6 +135,9 @@ public class TeacherDAO {
 				teacher.setSchool(s);
 				//teacher.setPicture(rs.getString("picture"));
 				
+				List<StudentGroup> sgList = fetchByTeacher(teacher);
+				teacher.setTeacherGroups(sgList);
+				
 				teachers.add (teacher);
 			}
 			rs.close();
@@ -146,11 +150,42 @@ public class TeacherDAO {
 		}
 	}
 	
-	public Teacher fetchByNameAndSchool (String name, String lastName, School school) {
-		
+	private List<StudentGroup> fetchByTeacher(Teacher teacher) {
 		try {
-			Teacher teacher = new Teacher();
+			List<StudentGroup> groups = new ArrayList<StudentGroup>();
 			
+			String sql = "select sg.* from student_group sg"
+					+ " inner join student_group_teacher sgt"
+					+ " on sgt.student_group_id = sg.student_group_id"
+					+ " where sgt.teacher_id = ?";
+			PreparedStatement stmt = this.connection.prepareStatement(sql);
+			stmt.setInt(1, teacher.getId());
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				StudentGroup group = new StudentGroup ();
+				group.setId(rs.getInt("student_group_id"));
+				group.setName((rs.getString("name")));
+				group.setSeries((rs.getString("series")));
+				group.setPeriod((rs.getString("period")));
+				
+				School s = new School ();
+				s.setId(rs.getInt("school_id"));
+				group.setSchool(s);
+				
+				groups.add (group);
+			}
+			rs.close();
+			stmt.close();
+			
+			return groups;
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Teacher fetchByNameAndSchool (String name, String lastName, School school) {
+		try {
 			String sql = "select * from teacher where teacher.school_id = ? and teacher.name = ? and teacher.last_name = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, school.getId());
@@ -158,8 +193,9 @@ public class TeacherDAO {
 			stmt.setString(3, (lastName));
 			
 			ResultSet rs = stmt.executeQuery();
+			Teacher teacher = null;
 			while (rs.next()) {
-				//Teacher teacher = new Teacher ();
+				teacher = new Teacher ();
 				teacher.setId(rs.getInt("teacher_id"));
 				teacher.setName((rs.getString("name")));
 				teacher.setLast_name((rs.getString("last_name")));
@@ -195,8 +231,9 @@ public class TeacherDAO {
 			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
-			Teacher teacher = new Teacher ();
+			Teacher teacher = null;
 			while (rs.next()) {
+				teacher = new Teacher ();
 				teacher.setId(rs.getInt("teacher_id"));
 				teacher.setName((rs.getString("name")));
 				teacher.setLast_name((rs.getString("last_name")));

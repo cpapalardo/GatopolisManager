@@ -33,7 +33,7 @@ public class GroupManageBean {
 		
 		group = new StudentGroup ();
 		group.setSchool(school);
-		group.setPeriod("MANHÃ");
+		group.setPeriod("M");
 		
 		teacherItens = new ArrayList<SelectItem>();
 		List<Teacher> teachers = new TeacherDAO ().fetchBySchool(school);
@@ -51,7 +51,7 @@ public class GroupManageBean {
 			
 			StudentGroup_Teacher sg_t = new StudentGroup_Teacher();
 			sg_t.setSchool(school);
-			sg_t.setStudent_group_id(group);
+			sg_t.setStudentGroup(group);
 			sg_t.setTeacher_id(teacher);
 			
 			new StudentGroup_TeacherDAO().save(sg_t);

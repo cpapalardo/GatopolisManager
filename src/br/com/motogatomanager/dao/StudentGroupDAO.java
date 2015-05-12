@@ -158,8 +158,6 @@ public class StudentGroupDAO {
 	
 	public StudentGroup fetchBySchoolAndPeriodAndSeries (School school, String period, String series) {
 		try {
-			StudentGroup group = new StudentGroup();
-			
 			String sql = "select * from student_group where student_group.school_id = ? and student_group.period = ? and student_group.series = ?";
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
 			stmt.setInt(1, school.getId());
@@ -167,7 +165,9 @@ public class StudentGroupDAO {
 			stmt.setString(3, (series));
 			
 			ResultSet rs = stmt.executeQuery();
+			StudentGroup group = null;
 			while (rs.next()) {
+				group = new StudentGroup();
 				group.setId(rs.getInt("student_group_id"));
 				group.setName((rs.getString("name")));
 				group.setSeries((rs.getString("series")));
@@ -194,8 +194,9 @@ public class StudentGroupDAO {
 			stmt.setInt(1, id);
 			
 			ResultSet rs = stmt.executeQuery();
-			StudentGroup group = new StudentGroup ();
+			StudentGroup group = null;
 			while (rs.next()) {
+				group = new StudentGroup ();
 				group.setId(rs.getInt("student_group_id"));
 				group.setName((rs.getString("name")));
 				group.setSeries((rs.getString("series")));
@@ -224,8 +225,9 @@ public class StudentGroupDAO {
 			stmt.setInt(3, school.getId());
 			
 			ResultSet rs = stmt.executeQuery();
-			StudentGroup group = new StudentGroup ();
+			StudentGroup group = null;
 			while (rs.next()) {
+				group = new StudentGroup ();
 				group.setId(rs.getInt("student_group_id"));
 				group.setName((rs.getString("name")));
 				group.setSeries((rs.getString("series")));

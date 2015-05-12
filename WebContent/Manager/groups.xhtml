@@ -20,7 +20,7 @@ xmlns:p="http://primefaces.org/ui">
 				</p:column>
 	
 				<p:column headerText="Periodo">
-					<h:outputText value="#{group.period}" />
+					<h:outputText value="#{group.period == 'M' ? 'Manhã' : (group.period == 'T' ? 'Tarde' : '')}" />
 				</p:column>
 	
 				<p:column headerText="Serie">

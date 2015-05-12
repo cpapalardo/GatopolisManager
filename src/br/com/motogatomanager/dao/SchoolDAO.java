@@ -107,8 +107,9 @@ public class SchoolDAO {
 			stmt.setString(1, syncCode);
 			
 			ResultSet rs = stmt.executeQuery();
-			School school = new School ();
+			School school = null;
 			while (rs.next()) {
+				school = new School();
 				school.setId(rs.getInt("school_id"));
 				school.setName((rs.getString("name")));
 				school.setSync_code(rs.getString("sync_code"));
@@ -130,8 +131,9 @@ public class SchoolDAO {
 			stmt.setString(1, (name));
 			
 			ResultSet rs = stmt.executeQuery();
-			School school = new School ();
+			School school = null;
 			while (rs.next()) {
+				school = new School ();
 				school.setId(rs.getInt("school_id"));
 				school.setName((rs.getString("name")));
 				school.setSync_code(rs.getString("sync_code"));

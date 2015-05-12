@@ -16,8 +16,9 @@ import javax.faces.context.FacesContext;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
 import br.com.motogatomanager.dao.SchoolDAO;
@@ -74,11 +75,10 @@ public class GeralImportBean {
     	if (uploadedFile != null) {
     		try {
     			// Finds the workbook instance for XLSX file
-    			@SuppressWarnings("resource")
-    			XSSFWorkbook myWorkBook = new XSSFWorkbook(uploadedFile.getInputstream());
+    			Workbook myWorkBook = WorkbookFactory.create(uploadedFile.getInputstream());
     			
     			// Return first sheet from the XLSX workbook
-    			XSSFSheet mySheet = myWorkBook.getSheetAt(0);
+    			Sheet mySheet = myWorkBook.getSheetAt(0);
     			
     			// Get iterator to all the rows in current sheet
     			Iterator<Row> rowIterator = mySheet.iterator();
@@ -104,8 +104,6 @@ public class GeralImportBean {
     				String birthDate = null;
     				String gender = null;
     				
-    				boolean linhaAMais = false;
-    				
     				// For each row, iterate through each columns
     				Iterator<Cell> cellIterator = row.cellIterator();
     				while (cellIterator.hasNext()) {
@@ -128,33 +126,28 @@ public class GeralImportBean {
     					} else if (columnIndex == 6) {
     						studentName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 7) {
-    						birthDate = String.valueOf((int)cell.getNumericCellValue());
+    						if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+    							birthDate = cell.getStringCellValue();
+    						} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+    							birthDate = String.valueOf((int)cell.getNumericCellValue());
+    						}
     					} else if (columnIndex == 8) {
     						gender = cell.getStringCellValue().trim();
     					}
-    					
-    					if (columnIndex == 9) {
-    						System.out.println("Excel tem linha de mais de 9 colunas!");
-    						linhaAMais = true;
-    					}
     				}
     				
-    				if (!linhaAMais) {
-    					System.out.print(schoolName + "\t");
-    					System.out.print(studentGroupName + "\t");
-    					System.out.print(serie + "\t");
-    					System.out.print(period + "\t");
-    					System.out.print(teacherName + "\t");
-    					System.out.print(teacherEmail + "\t");
-    					System.out.print(studentName + "\t");
-    					System.out.print(birthDate + "\t");
-    					System.out.print(gender + "\t");
-    					System.out.println();
-    					
-    					tratarLinha(schoolName, studentGroupName, serie, period, teacherName, teacherEmail, studentName, birthDate, gender);
-    				}
-    				
-    				linhaAMais = false;
+					System.out.print(schoolName + "\t");
+					System.out.print(studentGroupName + "\t");
+					System.out.print(serie + "\t");
+					System.out.print(period + "\t");
+					System.out.print(teacherName + "\t");
+					System.out.print(teacherEmail + "\t");
+					System.out.print(studentName + "\t");
+					System.out.print(birthDate + "\t");
+					System.out.print(gender + "\t");
+					System.out.println();
+					
+					tratarLinha(schoolName, studentGroupName, serie, period, teacherName, teacherEmail, studentName, birthDate, gender);
     			}
     			
     			FacesMessage message = new FacesMessage("Sucesso!", uploadedFile.getFileName() + " foi adicionado.");
@@ -171,14 +164,20 @@ public class GeralImportBean {
     public void tratarLinha (String schoolName, String studentGroupName, String serie, String period, String teacherName, 
 		   String teacherEmail, String studentName, String birthDate, String gender) throws ParseException {
 		
-		if (schoolName.equals(""))
+		if (schoolName == null || schoolName.equals(""))
+			return;
+		if (studentGroupName == null || serie == null || period == null)
+			return;
+		if (teacherName == null || teacherEmail == null)
+			return;
+		if (studentName == null || birthDate == null || gender == null)
 			return;
 		
 		//School
 		//String schoolName = schoolCell.getContents();
 		if (!schoolNameSet.contains(schoolName)) {
 			school = new SchoolDAO ().fetchByName(schoolName);
-			if (school.getId() == 0) {
+			if (school == null) {
 				
 				school = new School (schoolName);
 				new SchoolDAO().save(school);
@@ -198,7 +197,7 @@ public class GeralImportBean {
 		
 		if (!teacherFullNameSet.contains(teacherKey)) {
 			teacher = new TeacherDAO ().fetchByNameAndLastNameAndSchool(firstName, lastName, school);
-			if (teacher.getId() == 0) {
+			if (teacher == null) {
 				teacher = new Teacher (firstName, lastName, "1234", teacherEmail, "", "", school);
 				new TeacherDAO ().save(teacher);
 			}
@@ -210,7 +209,7 @@ public class GeralImportBean {
 		
 		if (!groupSerieSet.contains(groupKey)) {
 			group = new StudentGroupDAO ().fetchByNameAndSerieAndSchool(studentGroupName, serie, school);
-			if (group.getId() == 0) {
+			if (group == null) {
 				group = new StudentGroup (studentGroupName, serie, period, school);
 				new StudentGroupDAO ().save(group);
 			}
@@ -224,7 +223,7 @@ public class GeralImportBean {
 		
 		if (!sg_tSet.contains(sg_tKey)) {
 			sg_t = new StudentGroup_TeacherDAO().fetchByTeacherAndGroupAndSchool(teacher, group, school);
-			if (sg_t.getId() == 0) {
+			if (sg_t == null) {
 				sg_t = new StudentGroup_Teacher(school, group, teacher);
 				new StudentGroup_TeacherDAO().save(sg_t); 
 			}
@@ -240,8 +239,10 @@ public class GeralImportBean {
 			date = new SimpleDateFormat("ddMMyyyy").parse(birthDate);
 		} else if (birthDate.length() == 7) {
 			date = new SimpleDateFormat("dMMyyyy").parse(birthDate);
+		} else if (birthDate.length() == 10) {
+			date = new SimpleDateFormat("dd/MM/yyyy").parse(birthDate);
 		} else {
-			return;
+			throw new RuntimeException("Formato da celula de data incorreta!");
 		}
 			
 		Student student = new Student (firstNameAluno, lastNameAluno, gender, date, "NOT_ENOUGH_INPUT", 0, 0, school, group);

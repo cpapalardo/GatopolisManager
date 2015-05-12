@@ -29,7 +29,6 @@ public class TeachersBean {
 	}
 	
 	public String create () {
-		sessionMap.put ("teacher", new Teacher ());
 		return "teacherManage";
 	}
 

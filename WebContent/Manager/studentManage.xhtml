@@ -7,20 +7,46 @@ xmlns:p="http://primefaces.org/ui">
 
 <h:head>
   <title>Alunos</title>
+  
+  <script type="text/javascript">	
+        //<![CDATA[
+        function validateAlphabet (e) {
+        	var event = e || window.event;
+        	var key = event.keyCode || event.which;
+        	key = String.fromCharCode (key);
+        	
+        	var regex = /[A-Za-z]/;
+        	return regex.test(key);
+        }
+        
+        function validateNumbers (e) {
+        	var event = e || window.event;
+        	var key = event.keyCode || event.which;
+        	key = String.fromCharCode (key);
+        	
+        	var regex = /[0-9]/;
+        	return regex.test(key);
+        }
+        //]]>
+    </script>
 </h:head>
 
 <h:body>
 	<h:form id="student">
 		<p:panel>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			
 			<h3><p:outputLabel value="Aluno" /></h3>
 			
 			<h:panelGrid id="grid" columns="3" cellpadding="2"> 
 				<p:outputLabel for="name" value="Nome Completo" />
-				<p:inputText id="name" value="#{studentManageBean.completeName}" required="true" size="25" maxlength="100" />
+				<p:inputText id="name" value="#{studentManageBean.completeName}" required="true" size="25" maxlength="100" 
+						onkeypress="return validateAlphabet (event)" requiredMessage="O campo nome deve ser preenchido!"/>
 				<p:message for="name" display="tooltip" />
 			
 				<p:outputLabel for="birthDate" value="Data de Nascimento" />
-				<p:calendar id="birthDate" value="#{studentManageBean.student.birth_date}" required="true" pattern="dd-MM-yyyy" mask="true" size="10" />
+				<p:calendar id="birthDate" value="#{studentManageBean.student.birth_date}" required="true" pattern="dd-MM-yyyy" mask="true" size="10" 
+						requiredMessage="O campo data de nascimento deve ser preenchido!"/>
 				<p:message for="birthDate" display="tooltip" />
 			
 				<p:outputLabel for="gender" value="Sexo" />
@@ -39,7 +65,7 @@ xmlns:p="http://primefaces.org/ui">
 			
 			</h:panelGrid>
 			
-			<p:commandButton value="Salvar" type="submit" action="#{studentManageBean.save}" />
+			<p:commandButton value="Salvar" type="submit" update="grid" action="#{studentManageBean.save}" />
 			<p:commandButton value="Voltar" action="#{studentManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px"/>
 		</p:panel>
 	</h:form>

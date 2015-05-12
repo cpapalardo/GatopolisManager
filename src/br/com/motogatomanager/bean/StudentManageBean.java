@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -75,10 +76,14 @@ public class StudentManageBean {
 			new StudentDAO().update (student);
 		}
 		
-		if (sessionMap.containsKey("teacher"))
+		FacesMessage message = new FacesMessage("Aluno adicionado com sucesso!");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+		
+		if (sessionMap.containsKey("teacher")) {
 			return "teacherManage";
-		else
+		}else{
 			return "students";
+		}
 	}
 	
 	public String back () {

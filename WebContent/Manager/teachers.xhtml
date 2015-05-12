@@ -12,6 +12,8 @@ xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<h:form id="teachers">
 		<p:panel>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			
 			<h3><p:outputLabel value="Escola: #{sessionScope.schoolName}" /></h3>
 			<p:outputLabel value="Código de Sincronização: #{sessionScope.schoolSyncCode}" />
 		
@@ -28,17 +30,16 @@ xmlns:p="http://primefaces.org/ui">
 				
 				<p:column>
 					<p:commandLink id="Edit" ajax="false" action="#{teachersBean.edit(teacher)}">
-	        			<h:outputText value="Editar" />
+	        			<h:outputText value="Editar Professor" />
 	    			</p:commandLink>
 	    			
-					<p:commandButton value="Adicionar" type="submit" action="#{teachersBean.addStudents (teacher)}" style="margin-left:20px" />
+					<p:commandButton value="Adicionar Arquivo" type="submit" action="#{teachersBean.addStudents (teacher)}" style="margin-left:20px" />
 				
 				</p:column>
-				
 	
 			</p:dataTable>
 	
-			<p:commandButton value="Novo Professor" type="submit" action="#{teachersBean.create}" style="margin-top:10px"/>
+			<p:commandButton value="Cadastrar Professor" type="submit" action="#{teachersBean.create}" style="margin-top:10px"/>
 			<p:commandButton value="Alunos" type="submit" action="#{teachersBean.students}" style="margin-top:10px"/>
 			<p:commandButton value="Turmas" type="submit" action="#{teachersBean.groups}" style="margin-top:10px"/>
 			<p:commandButton value="Voltar" action="#{teachersBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />

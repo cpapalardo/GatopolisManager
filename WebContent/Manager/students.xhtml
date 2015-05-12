@@ -12,9 +12,9 @@
 <h:body>
 	<h:form id="students">
 		<p:panel>
-			<h3>
-				<p:outputLabel value="Alunos" />
-			</h3>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+		
+			<h3><p:outputLabel value="Alunos" /></h3>
 	
 			<p:dataTable var="student" value="#{studentsBean.students}">
 				<p:column headerText="Nome">
