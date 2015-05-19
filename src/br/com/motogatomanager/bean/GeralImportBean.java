@@ -1,5 +1,10 @@
 package br.com.motogatomanager.bean;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -94,6 +99,7 @@ public class GeralImportBean {
     				//Pula o header
     				Row row = rowIterator.next();
     				
+    				int inep_code = 0;
     				String schoolName = null;
     				String studentGroupName = null;
     				String serie = null;
@@ -112,7 +118,23 @@ public class GeralImportBean {
     					int columnIndex = cell.getColumnIndex();
     					
     					if (columnIndex == 0) {
-    						schoolName = cell.getStringCellValue().trim();
+    						if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+    							inep_code = (int) cell.getNumericCellValue();
+    					 	}else if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
+    					 		try{
+    					 			inep_code = Integer.parseInt(cell.getStringCellValue());
+    					 		}catch(NumberFormatException nfe){
+    					 			System.out.println("Não foi preenchido o código INEP da escola!");
+    					 		}
+    						}
+    						
+    						try {
+    							schoolName = getSchoolNameByInep(inep_code);
+							} catch (Exception e) {
+								return;
+							}
+    						
+    						//schoolName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 1) {
     						studentGroupName = cell.getStringCellValue().trim();
     					} else if (columnIndex == 2) {
@@ -248,7 +270,47 @@ public class GeralImportBean {
 		Student student = new Student (firstNameAluno, lastNameAluno, gender, date, "NOT_ENOUGH_INPUT", 0, 0, school, group);
 		new StudentDAO ().save(student);
     }
-
+    
+	private String getSchoolNameByInep (int inep) throws Exception {
+    	String url = "http://www.fnde.gov.br/pddeinfo/index.php/pddeinfo/escola/consultar";
+   	 
+		URL obj = new URL(url);
+		URLConnection con = obj.openConnection();
+		
+		con.setDoOutput(true);
+		con.setDoInput(true);
+		
+		OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+		wr.write("codescola=" + inep);
+		wr.flush();
+		
+ 
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+ 
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+ 
+		//print result
+		//System.out.println(response.toString());
+		
+		String result = null;
+		try{
+			result = response.toString().split("<th>Nome Escola:</th><td colspan=5>")[1].split("</td></tr><tr><th>UF:</th>")[0];
+			System.out.println(result);
+		}catch (Exception e){
+			System.out.println("INEP inexistente");
+		}
+		
+		return result;
+    }
+    
+    
+    //Getters and Setters 
+    
 	public List<School> getSchoolsAdded() {
 		return schoolsAdded;
 	}
