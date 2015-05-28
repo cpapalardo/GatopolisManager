@@ -8,11 +8,14 @@ xmlns:p="http://primefaces.org/ui">
 <h:head>
      <link rel="shortcut icon" href="http://gatopolismanager.azurewebsites.net/GatopolisManager/favicon.ico"/>
     <title>Gatópolis</title>
+    <script src="resources/myScript.js"/>
 </h:head>
 
 <h:body>
 	<h:form id="home">
 		<p:panel>
+			<p:outputLabel value="#{homeBean.syncCode}" />
+			
             <div align="center">
             
             <p><img src="Android_4.png" width="128" height="128" /></p>
@@ -24,7 +27,7 @@ xmlns:p="http://primefaces.org/ui">
 			<br />
 			<br />
 			<p:outputLabel value="Código da Escola" />
-			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px"/>
+			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px" onkeypress="return validateNumbers (event)"/>
 			<br />
 			<br />
 			<p:commandButton type="submit" value="Acessar" action="#{homeBean.access}" />

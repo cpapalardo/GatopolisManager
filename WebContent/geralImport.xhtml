@@ -6,7 +6,7 @@ xmlns:h="http://java.sun.com/jsf/html"
 xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-  <title>Importar Geral</title>
+  <title>Importar Escolas, Professores, Turmas e Alunos</title>
 </h:head>
 
 <h:body>
@@ -34,7 +34,7 @@ xmlns:p="http://primefaces.org/ui">
 	
 			<p:dataTable var="school" value="#{geralImportBean.schoolsAdded}">
 				<p:column headerText="Nome">
-					<h:outputText value="#{school.name}" />
+					<h:outputText value="#{school.schoolData.name}" />
 				</p:column>
 				
 				<p:column headerText="Codigo">

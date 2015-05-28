@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:f="http://java.sun.com/jsf/core"
+xmlns:h="http://java.sun.com/jsf/html"
+xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+  <title>Report</title>
+</h:head>
+
+<h:body>
+	<h:form id="report">
+		<p:panel>
+			<p:outputLabel for="escola" value="Escola:" />
+			<p:selectOneMenu id="escola" value="#{reportBean.schoolId}" style="margin-left:20px; width:400px" >
+				<f:selectItem itemValue="" />
+			    <f:selectItems value="#{reportBean.schoolItens}" />
+			</p:selectOneMenu>
+			<p:commandButton value="Ver" actionListener="#{reportBean.showReport}" update="report" style="margin-left:20px"/>
+
+			<h3><p:outputLabel value="Relatório do Professor" /></h3>
+	
+			<p:dataTable id="reportTeacher" var="rti" value="#{reportBean.rtiList}">
+				<p:column headerText="Nome do Professor">
+					<h:outputText value="#{rti.teacherName}" />
+				</p:column>
+				
+				<p:column headerText="Dashboard Aberto">
+					<h:outputText value="#{rti.dashboardOpenedTotal}" />
+				</p:column>
+				
+				<p:column headerText="Tempo no Dashboard">
+					<h:outputText value="#{rti.dashboardDurationTotal}" />
+				</p:column>
+				
+				<p:column headerText="Tempo na Aba Observações">
+					<h:outputText value="#{rti.durationAbaObsTotal}" />
+				</p:column>
+				
+				<p:column headerText="Tempo na Aba Produção Escrita">
+					<h:outputText value="#{rti.durationAbaProdTotal}" />
+				</p:column>
+				
+				<p:column headerText="Tempo na Aba Frequencia">
+					<h:outputText value="#{rti.durationAbaFreqTotal}" />
+				</p:column>
+				
+				<p:column headerText="Tempo nas Transições">
+					<h:outputText value="#{rti.durationTransitionsTotal}" />
+				</p:column>
+				
+				<p:column headerText="Tempo no Agrupamento de Alunos">
+					<h:outputText value="#{rti.durationGroupingTotal}" />
+				</p:column>
+				
+			</p:dataTable>
+			
+			<h3><p:outputLabel value="Relatório do Aluno" /></h3>
+	
+			<p:dataTable id="reportStudent" var="rsi" value="#{reportBean.rsiList}">
+				<p:column headerText="Nome do Aluno">
+					<h:outputText value="#{rsi.studentName}" />
+				</p:column>
+				
+				<p:column headerText="Acessado essa Semana">
+					<h:outputText value="#{rsi.accessedThisWeek}" />
+				</p:column>
+				
+				<p:column headerText="Acessado esse Mês">
+					<h:outputText value="#{rsi.accessedThisMonth}" />
+				</p:column>
+				
+				<p:column headerText="Acessado esse Ano">
+					<h:outputText value="#{rsi.accessedThisYear}" />
+				</p:column>
+				
+				<p:column headerText="Vezes Visualizado">
+					<h:outputText value="#{rsi.viewedCount}" />
+				</p:column>
+				
+			</p:dataTable>
+			
+			<p:commandButton value="Voltar" type="submit" action="#{reportBean.back}" style="margin-top:10px; margin-left:10px" />
+			
+	    </p:panel>
+	    
+	</h:form>
+</h:body>
+
+</html>
