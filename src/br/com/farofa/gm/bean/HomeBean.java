@@ -5,37 +5,47 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
+import br.com.farofa.gm.manager.Enviroment;
 import br.com.farofa.gm.model.School;
 
 @ManagedBean
 public class HomeBean {
+	private SchoolDAO schoolDAO;
+	
+	private String enviroment;
+	
 	private String syncCode;
 	private String password;
 	private String access;
-	private String enviroment;
 	
 	@PostConstruct
 	public void init () {
+		enviroment = DataBaseManager.getEnviroment();
+		if(enviroment == Enviroment.banco_teste2.name())
+			enviroment = "Ambiente de Produção";
 		access = "farofa2015";
 	}
 	
 	public String access () {
+		schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
 		if (syncCode != null && !syncCode.equals("")) {
-			int number = Integer.parseInt(syncCode);
-			School school = new SchoolDAOImpl().findBySyncCode (number);
+			School school = schoolDAO.findBySyncCode (syncCode);
+			DataBaseManager.close();
 			
-			if (school.getSync_code() != null && school.getSync_code().equals(number)) {
+			if (school != null) {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("schoolName", school.getSchoolData().getName());  
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("schoolSyncCode", school.getSync_code());  
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("school", school);
 				return "teachers";
 			} else {
-		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Codigo de Sincronizacao nao encontrado."));
+		        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Codigo de Sincronizacao nao encontrado.", null));
 		        return "home";
 			}
 		} else {
-	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "O campo Codigo de Sincronizacao deve ser preenchido."));
+	        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "O campo Codigo de Sincronizacao deve ser preenchido.", null));
 			return "home";
 		}
 	}

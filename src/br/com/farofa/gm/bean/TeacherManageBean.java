@@ -9,14 +9,20 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.StudentDAOImpl;
+import br.com.farofa.gm.dao.TeacherDAO;
 import br.com.farofa.gm.dao.TeacherDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
 
 @ManagedBean
 public class TeacherManageBean {
+	private TeacherDAO teacherDAO;
+	private StudentDAO studentDAO;
+	
 	private School school;
 	private Teacher teacher;
 	private List<Student> students;
@@ -29,12 +35,13 @@ public class TeacherManageBean {
 	
 	@PostConstruct
 	public void init() {
+		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		
 		if (sessionMap.containsKey("teacher")) {
 			teacher = (Teacher) sessionMap.get("teacher");
-			students = new StudentDAOImpl ().findByTeacher (teacher);
+			students = studentDAO.findByTeacher (teacher);
 			isEdited = true;
 		} else {
 			teacher = new Teacher ();
@@ -43,6 +50,8 @@ public class TeacherManageBean {
 	}
 
 	public String save() {
+		teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+		
 		//Valida email
 		String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(emailPattern);
@@ -56,14 +65,15 @@ public class TeacherManageBean {
 		teacher.setSchool(school);
 
 		if (teacher.getId() == null) {
-			new TeacherDAOImpl ().save(teacher);
+			teacherDAO.save(teacher);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Professor adicionado com sucesso!"));
 		} else {
-			new TeacherDAOImpl ().update (teacher);
+			teacherDAO.update (teacher);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Professor alterado com sucesso!"));
 		}
 		
 		sessionMap.remove("teacher");
+		DataBaseManager.close();
 		return "teachers";
 	}
 

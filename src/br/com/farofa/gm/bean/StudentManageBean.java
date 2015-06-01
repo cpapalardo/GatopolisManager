@@ -10,14 +10,20 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
+import br.com.farofa.gm.dao.GroupDAO;
 import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.StudentDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.Group;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 
 @ManagedBean
 public class StudentManageBean {
+	private GroupDAO groupDAO;
+	private StudentDAO studentDAO;
+	
 	private School school;
 	private Student student;
 	private List<SelectItem> studentGroupItens;
@@ -39,24 +45,32 @@ public class StudentManageBean {
 		}
 		
 		//Load groups
-		List<Group> groups = new GroupDAOImpl ().findByInep (school.getSchoolData().getInep());
+		groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
+		List<Group> groups = groupDAO.findByInep (school.getSchoolData().getInep());
 		studentGroupItens = new ArrayList <SelectItem> ();
 		for (Group group : groups) {
-			studentGroupItens.add(new SelectItem(group.getId(), group.getName() + " " + group.getSerie() + " " + group.getPeriod()));			
+			String periodo = "Manhã";
+			if (group.getPeriod() == 'T')
+				periodo = "Tarde";
+			else if (group.getPeriod() == 'I')
+				periodo = "Integral";
+			studentGroupItens.add(new SelectItem(group.getId(), group.getName() + " " + group.getSerie() + " " + periodo));			
 		}
+		DataBaseManager.close();
 	}
 	
 	public String save () {
+		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		if (student.getId() == null) {
 			student.setDiagnosis_level("NOT_ENOUGH_INPUT");
-			new StudentDAOImpl().save(student);
+			studentDAO.save(student);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno adicionado com sucesso!"));
 		} else {
-			new StudentDAOImpl().update (student);
+			studentDAO.update (student);
 			sessionMap.remove("student");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno alterado com sucesso!"));
 		}
-		
+		DataBaseManager.close();
 		return "students";
 	}
 	

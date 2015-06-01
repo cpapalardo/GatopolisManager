@@ -8,13 +8,19 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.farofa.gm.dao.GroupDAO;
 import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.StudentDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 
 @ManagedBean
 public class StudentsBean {
+	private GroupDAO groupDAO;
+	private StudentDAO studentDAO;
+	
 	private School school;
 	private List<Student> students = new ArrayList<Student>();
 	
@@ -22,10 +28,12 @@ public class StudentsBean {
 	
 	@PostConstruct
 	public void init () {
+		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		
 		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
-		students = new StudentDAOImpl ().findByInep(school.getSchoolData().getInep());
+		students = studentDAO.findByInep(school.getSchoolData().getInep());
+		DataBaseManager.close();
 	}
 	
 	public String novoAluno () {
@@ -50,7 +58,11 @@ public class StudentsBean {
 	}
 	
 	public String groupName (int id) {
-		return new GroupDAOImpl ().findById(id).getName();
+		String name = null;
+		groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
+		name = groupDAO.findById(id).getName();
+		DataBaseManager.close();
+		return name;
 	}
 	
 }

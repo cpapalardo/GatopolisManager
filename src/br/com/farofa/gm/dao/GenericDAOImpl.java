@@ -24,11 +24,10 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		} catch (Exception e) {
 			e.printStackTrace();
 			manager.getTransaction().rollback();
-		} finally {
-			manager.close();
 		}
 	}
-
+	
+	@Override
 	public void update(T entity) {
 		try {
 			manager.getTransaction().begin();
@@ -37,15 +36,19 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		} catch (Exception e) {
 			e.printStackTrace();
 			manager.getTransaction().rollback();
-		} finally {
-			manager.close();
 		}
 	}
 	
 	@Override
 	public void delete(T entity) {
-		manager.remove(entity);
-		manager.close();
+		try{
+			manager.getTransaction().begin();
+			manager.remove(entity);
+			manager.getTransaction().commit();
+		}catch(Exception e){
+			e.printStackTrace();
+			manager.getTransaction().rollback();
+		}
 	}
 	
 	@Override
@@ -58,8 +61,6 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		} catch (Exception e) {
 			e.printStackTrace();
 			manager.getTransaction().rollback();
-		} finally {
-			manager.close();
 		}
 		return result;
 	}
@@ -74,18 +75,18 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		} catch (Exception e) {
 			e.printStackTrace();
 			manager.getTransaction().rollback();
-		} finally {
-			manager.close();
 		}
 		return result;
 	}
 
 	@Override
-	public List<T> findByInep(int inep) {
+	public List<T> findByInep(String inep) {
+		List<T> result = null;
+		
 		Query query = manager.createNamedQuery(getTypeClass().getSimpleName() + ".findByInepCode");
 		query.setParameter("inep", inep);
-		List<T> result = query.getResultList();
-		manager.close();
+		result = query.getResultList();
+			
 		return result;
 	}
 	

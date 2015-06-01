@@ -32,16 +32,16 @@ public class Group implements Serializable {
 	private Character period;
 	
 	@ManyToOne
-	@JoinColumn(name="teacher_id", nullable=false)
+	@JoinColumn(name="teacher_id")
 	private Teacher teacher;
 	
 	@Transient
-	private int qtdeAlunos;
+	private Integer qtdeAlunos;
 	
 	public Group(){}
 	
 	public Group(Integer id, String name, String serie, Character period,
-			Teacher teacher, int qtdeAlunos) {
+			Teacher teacher, Integer qtdeAlunos) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -91,11 +91,11 @@ public class Group implements Serializable {
 		this.teacher = teacher;
 	}
 
-	public int getQtdeAlunos() {
+	public Integer getQtdeAlunos() {
 		return qtdeAlunos;
 	}
 
-	public void setQtdeAlunos(int qtdeAlunos) {
+	public void setQtdeAlunos(Integer qtdeAlunos) {
 		this.qtdeAlunos = qtdeAlunos;
 	}
 	

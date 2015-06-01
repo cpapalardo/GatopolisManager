@@ -5,14 +5,14 @@ import javax.persistence.Query;
 
 import br.com.farofa.gm.model.School;
 
-public class SchoolDAOImpl extends GenericDAOImpl<School, Integer> implements SchoolDAO {
+public class SchoolDAOImpl extends GenericDAOImpl<School, String> implements SchoolDAO {
 
 	public SchoolDAOImpl(EntityManager manager) {
 		super(manager);
 	}
 
 	@Override
-	public School findBySyncCode(int syncCode) {
+	public School findBySyncCode(String syncCode) {
 		String jpql = "select s from School s where s.sync_code = :sync_code";
 		Query query = manager.createQuery(jpql);
 		query.setParameter("sync_code", syncCode);

@@ -9,11 +9,15 @@ import javax.faces.model.SelectItem;
 
 import br.com.farofa.gm.bean.item.ReportStudentItem;
 import br.com.farofa.gm.bean.item.ReportTeacherItem;
+import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 
 @ManagedBean
 public class ReportBean {
+	private SchoolDAO schoolDAO;
+	
 	public int schoolId;
 	private List <SelectItem> schoolItens;
 	
@@ -22,9 +26,11 @@ public class ReportBean {
 
 	@PostConstruct
 	public void init () {
+		schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
 		schoolItens = new ArrayList<SelectItem> ();
-		for (School school : new SchoolDAOImpl ().findAll())
+		for (School school : schoolDAO.findAll())
 			schoolItens.add (new SelectItem (school.getSchoolData().getInep(), school.getSchoolData().getName()));
+		DataBaseManager.close();
 	}
 	
 	public void showReport () {

@@ -17,7 +17,7 @@ public class GroupDAOImpl extends GenericDAOImpl<Group, Integer> implements Grou
 	}
 
 	@Override
-	public List<Group> findByInep(int inep) {
+	public List<Group> findByInep(String inep) {
 		Query query = manager.createNamedQuery("Group.findByInepCode");
 		query.setParameter("inep", inep);
 		List<Group> result = query.getResultList();
@@ -44,7 +44,7 @@ public class GroupDAOImpl extends GenericDAOImpl<Group, Integer> implements Grou
 	}
 	
 	@Override
-	public Group findByNameAndSerieAndPeriodAndInep(String name, String serie, Character period, Integer inep) {
+	public Group findByNameAndSerieAndPeriodAndInep(String name, String serie, Character period, String inep) {
 		String jpql = "select g from Group g where g.name = :name and g.serie = :serie and g.period = :period and g.teacher.school.schoolData.inep = :inep";
 		Query query = manager.createQuery(jpql);
 		query.setParameter("name", name);

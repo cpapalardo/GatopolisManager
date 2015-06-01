@@ -5,19 +5,20 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -25,29 +26,37 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
+import br.com.farofa.gm.dao.GroupDAO;
 import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDAOImpl;
+import br.com.farofa.gm.dao.SchoolDataDAO;
 import br.com.farofa.gm.dao.SchoolDataDAOImpl;
+import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.StudentDAOImpl;
+import br.com.farofa.gm.dao.TeacherDAO;
 import br.com.farofa.gm.dao.TeacherDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
+import br.com.farofa.gm.manager.Enviroment;
 import br.com.farofa.gm.model.Group;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.SchoolData;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
+import br.com.farofa.gm.util.DateConverterUtil;
+import br.com.farofa.gm.util.SyncCodeGeneratorUtil;
 
 @ManagedBean
 public class GeralImportBean {
+	private SchoolDataDAO schoolDataDAO;
+	private SchoolDAO schoolDAO;
+	private TeacherDAO teacherDAO;
+	private GroupDAO groupDAO;
+	private StudentDAO studentDAO;
 	
 	private boolean rendered;
 	private List<School> schoolsAdded;
 	private UploadedFile uploadedFile;
-	
-	//Usado para tratar linhas do excel
-	private HashMap<String, SchoolData> schoolDataMap;
-	private HashMap<String, School> schoolMap;
-	private HashMap<String, Teacher> teacherMap;
-	private HashMap<String, Group> groupMap;
 	
 	@PostConstruct
 	public void init () {
@@ -72,33 +81,34 @@ public class GeralImportBean {
     }
     
     public void upload () {
+    	schoolDataDAO = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
+    	schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
+    	teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+    	groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
+    	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
+    	
     	if (uploadedFile != null) {
     		try {
-    			ListaAlunosExcelItem item = getListAlunosExcelItem(uploadedFile);
-    			
-    			if(item != null) {
-    				
-    				schoolDataMap = new HashMap<String, SchoolData>();
-    				schoolMap = new HashMap<String, School>();
-    				teacherMap = new HashMap<String, Teacher>();
-    				groupMap = new HashMap<String, Group>();
-    				
-    				listaAlunosTratarLinha(item);
-    			}
-    			
+    			proccessExcel(uploadedFile);
+    			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sucesso!", "O arquivo " + uploadedFile.getFileName() + " foi adicionado com sucesso."));
     		}catch(Exception e){
     			e.printStackTrace();
-    			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", e.toString()));
+    			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Erro no envio do Excel!"));
     		}
-    		
-			
-			
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sucesso!", uploadedFile.getFileName() + " foi adicionado."));
-    	}
+    	}else{
+        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Não foi possível concluir o envio do arquivo!"));
+        }
+    	
+    	DataBaseManager.close();
     }
     
-    private ListaAlunosExcelItem getListAlunosExcelItem(UploadedFile uploadedFile) throws Exception{
-		ListaAlunosExcelItem item = null;
+    private void proccessExcel(UploadedFile uploadedFile) throws Exception{
+    	//Declaration of lines as objects
+    	Map<String, SchoolData> schoolDataMap = new HashMap<String, SchoolData>();
+    	Map<String, School> schoolMap = new HashMap<String, School>();
+    	Map<String, Teacher> teacherMap = new HashMap<String, Teacher>();
+    	Map<String, Group> groupMap = new HashMap<String, Group>();
+    	List<Student> studentList = new ArrayList<Student>();
 		
 		// Finds the workbook instance for XLSX file
 		Workbook myWorkBook = WorkbookFactory.create(uploadedFile.getInputstream());
@@ -116,7 +126,7 @@ public class GeralImportBean {
 			Row row = rowIterator.next();
 			
 			//Declaração dos campos do excel
-			int codigoInepDaEscola = 0;
+			String codigoInepDaEscola = null;
 			String nomeDaTurma = null;
 			String serie = null;
 			String periodo = null;
@@ -138,19 +148,21 @@ public class GeralImportBean {
 				//Código inep da escola
 				if (columnIndex == 0) {
 					if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-						codigoInepDaEscola = (int) cell.getNumericCellValue();
+						codigoInepDaEscola = String.valueOf((int)cell.getNumericCellValue());
 				 	}else if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
-				 		try{
-				 			codigoInepDaEscola = Integer.parseInt(cell.getStringCellValue());
-				 		}catch(NumberFormatException nfe){
-				 			System.out.println("Não foi preenchido o código INEP da escola!");
-				 		}
+			 			codigoInepDaEscola = cell.getStringCellValue();
 					}
 					
-					try {
-						nomeDaEscola = getSchoolNameByInep(codigoInepDaEscola);
-					} catch (Exception e) {
-						continue;
+					//Verifica se é base teste ou produção
+					if(DataBaseManager.getEnviroment() == Enviroment.banco_teste2.name()){
+						try {
+							nomeDaEscola = getSchoolNameByInep(codigoInepDaEscola);
+						} catch (Exception e) {
+							e.printStackTrace();
+							continue;
+						}
+					}else{
+						nomeDaEscola = "Escola Teste";
 					}
 				} 
 				//Nome da turma
@@ -181,8 +193,12 @@ public class GeralImportBean {
 				else if (columnIndex == 7) {
 					if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
 						dataDeNascimento = cell.getStringCellValue();
-					} else if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-						dataDeNascimento = String.valueOf((int)cell.getNumericCellValue());
+					}else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+						if(HSSFDateUtil.isCellDateFormatted(cell)){
+							dataDeNascimento = new SimpleDateFormat("ddMMyyyy").format(cell.getDateCellValue());				
+						}else{
+							dataDeNascimento = String.valueOf((int)cell.getNumericCellValue());
+						}
 					}
 				} 
 				//Sexo
@@ -211,116 +227,113 @@ public class GeralImportBean {
 			
 			//Validate sexo
 			char sexoChar = 'M';
-			if(sexo == "Menina")
+			if(sexo.equals("Menina"))
 				sexoChar = 'F';
 			
 			//Validate data nascimento
-			Date date = null;
-			if (dataDeNascimento.length() == 8) {
-				date = new SimpleDateFormat("ddMMyyyy").parse(dataDeNascimento);
-			} else if (dataDeNascimento.length() == 7) {
-				date = new SimpleDateFormat("dMMyyyy").parse(dataDeNascimento);
-			} else if (dataDeNascimento.length() == 10) {
-				date = new SimpleDateFormat("dd/MM/yyyy").parse(dataDeNascimento);
-			} else {
-				date = new Date();
-			}
-			
-			//Criar objetos
-			SchoolData sd = new SchoolData(codigoInepDaEscola, nomeDaEscola);
-			School school = new School(sd, null, null, null);
-			Teacher teacher = new Teacher(null, professor, 1234, emailProfessor, null, null, null, school);
-			Group group = new Group(null, nomeDaTurma, serie, periodoChar, teacher, 0);
-			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, group);
+			Date date = DateConverterUtil.stringToDate(dataDeNascimento);
 			
 			//Settando Keys
-			String sdKey = sd.getInep() + "-" + sd.getName();
-			String schoolKey = String.valueOf(school.getSync_code());
-			String teacherKey = teacher.getName() + "-" + teacher.getEmail();
-			String groupKey = group.getName() + "-" + group.getSerie() + "-" + group.getPeriod();
-			String studentKey = student.getName() + "-" + student.getGender() + "-" + (new SimpleDateFormat("dd/MM/yyyy").format(student.getBirth_date()));
+			String sdKey = codigoInepDaEscola + "-" + nomeDaEscola;
+			String schoolKey = sdKey;
+			String teacherKey = professor + "-" + emailProfessor + "-" + codigoInepDaEscola;
+			String groupKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola;
 			
-			//Criar resultado de retorno
-			item = new ListaAlunosExcelItem();
-			item.setSchoolData(sd);
-			item.setSchool(school);
-			item.setTeacher(teacher);
-			item.setGroup(group);
-			item.setStudent(student);
-	    	
-	    	item.setSchoolDataKey(sdKey);
-	    	item.setSchoolKey(schoolKey);
-	    	item.setTeacherKey(teacherKey);
-	    	item.setGroupKey(groupKey);
-	    	item.setStudentKey(studentKey);
+			//Declara objetos
+			SchoolData sd = null;
+			School school = null;
+			Teacher teacher = null;
+			Group group = null;
+			
+			//SchoolDataMap
+			if(!schoolDataMap.containsKey(sdKey)){
+				sd = new SchoolData(codigoInepDaEscola, nomeDaEscola);
+				schoolDataMap.put(sdKey, sd);
+			}else{
+				sd = schoolDataMap.get(sdKey);
+			}
+			//SchoolMap
+			if(!schoolMap.containsKey(schoolKey)){
+				school = new School(sd, null, null, null);
+				schoolMap.put(schoolKey, school);
+			}else{
+				school = schoolMap.get(schoolKey);
+			}
+			//TeacherMap
+			if(!teacherMap.containsKey(teacherKey)){
+				teacher = new Teacher(null, professor, null, emailProfessor, null, null, null, school);
+				teacherMap.put(teacherKey, teacher);
+			}else{
+				teacher = teacherMap.get(teacherKey);
+			}
+			//GroupMap
+			if(!groupMap.containsKey(groupKey)){
+				group = new Group(null, nomeDaTurma, serie, periodoChar, teacher, null);
+				groupMap.put(groupKey, group);
+			}else{
+				group = groupMap.get(groupKey);
+			}
+			
+			//StudentList
+			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, null, null, null, null, null, group);
+			studentList.add(student);
 		}
 		
-		return item;
-	}
-    
-    private void listaAlunosTratarLinha (ListaAlunosExcelItem item) throws ParseException {
+		
+		//Start Updating de DataBase
+		
 		//School Data
-    	String sdKey = item.getSchoolDataKey();
-    	SchoolData sd = null;
-		if (!schoolDataMap.containsKey(sdKey)){
-			sd = new SchoolDataDAOImpl().findById(item.getSchoolData().getInep());
-			if (sd == null){
-				sd = item.getSchoolData();
-				new SchoolDataDAOImpl().save(sd);
+		for (SchoolData sd : schoolDataMap.values()){
+			SchoolData tmp = schoolDataDAO.findById(sd.getInep());
+			if (tmp != null){
+				sd.setName(tmp.getName());
+			}else{
+				schoolDataDAO.save(sd);
 			}
-		}else{
-			sd = schoolDataMap.get(sdKey);
 		}
-		schoolDataMap.put(sdKey, sd);
 		
 		//School
-		String schoolKey = item.getSchoolKey();
-		School school = null;
-		if (!schoolMap.containsKey(schoolKey)){
-			school = new SchoolDAOImpl().findByName(item.getSchool().getSchoolData().getName());
-			if (school == null) {
-				school = item.getSchool();
-				new SchoolDAOImpl().save(school);
-		    	schoolsAdded.add (school);
+		for (School school : schoolMap.values()){
+			School tmp = schoolDAO.findById(school.getSchoolData().getInep());
+			if(tmp==null){
+				school.setSync_code(SyncCodeGeneratorUtil.generate());
+				school.setPassword("12345678");
+				schoolDAO.save(school);
+				//Mostra na tela
+				schoolsAdded.add (school);
 			}
-		}else{
-			school = schoolMap.get(schoolKey);
 		}
-		schoolMap.put(schoolKey, school);
 		
 		//Teacher
-		String teacherKey = item.getTeacherKey();
-		Teacher teacher = null;
-		if (!teacherMap.containsKey(teacherKey)) {
-			teacher = new TeacherDAOImpl ().findByNameAndInep(item.getTeacher().getName(), item.getSchoolData().getInep());
-			if (teacher == null) {
-				teacher = item.getTeacher();
-				new TeacherDAOImpl().save(teacher);
+		for (Teacher teacher : teacherMap.values()){
+			Teacher tmp = teacherDAO.findByNameAndInep(teacher.getName(), teacher.getSchool().getSchoolData().getInep());
+			if(tmp != null){
+				teacher.setId(tmp.getId());
+			}else{
+				teacher.setPassword("1234");
+				teacherDAO.save(teacher);
 			}
-		}else{
-			teacher = teacherMap.get(teacherKey);
 		}
-		teacherMap.put(teacherKey, teacher);
 		
 		//Group
-		String groupKey = item.getGroupKey();
-		Group group = null;
-		if (!groupMap.containsKey(groupKey)) {
-			group = new GroupDAOImpl().findByNameAndSerieAndPeriodAndInep(item.getGroup().getName(), item.getGroup().getSerie(), 
-					item.getGroup().getPeriod(), item.getSchoolData().getInep());
-			if (group == null) {
-				group = item.getGroup();
-				new GroupDAOImpl().save(group);
+		for (Group group : groupMap.values()){
+			Group tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getPeriod(), 
+					group.getTeacher().getSchool().getSchoolData().getInep());
+			if(tmp != null){
+				group.setId(tmp.getId());
+			}else{
+				groupDAO.save(group);
 			}
 		}
-		groupMap.put(groupKey, group);
 		
 		//Student
-		Student student = item.getStudent();
-		new StudentDAOImpl().save(student);
-    }
+		for (Student student : studentList){
+			student.setDiagnosis_level("NOT_ENOUGH_INPUT");
+			studentDAO.save(student);
+		}
+	}
     
-	private String getSchoolNameByInep (int inep) throws Exception {
+	private String getSchoolNameByInep (String inep) throws Exception {
     	String url = "http://www.fnde.gov.br/pddeinfo/index.php/pddeinfo/escola/consultar";
    	 
 		URL obj = new URL(url);
@@ -354,7 +367,6 @@ public class GeralImportBean {
 		return result;
     }
     
-    
     //Getters and Setters 
     
 	public List<School> getSchoolsAdded() {
@@ -373,79 +385,4 @@ public class GeralImportBean {
 		this.rendered = rendered;
 	}
 	
-}
-
-class ListaAlunosExcelItem {
-	private String schoolDataKey;
-	private String schoolKey;
-	private String teacherKey;
-	private String groupKey;
-	private String studentKey;
-	
-	private SchoolData schoolData;
-	private School school;
-	private Teacher teacher;
-	private Group group;
-	private Student student;
-	
-	public SchoolData getSchoolData() {
-		return schoolData;
-	}
-	public void setSchoolData(SchoolData schoolData) {
-		this.schoolData = schoolData;
-	}
-	public School getSchool() {
-		return school;
-	}
-	public void setSchool(School school) {
-		this.school = school;
-	}
-	public Teacher getTeacher() {
-		return teacher;
-	}
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
-	}
-	public Group getGroup() {
-		return group;
-	}
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-	public Student getStudent() {
-		return student;
-	}
-	public void setStudent(Student student) {
-		this.student = student;
-	}
-	public String getSchoolDataKey() {
-		return schoolDataKey;
-	}
-	public void setSchoolDataKey(String sdKey) {
-		this.schoolDataKey = sdKey;
-	}
-	public String getSchoolKey() {
-		return schoolKey;
-	}
-	public void setSchoolKey(String schoolKey) {
-		this.schoolKey = schoolKey;
-	}
-	public String getTeacherKey() {
-		return teacherKey;
-	}
-	public void setTeacherKey(String teacherKey) {
-		this.teacherKey = teacherKey;
-	}
-	public String getGroupKey() {
-		return groupKey;
-	}
-	public void setGroupKey(String groupKey) {
-		this.groupKey = groupKey;
-	}
-	public String getStudentKey() {
-		return studentKey;
-	}
-	public void setStudentKey(String studentKey) {
-		this.studentKey = studentKey;
-	}
 }

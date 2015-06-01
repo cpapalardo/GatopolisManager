@@ -21,24 +21,28 @@ public class School implements Serializable {
 	@JoinColumn(name="inep")
 	private SchoolData schoolData;
 	
-	@Column(nullable=false)
-	private Integer sync_code;
+	@Column(nullable=false, length=10)
+	private String sync_code;
 	
 	@Column(nullable=false, length=8)
 	private String password;
 	
-	@Column(nullable=false, length= 255)
+	@Column(nullable=true, length= 255)
 	private String email;
 	
 	public School () {}
 	
-	public School(SchoolData schoolData, Integer sync_code, String password,
+	public School(SchoolData schoolData, String sync_code, String password,
 			String email) {
 		super();
 		this.schoolData = schoolData;
 		this.sync_code = sync_code;
 		this.password = password;
 		this.email = email;
+	}
+	
+	public School(String json){
+		this.password = json;
 	}
 
 	public SchoolData getSchoolData() {
@@ -47,10 +51,10 @@ public class School implements Serializable {
 	public void setSchoolData(SchoolData schoolData) {
 		this.schoolData = schoolData;
 	}
-	public Integer getSync_code() {
+	public String getSync_code() {
 		return sync_code;
 	}
-	public void setSync_code(Integer sync_code) {
+	public void setSync_code(String sync_code) {
 		this.sync_code = sync_code;
 	}
 	public String getPassword() {
@@ -65,5 +69,10 @@ public class School implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "School [schoolData=" + schoolData + ", sync_code=" + sync_code
+				+ ", password=" + password + ", email=" + email + "]";
+	}
 }

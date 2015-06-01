@@ -8,12 +8,16 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.farofa.gm.dao.GroupDAO;
 import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.Group;
 import br.com.farofa.gm.model.School;
 
 @ManagedBean
 public class GroupsBean {
+	private GroupDAO groupDAO;
+	
 	private School school;
 	private List<Group> groups = new ArrayList<Group>();
 	
@@ -21,9 +25,11 @@ public class GroupsBean {
 	
 	@PostConstruct
 	public void init () {
+		groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
-		groups = new GroupDAOImpl().findByInep(school.getSchoolData().getInep());
+		groups = groupDAO.findByInep(school.getSchoolData().getInep());
+		DataBaseManager.close();
 	}
 	
 	public String novaTurma () {

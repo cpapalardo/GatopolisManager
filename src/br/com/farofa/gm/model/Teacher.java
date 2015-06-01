@@ -24,10 +24,10 @@ public class Teacher implements Serializable {
 	@Column(nullable=false, length=255)
 	private String name;
 	
-	@Column(nullable=false)
-	private Integer password;
+	@Column(nullable=false, length=4)
+	private String password;
 	
-	@Column(nullable=true, length=255)
+	@Column(nullable=false, length=255)
 	private String email;
 	
 	@Column(nullable=true)
@@ -40,13 +40,13 @@ public class Teacher implements Serializable {
 	private String picture_url;
 	
 	@ManyToOne
-	@JoinColumn(name="school_id", nullable=false, referencedColumnName="inep")
+	@JoinColumn(name="inep", nullable=false, referencedColumnName="inep")
 	private School school;
 
 	public Teacher() {}
 	
 	
-	public Teacher(Integer id, String name, Integer password, String email,
+	public Teacher(Integer id, String name, String password, String email,
 			Character question, String answer, String picture_url, School school) {
 		super();
 		this.id = id;
@@ -76,11 +76,11 @@ public class Teacher implements Serializable {
 		this.name = name;
 	}
 
-	public Integer getPassword() {
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(Integer password) {
+	public void setPassword(String password) {
 		this.password = password;
 	}
 

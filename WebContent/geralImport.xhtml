@@ -25,14 +25,14 @@ xmlns:p="http://primefaces.org/ui">
 		    <h:outputLink value="ListaAlunos.xlsx">ListaAlunos.xlsx</h:outputLink>
 			<br />
 			
-			<p:commandButton value="Importar" ajax="false" actionListener="#{geralImportBean.upload}" style="margin-top:10px" />
+			<p:commandButton value="Importar" update="schoolsAdded" ajax="false" actionListener="#{geralImportBean.upload}" style="margin-top:10px" />
 			<p:commandButton value="Voltar" type="submit" action="#{geralImportBean.back}" style="margin-top:10px; margin-left:10px" />
 					
 			<br />
 			
 			<h3><p:outputLabel value="Escolas Adicionadas" /></h3>
 	
-			<p:dataTable var="school" value="#{geralImportBean.schoolsAdded}">
+			<p:dataTable id="schoolsAdded" var="school" value="#{geralImportBean.schoolsAdded}">
 				<p:column headerText="Nome">
 					<h:outputText value="#{school.schoolData.name}" />
 				</p:column>

@@ -14,6 +14,10 @@ xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<h:form id="home">
 		<p:panel>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+		
+			<p:outputLabel value="#{homeBean.enviroment}" />
+		
 			<p:outputLabel value="#{homeBean.syncCode}" />
 			
             <div align="center">
@@ -46,10 +50,6 @@ xmlns:p="http://primefaces.org/ui">
 			<p:commandButton type="submit" value="Entrar" action="#{homeBean.entering}" style="margin-left:20px"/>
 			<br />
 			<br />
-			
-			<!-- Error Messages -->
-		    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-		    
 		    </div>
 
 	    </p:panel>

@@ -8,12 +8,16 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import br.com.farofa.gm.dao.TeacherDAO;
 import br.com.farofa.gm.dao.TeacherDAOImpl;
+import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Teacher;
 
 @ManagedBean
 public class TeachersBean {
+	private TeacherDAO teacherDAO;
+	
 	private School school;
 	private Teacher teacher;
 	private List<Teacher> teachers = new ArrayList<Teacher>();
@@ -22,10 +26,12 @@ public class TeachersBean {
 	
 	@PostConstruct
 	public void init () {
+		teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		sessionMap.remove ("teacher");
-		teachers = new TeacherDAOImpl().findByInep(school.getSchoolData().getInep());
+		teachers = teacherDAO.findByInep(school.getSchoolData().getInep());
+		DataBaseManager.close();
 	}
 	
 	public String create () {

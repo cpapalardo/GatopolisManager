@@ -49,7 +49,7 @@ public class Student implements Serializable {
 	@Column(nullable=true)
 	private String picture_url;
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="class_id", nullable=false)
 	private Group group;
 	

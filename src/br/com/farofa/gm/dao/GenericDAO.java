@@ -12,7 +12,7 @@ public interface GenericDAO<T extends Serializable, PK extends Serializable> {
 	
 	public T findById(PK pk);
 	
-	public List<T> findByInep (int inep);
+	public List<T> findByInep (String inep);
 	
 	public List<T> findAll();
 }

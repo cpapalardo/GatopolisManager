@@ -8,5 +8,5 @@ import br.com.farofa.gm.model.Teacher;
 public interface GroupDAO extends GenericDAO<Group, Integer> {
 	
 	public List<Group> findByTeacher(Teacher teacher);
-	public Group findByNameAndSerieAndPeriodAndInep(String name, String serie, Character period, Integer inep);
+	public Group findByNameAndSerieAndPeriodAndInep(String name, String serie, Character period, String inep);
 }
