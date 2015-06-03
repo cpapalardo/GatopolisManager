@@ -1,7 +1,6 @@
 package br.com.farofa.gm.dao;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,9 +8,11 @@ import javax.persistence.Query;
 
 @SuppressWarnings("unchecked")
 public class GenericDAOImpl<T extends Serializable, PK extends Serializable> implements GenericDAO<T, PK> {
+	private Class<T> clazz;
 	protected EntityManager manager;
-
-	public GenericDAOImpl(EntityManager manager) {
+	
+	public GenericDAOImpl(Class<T> clazz, EntityManager manager) {
+		this.clazz = clazz;
 		this.manager = manager;
 	}
 	
@@ -56,7 +57,7 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		T result = null;
 		try {
 			manager.getTransaction().begin();
-			result = (T) manager.find(getTypeClass(), pk);
+			result = (T) manager.find(clazz, pk);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -70,7 +71,7 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		List<T> result = null;
 		try {
 			manager.getTransaction().begin();
-			result = manager.createQuery(("FROM " + getTypeClass().getName())).getResultList();
+			result = manager.createQuery(("FROM " + clazz.getName())).getResultList();
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,15 +84,11 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public List<T> findByInep(String inep) {
 		List<T> result = null;
 		
-		Query query = manager.createNamedQuery(getTypeClass().getSimpleName() + ".findByInepCode");
+		Query query = manager.createNamedQuery(clazz.getSimpleName() + ".findByInepCode");
 		query.setParameter("inep", inep);
 		result = query.getResultList();
 			
 		return result;
 	}
 	
-	private Class<T> getTypeClass() {
-		final ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();  
-		return (Class<T>) (type).getActualTypeArguments()[0];
-	}
 }

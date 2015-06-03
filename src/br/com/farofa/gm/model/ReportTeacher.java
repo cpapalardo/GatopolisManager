@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="report_teacher")
 @NamedQuery(name="ReportTeacher.findByInepCode", query="select rt from ReportTeacher rt WHERE rt.teacher.school.schoolData.inep = :inep")
-public class ReportTeacher implements Serializable {
+public class ReportTeacher extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -137,6 +137,18 @@ public class ReportTeacher implements Serializable {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+
+	@Override
+	public String toString() {
+		return "ReportTeacher [id=" + id + ", dashboard_opened="
+				+ dashboard_opened + ", dashboard_duration="
+				+ dashboard_duration + ", aba_obs_duration=" + aba_obs_duration
+				+ ", aba_prod_duration=" + aba_prod_duration
+				+ ", aba_freq_duration=" + aba_freq_duration
+				+ ", transitions_duration=" + transitions_duration
+				+ ", grouping_duration=" + grouping_duration + ", teacher="
+				+ teacher.getId() + "]";
 	}
 	
 }

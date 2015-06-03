@@ -17,7 +17,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "note")
 @NamedQuery(name="Note.findByInepCode", query="select n from Note n WHERE n.student.group.teacher.school.schoolData.inep = :inep")
-public class Note implements Serializable {
+public class Note extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -91,6 +91,13 @@ public class Note implements Serializable {
 
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
+	}
+
+	@Override
+	public String toString() {
+		return "Note [Id=" + Id + ", note=" + note + ", created_at="
+				+ created_at + ", teacher=" + teacher + ", student=" + student.getId()
+				+ "]";
 	}
 	
 }

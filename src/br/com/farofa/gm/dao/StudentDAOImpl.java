@@ -12,7 +12,7 @@ import br.com.farofa.gm.model.Teacher;
 public class StudentDAOImpl extends GenericDAOImpl<Student, Integer> implements StudentDAO {
 	
 	public StudentDAOImpl(EntityManager manager) {
-		super(manager);
+		super(Student.class, manager);
 	}
 
 	@SuppressWarnings("unchecked")

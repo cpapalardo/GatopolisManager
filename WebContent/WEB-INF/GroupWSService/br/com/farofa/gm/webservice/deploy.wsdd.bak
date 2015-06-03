@@ -1,0 +1,67 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from GroupWSService WSDL service -->
+
+  <service name="GroupWS" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
+      <parameter name="wsdlServiceElement" value="GroupWSService"/>
+      <parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+      <parameter name="wsdlServicePort" value="GroupWS"/>
+      <parameter name="className" value="br.com.farofa.gm.webservice.GroupWSSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="GroupWS"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="update" qname="operNS:update" xmlns:operNS="http://webservice.gm.farofa.com.br" soapAction="" >
+        <parameter qname="pns:json" xmlns:pns="http://webservice.gm.farofa.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="delete" qname="operNS:delete" xmlns:operNS="http://webservice.gm.farofa.com.br" soapAction="" >
+        <parameter qname="pns:json" xmlns:pns="http://webservice.gm.farofa.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="save" qname="operNS:save" xmlns:operNS="http://webservice.gm.farofa.com.br" returnQName="retNS:saveReturn" xmlns:retNS="http://webservice.gm.farofa.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:json" xmlns:pns="http://webservice.gm.farofa.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="findAll" qname="operNS:findAll" xmlns:operNS="http://webservice.gm.farofa.com.br" returnQName="retNS:findAllReturn" xmlns:retNS="http://webservice.gm.farofa.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="findById" qname="operNS:findById" xmlns:operNS="http://webservice.gm.farofa.com.br" returnQName="retNS:findByIdReturn" xmlns:retNS="http://webservice.gm.farofa.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:pk" xmlns:pns="http://webservice.gm.farofa.com.br" type="tns:anyType" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="findByInep" qname="operNS:findByInep" xmlns:operNS="http://webservice.gm.farofa.com.br" returnQName="retNS:findByInepReturn" xmlns:retNS="http://webservice.gm.farofa.com.br" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:inep" xmlns:pns="http://webservice.gm.farofa.com.br" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
+
+      <typeMapping
+        xmlns:ns="http://webservice.gm.farofa.com.br"
+        qname="ns:>findByIdResponse"
+        type="java:br.com.farofa.gm.webservice.FindByIdResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://webservice.gm.farofa.com.br"
+        qname="ns:>findByInepResponse"
+        type="java:br.com.farofa.gm.webservice.FindByInepResponse"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://webservice.gm.farofa.com.br"
+        qname="ns:>findByInep"
+        type="java:br.com.farofa.gm.webservice.FindByInep"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

@@ -8,7 +8,7 @@ import br.com.farofa.gm.model.Teacher;
 
 public class TeacherDAOImpl extends GenericDAOImpl<Teacher, Integer> implements TeacherDAO {
 	public TeacherDAOImpl(EntityManager manager) {
-		super(manager);
+		super(Teacher.class, manager);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -17,7 +19,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="student")
 @NamedQuery(name="Student.findByInepCode", query="select s from Student s WHERE s.group.teacher.school.schoolData.inep = :inep")
-public class Student implements Serializable {
+public class Student extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -149,6 +151,16 @@ public class Student implements Serializable {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	@Override
+	public String toString() {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return "Student [id=" + id + ", name=" + name + ", gender=" + gender
+				+ ", birth_date=" + df.format(birth_date) + ", diagnosis_level="
+				+ diagnosis_level + ", buildings=" + buildings + ", coins="
+				+ coins + ", app_rating=" + app_rating + ", picture_url="
+				+ picture_url + ", group=" + group.getId() + "]";
 	}
 	
 }

@@ -15,7 +15,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="class")
 @NamedQuery(name="Group.findByInepCode", query="select g from Group g WHERE g.teacher.school.schoolData.inep = :inep")
-public class Group implements Serializable {
+public class Group extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -97,6 +97,13 @@ public class Group implements Serializable {
 
 	public void setQtdeAlunos(Integer qtdeAlunos) {
 		this.qtdeAlunos = qtdeAlunos;
+	}
+
+	@Override
+	public String toString() {
+		return "Group [id=" + id + ", name=" + name + ", serie=" + serie
+				+ ", period=" + period + ", teacher=" + teacher.getId()
+				+ ", qtdeAlunos=" + qtdeAlunos + "]";
 	}
 	
 }

@@ -13,7 +13,7 @@ import br.com.farofa.gm.model.Teacher;
 public class GroupDAOImpl extends GenericDAOImpl<Group, Integer> implements GroupDAO {
 	
 	public GroupDAOImpl(EntityManager manager) {
-		super(manager);
+		super(Group.class, manager);
 	}
 
 	@Override

@@ -17,12 +17,12 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "written_word")
 @NamedQuery(name="WrittenWord.findByInepCode", query="select ww from WrittenWord ww WHERE ww.student.group.teacher.school.schoolData.inep = :inep")
-public class WrittenWord implements Serializable {
+public class WrittenWord extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue
-	private int Id;
+	private Integer id;
 	
 	@Column(nullable=false, length=45)
 	private String word;
@@ -46,10 +46,10 @@ public class WrittenWord implements Serializable {
 	
 	public WrittenWord () {}
 	
-	public WrittenWord(int id, String word, String input, String gesture,
+	public WrittenWord(Integer id, String word, String input, String gesture,
 			String diagnosis_level, Date created_at, Student student) {
 		super();
-		Id = id;
+		this.id = id;
 		this.word = word;
 		this.input = input;
 		this.gesture = gesture;
@@ -58,12 +58,12 @@ public class WrittenWord implements Serializable {
 		this.student = student;
 	}
 
-	public int getId() {
-		return Id;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setId(int id) {
-		Id = id;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getWord() {
@@ -112,6 +112,14 @@ public class WrittenWord implements Serializable {
 
 	public void setInput(String input) {
 		this.input = input;
+	}
+
+	@Override
+	public String toString() {
+		return "WrittenWord [id=" + id + ", word=" + word + ", input=" + input
+				+ ", gesture=" + gesture + ", diagnosis_level="
+				+ diagnosis_level + ", created_at=" + created_at + ", student="
+				+ student.getId() + "]";
 	}
 	
 }

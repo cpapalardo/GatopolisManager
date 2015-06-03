@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="school")
 @NamedQuery(name="School.findByInepCode", query="select s from School s WHERE s.schoolData.inep = :inep")
-public class School implements Serializable {
+public class School extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -72,7 +72,7 @@ public class School implements Serializable {
 
 	@Override
 	public String toString() {
-		return "School [schoolData=" + schoolData + ", sync_code=" + sync_code
+		return "School [schoolData=" + schoolData.getInep() + ", sync_code=" + sync_code
 				+ ", password=" + password + ", email=" + email + "]";
 	}
 }

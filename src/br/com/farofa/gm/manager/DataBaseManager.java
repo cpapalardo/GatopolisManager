@@ -18,6 +18,13 @@ public class DataBaseManager {
 		return manager;
 	}
 	
+	public static EntityManagerFactory getFactory() {
+		if(factory == null || !factory.isOpen()){
+			factory = Persistence.createEntityManagerFactory(getEnviroment());
+		}
+		return factory;
+	}
+	
 	public static void close(){
 		manager.close();
 		factory.close();

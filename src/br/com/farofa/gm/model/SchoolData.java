@@ -44,5 +44,10 @@ public class SchoolData extends JsonBehaviour implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "SchoolData [inep=" + inep + ", name=" + name + "]";
+	}
 	
 }
