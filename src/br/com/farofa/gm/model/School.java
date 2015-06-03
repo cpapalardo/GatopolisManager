@@ -40,10 +40,6 @@ public class School extends JsonBehaviour implements Serializable {
 		this.password = password;
 		this.email = email;
 	}
-	
-	public School(String json){
-		this.password = json;
-	}
 
 	public SchoolData getSchoolData() {
 		return schoolData;

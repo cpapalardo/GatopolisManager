@@ -1,5 +1,8 @@
 package br.com.farofa.gm.test;
 
+import java.util.Date;
+import java.util.Random;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -8,12 +11,14 @@ import br.com.farofa.gm.dao.GenericDAOImpl;
 import br.com.farofa.gm.dao.SchoolDataDAO;
 import br.com.farofa.gm.dao.SchoolDataDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.GameBird;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.SchoolData;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
-import br.com.farofa.gm.webservice.GroupWS;
+import br.com.farofa.gm.webservice.GameBirdWS;
+import br.com.farofa.gm.webservice.RoomWS;
 import br.com.farofa.gm.webservice.SchoolDataWS;
 import br.com.farofa.gm.webservice.SchoolWS;
 import br.com.farofa.gm.webservice.StudentWS;
@@ -21,21 +26,64 @@ import br.com.farofa.gm.webservice.TeacherWS;
 
 public class WebServiceTests {
 	public static void main(String[] args) {
-		testFindById();
+		testGameBird();
+	}
+	
+	public static void testGameBird() {
+		GameBirdWS ws = new GameBirdWS();
+		Student student = new Student();
+		student.setId(1);
+		GameBird gb = new GameBird(null, true, 100, "", "", new Date(), student);
+		String json = gb.getJson();
+		
+		String result = ws.save(json);
+		
+		int id = Integer.valueOf(result);
+		
+	}
+	
+	public static void testDelete() {
+		SchoolDataWS ws = new SchoolDataWS();
+		
+		int num = new Random().nextInt(99999999);
+		String inep = String.valueOf(num);
+		
+		SchoolData actual = new SchoolData(inep, "Escola Teste");
+		String json = actual.getJson();
+		ws.save(json);
+		
+		ws.delete(inep);
+		
+		json = ws.findById(inep);
 	}
 	
 	public static void testFindById() {
-		GenericDAO<SchoolData,String> dao = new GenericDAOImpl<SchoolData, String>(SchoolData.class, DataBaseManager.getEntityManager());
-		SchoolData sd = dao.findById("12345678");
-		System.out.println(sd);
+		SchoolDataWS ws = new SchoolDataWS();
+		
+		String json = ws.findByInep("12345678");
+		if (json == null) {
+			SchoolData sd = new SchoolData("12345678", "Escola Teste");
+			json = sd.getJson();
+			ws.save(json);
+			json = ws.findByInep("12345678");
+		}
+		
+		JSONObject jsonObj = new JSONObject(json);
+		
+		SchoolData sd = new SchoolData();
+		String s = jsonObj.get("SchoolData-0").toString();
+		sd.setJson(s);
+		
+		//assertNotNull(json);
+		//assertEquals("12345678", sd.getInep());
 	}
 	
 	public static void testGroupWeb() {
-		GroupWS ws = new GroupWS();
+		RoomWS ws = new RoomWS();
 		SchoolData sd = new SchoolData("12345678", "Escola Teste");
 		School school = new School(sd, "1234567890", "1234", "escola@email.com");
 		Teacher teacher = new Teacher(1, "Rodrigo de Sordi", "1234", "rodsordi@hotmail.com", null, null, null, school);
-		Group group = new Group(null, "Grupo Malandro", "Seria Alpha", 'M', teacher, null);
+		Room group = new Room(null, "Grupo Malandro", "Seria Alpha", 'M', teacher, null);
 		String json = group.getJson();
 		int id = Integer.valueOf(ws.save(json));
 		group.setId(id);

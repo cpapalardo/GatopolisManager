@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import br.com.farofa.gm.manager.DataBaseManager;
+
 @SuppressWarnings("unchecked")
 public class GenericDAOImpl<T extends Serializable, PK extends Serializable> implements GenericDAO<T, PK> {
 	private Class<T> clazz;
@@ -44,6 +46,8 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public void delete(T entity) {
 		try{
 			manager.getTransaction().begin();
+			Object pk = DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
+			entity = (T) manager.find(clazz, pk);
 			manager.remove(entity);
 			manager.getTransaction().commit();
 		}catch(Exception e){

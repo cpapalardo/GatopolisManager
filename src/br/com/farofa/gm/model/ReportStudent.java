@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="report_student")
-@NamedQuery(name="ReportStudent.findByInepCode", query="select rs from ReportStudent rs WHERE rs.student.group.teacher.school.schoolData.inep = :inep")
+@NamedQuery(name="ReportStudent.findByInepCode", query="select rs from ReportStudent rs WHERE rs.student.room.teacher.school.schoolData.inep = :inep")
 public class ReportStudent extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -25,7 +25,7 @@ public class ReportStudent extends JsonBehaviour implements Serializable {
 	private Integer id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable=true)
+	@Column(nullable=true, name="date_access")
 	private Date date_accessed;
 	
 	@Column(nullable=true)

@@ -26,8 +26,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
-import br.com.farofa.gm.dao.GroupDAO;
-import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.RoomDAO;
+import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDAOImpl;
 import br.com.farofa.gm.dao.SchoolDataDAO;
@@ -38,7 +38,7 @@ import br.com.farofa.gm.dao.TeacherDAO;
 import br.com.farofa.gm.dao.TeacherDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.manager.Enviroment;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.SchoolData;
 import br.com.farofa.gm.model.Student;
@@ -51,7 +51,7 @@ public class GeralImportBean {
 	private SchoolDataDAO schoolDataDAO;
 	private SchoolDAO schoolDAO;
 	private TeacherDAO teacherDAO;
-	private GroupDAO groupDAO;
+	private RoomDAO groupDAO;
 	private StudentDAO studentDAO;
 	
 	private boolean rendered;
@@ -84,7 +84,7 @@ public class GeralImportBean {
     	schoolDataDAO = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
     	schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
     	teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
-    	groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
+    	groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
     	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
     	
     	if (uploadedFile != null) {
@@ -107,7 +107,7 @@ public class GeralImportBean {
     	Map<String, SchoolData> schoolDataMap = new HashMap<String, SchoolData>();
     	Map<String, School> schoolMap = new HashMap<String, School>();
     	Map<String, Teacher> teacherMap = new HashMap<String, Teacher>();
-    	Map<String, Group> groupMap = new HashMap<String, Group>();
+    	Map<String, Room> groupMap = new HashMap<String, Room>();
     	List<Student> studentList = new ArrayList<Student>();
 		
 		// Finds the workbook instance for XLSX file
@@ -243,7 +243,7 @@ public class GeralImportBean {
 			SchoolData sd = null;
 			School school = null;
 			Teacher teacher = null;
-			Group group = null;
+			Room group = null;
 			
 			//SchoolDataMap
 			if(!schoolDataMap.containsKey(sdKey)){
@@ -268,7 +268,7 @@ public class GeralImportBean {
 			}
 			//GroupMap
 			if(!groupMap.containsKey(groupKey)){
-				group = new Group(null, nomeDaTurma, serie, periodoChar, teacher, null);
+				group = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
 				groupMap.put(groupKey, group);
 			}else{
 				group = groupMap.get(groupKey);
@@ -316,8 +316,8 @@ public class GeralImportBean {
 		}
 		
 		//Group
-		for (Group group : groupMap.values()){
-			Group tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getPeriod(), 
+		for (Room group : groupMap.values()){
+			Room tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getTerm(), 
 					group.getTeacher().getSchool().getSchoolData().getInep());
 			if(tmp != null){
 				group.setId(tmp.getId());
@@ -328,7 +328,7 @@ public class GeralImportBean {
 		
 		//Student
 		for (Student student : studentList){
-			student.setDiagnosis_level("NOT_ENOUGH_INPUT");
+			//student.setDiagnosis_level("NOT_ENOUGH_INPUT");
 			studentDAO.save(student);
 		}
 	}

@@ -10,22 +10,22 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import br.com.farofa.gm.dao.GroupDAO;
-import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.RoomDAO;
+import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.TeacherDAO;
 import br.com.farofa.gm.dao.TeacherDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Teacher;
 
 @ManagedBean
 public class GroupManageBean {
 	private TeacherDAO teacherDAO;
-	private GroupDAO groupDAO;
+	private RoomDAO groupDAO;
 	
 	private School school;
-	private Group group;
+	private Room group;
 	private List<SelectItem> teacherItens;
 	
 	private Map<String, Object> sessionMap;
@@ -45,17 +45,17 @@ public class GroupManageBean {
 		
 		//Initiate group
 		if (sessionMap.containsKey("group")) {
-			group = (Group) sessionMap.get("group");
+			group = (Room) sessionMap.get("group");
 		} else {
-			group = new Group ();
-			group.setPeriod('M');
+			group = new Room ();
+			group.setTerm('M');
 			group.setTeacher(new Teacher());
 		}
 		DataBaseManager.close();
 	}
 	
 	public String save () {
-		groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
+		groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
 		if(group.getId() == null) {
 			groupDAO.save(group);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma adicionada com sucesso!"));
@@ -75,11 +75,11 @@ public class GroupManageBean {
 
 	//Getters and Setters
 	
-	public Group getGroup() {
+	public Room getGroup() {
 		return group;
 	}
 
-	public void setGroup(Group group) {
+	public void setGroup(Room group) {
 		this.group = group;
 	}
 

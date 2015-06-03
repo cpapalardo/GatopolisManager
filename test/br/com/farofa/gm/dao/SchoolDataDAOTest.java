@@ -34,7 +34,7 @@ public class SchoolDataDAOTest extends TestCase {
 		
 		SchoolData actual = dao.findById("12345678");
 		if (actual == null) {
-			actual = new SchoolData("12345678", "Escola Teste");
+			actual = new SchoolData("12345678", "Escola Teste"); 
 			dao.save(actual);
 		}
 		if (actual.getName().equals("Escola Teste"))
@@ -89,7 +89,7 @@ public class SchoolDataDAOTest extends TestCase {
 			for (int i = 0; i < 10; i++) {
 				int num = new Random().nextInt(99999999);
 				String inep = String.valueOf(num);
-				SchoolData sd = new SchoolData(inep, "Escola Teste");
+				SchoolData sd = new SchoolData(inep, "Escola Teste - " + i);
 				dao.save(sd);
 			}
 			sdList = dao.findAll();

@@ -10,18 +10,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import br.com.farofa.gm.dao.GroupDAO;
-import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.RoomDAO;
+import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.StudentDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 
 @ManagedBean
 public class StudentManageBean {
-	private GroupDAO groupDAO;
+	private RoomDAO groupDAO;
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -39,20 +39,20 @@ public class StudentManageBean {
 		if(!sessionMap.containsKey("student")){
 			student = new Student();
 			student.setGender('M');
-			student.setGroup(new Group());
+			student.setRoom(new Room());
 		}else{
 			student = (Student) sessionMap.get("student");
 		}
 		
 		//Load groups
-		groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
-		List<Group> groups = groupDAO.findByInep (school.getSchoolData().getInep());
+		groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
+		List<Room> groups = groupDAO.findByInep (school.getSchoolData().getInep());
 		studentGroupItens = new ArrayList <SelectItem> ();
-		for (Group group : groups) {
+		for (Room group : groups) {
 			String periodo = "Manhã";
-			if (group.getPeriod() == 'T')
+			if (group.getTerm() == 'T')
 				periodo = "Tarde";
-			else if (group.getPeriod() == 'I')
+			else if (group.getTerm() == 'I')
 				periodo = "Integral";
 			studentGroupItens.add(new SelectItem(group.getId(), group.getName() + " " + group.getSerie() + " " + periodo));			
 		}
@@ -62,7 +62,7 @@ public class StudentManageBean {
 	public String save () {
 		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		if (student.getId() == null) {
-			student.setDiagnosis_level("NOT_ENOUGH_INPUT");
+			//student.setDiagnosis_level("NOT_ENOUGH_INPUT");
 			studentDAO.save(student);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno adicionado com sucesso!"));
 		} else {

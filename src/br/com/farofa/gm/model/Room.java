@@ -13,9 +13,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="class")
-@NamedQuery(name="Group.findByInepCode", query="select g from Group g WHERE g.teacher.school.schoolData.inep = :inep")
-public class Group extends JsonBehaviour implements Serializable {
+@Table(name="room")
+@NamedQuery(name="Group.findByInepCode", query="select r from Room r WHERE r.teacher.school.schoolData.inep = :inep")
+public class Room extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -29,7 +29,7 @@ public class Group extends JsonBehaviour implements Serializable {
 	private String serie;
 	
 	@Column(nullable=false)
-	private Character period;
+	private Character term;
 	
 	@ManyToOne
 	@JoinColumn(name="teacher_id")
@@ -38,15 +38,15 @@ public class Group extends JsonBehaviour implements Serializable {
 	@Transient
 	private Integer qtdeAlunos;
 	
-	public Group(){}
+	public Room(){}
 	
-	public Group(Integer id, String name, String serie, Character period,
+	public Room(Integer id, String name, String serie, Character term,
 			Teacher teacher, Integer qtdeAlunos) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.serie = serie;
-		this.period = period;
+		this.term = term;
 		this.teacher = teacher;
 		this.qtdeAlunos = qtdeAlunos;
 	}
@@ -75,12 +75,12 @@ public class Group extends JsonBehaviour implements Serializable {
 		this.serie = serie;
 	}
 
-	public Character getPeriod() {
-		return period;
+	public Character getTerm() {
+		return term;
 	}
 
-	public void setPeriod(Character period) {
-		this.period = period;
+	public void setTerm(Character term) {
+		this.term = term;
 	}
 
 	public Teacher getTeacher() {
@@ -102,7 +102,7 @@ public class Group extends JsonBehaviour implements Serializable {
 	@Override
 	public String toString() {
 		return "Group [id=" + id + ", name=" + name + ", serie=" + serie
-				+ ", period=" + period + ", teacher=" + teacher.getId()
+				+ ", term=" + term + ", teacher=" + teacher.getId()
 				+ ", qtdeAlunos=" + qtdeAlunos + "]";
 	}
 	

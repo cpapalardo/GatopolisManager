@@ -22,7 +22,7 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.Student;
 
 public class ExcelUtil {
@@ -39,7 +39,7 @@ public class ExcelUtil {
 	private String path;
 	
 	private List<Student> students = new ArrayList<Student>();
-	private List<Group> groups = new ArrayList<Group>();
+	private List<Room> groups = new ArrayList<Room>();
 	
 	public ExcelUtil () {}
 
@@ -81,7 +81,7 @@ public class ExcelUtil {
 
 			for (int i = 1; i < sheet.getRows(); i++) {
 				Student student = new Student ();
-				Group group = new Group ();
+				Room group = new Room ();
 				
 				for (int j = 0; j < MAX_COLUMNS; j++) {
 					
@@ -162,9 +162,9 @@ public class ExcelUtil {
 		sheet.addCell(label);
 	}
 	
-	private boolean compareGroup (Group g1, Group g2) {
+	private boolean compareGroup (Room g1, Room g2) {
 		if (g1.getName().trim().equals(g2.getName().trim()) && 
-				g1.getPeriod().equals(g2.getPeriod()) && 
+				g1.getTerm().equals(g2.getTerm()) && 
 				g1.getSerie().trim().equals(g2.getSerie().trim())) {
 			return true;
 		}else{
@@ -180,11 +180,11 @@ public class ExcelUtil {
 		this.students = students;
 	}
 
-	public List<Group> getGroups() {
+	public List<Room> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(List<Room> groups) {
 		this.groups = groups;
 	}
 	

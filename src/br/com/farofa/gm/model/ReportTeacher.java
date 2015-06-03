@@ -1,6 +1,9 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="report_teacher")
@@ -42,6 +47,10 @@ public class ReportTeacher extends JsonBehaviour implements Serializable {
 	@Column(nullable=true)
 	private Integer grouping_duration;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=true)
+	private Date access;
+	
 	@ManyToOne
 	@JoinColumn(name="teacher_id", nullable=false)
 	private Teacher teacher;
@@ -54,7 +63,7 @@ public class ReportTeacher extends JsonBehaviour implements Serializable {
 			Integer dashboard_duration, Integer aba_obs_duration,
 			Integer aba_prod_duration, Integer aba_freq_duration,
 			Integer transitions_duration, Integer grouping_duration,
-			Teacher teacher) {
+			Date access, Teacher teacher) {
 		super();
 		this.id = id;
 		this.dashboard_opened = dashboard_opened;
@@ -64,6 +73,7 @@ public class ReportTeacher extends JsonBehaviour implements Serializable {
 		this.aba_freq_duration = aba_freq_duration;
 		this.transitions_duration = transitions_duration;
 		this.grouping_duration = grouping_duration;
+		this.access = access;
 		this.teacher = teacher;
 	}
 
@@ -139,8 +149,17 @@ public class ReportTeacher extends JsonBehaviour implements Serializable {
 		this.teacher = teacher;
 	}
 
+	public Date getAccess() {
+		return access;
+	}
+
+	public void setAccess(Date access) {
+		this.access = access;
+	}
+
 	@Override
 	public String toString() {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return "ReportTeacher [id=" + id + ", dashboard_opened="
 				+ dashboard_opened + ", dashboard_duration="
 				+ dashboard_duration + ", aba_obs_duration=" + aba_obs_duration
@@ -148,7 +167,8 @@ public class ReportTeacher extends JsonBehaviour implements Serializable {
 				+ ", aba_freq_duration=" + aba_freq_duration
 				+ ", transitions_duration=" + transitions_duration
 				+ ", grouping_duration=" + grouping_duration + ", teacher="
-				+ teacher.getId() + "]";
+				+ teacher.getId() + ", "
+				+ "access=" + df.format(access) + "]";
 	}
 	
 }

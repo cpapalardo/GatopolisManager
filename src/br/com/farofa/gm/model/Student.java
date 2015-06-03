@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="student")
-@NamedQuery(name="Student.findByInepCode", query="select s from Student s WHERE s.group.teacher.school.schoolData.inep = :inep")
+@NamedQuery(name="Student.findByInepCode", query="select s from Student s WHERE s.room.teacher.school.schoolData.inep = :inep")
 public class Student extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -36,14 +36,14 @@ public class Student extends JsonBehaviour implements Serializable {
 	@Column(nullable=false)
 	private Date birth_date;
 	
-	@Column(nullable=false, length=45)
-	private String diagnosis_level;
-	
 	@Column(nullable=true)
 	private Integer buildings;
 	
 	@Column(nullable=true)
 	private Integer coins;
+	
+	@Column(nullable=true)
+	private Integer time_in_city;
 	
 	@Column(nullable=true)
 	private Integer app_rating;
@@ -52,25 +52,25 @@ public class Student extends JsonBehaviour implements Serializable {
 	private String picture_url;
 	
 	@ManyToOne()
-	@JoinColumn(name="class_id", nullable=false)
-	private Group group;
+	@JoinColumn(name="room_id", nullable=false)
+	private Room room;
 	
 	public Student () {}
 
 	public Student(Integer id, String name, Character gender, Date birth_date,
-			String diagnosis_level, Integer buildings, Integer coins,
-			Integer app_rating, String picture_url, Group group) {
+			Integer buildings, Integer coins, Integer time_in_city,
+			Integer app_rating, String picture_url, Room room) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.birth_date = birth_date;
-		this.diagnosis_level = diagnosis_level;
 		this.buildings = buildings;
 		this.coins = coins;
+		this.time_in_city = time_in_city;
 		this.app_rating = app_rating;
 		this.picture_url = picture_url;
-		this.group = group;
+		this.room = room;
 	}
 
 	public Integer getId() {
@@ -105,14 +105,6 @@ public class Student extends JsonBehaviour implements Serializable {
 		this.birth_date = birth_date;
 	}
 
-	public String getDiagnosis_level() {
-		return diagnosis_level;
-	}
-
-	public void setDiagnosis_level(String diagnosis_level) {
-		this.diagnosis_level = diagnosis_level;
-	}
-
 	public Integer getBuildings() {
 		return buildings;
 	}
@@ -144,23 +136,33 @@ public class Student extends JsonBehaviour implements Serializable {
 	public void setPicture_url(String picture_url) {
 		this.picture_url = picture_url;
 	}
-
-	public Group getGroup() {
-		return group;
+	
+	
+	public Integer getTime_in_city() {
+		return time_in_city;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setTime_in_city(Integer time_in_city) {
+		this.time_in_city = time_in_city;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	@Override
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return "Student [id=" + id + ", name=" + name + ", gender=" + gender
-				+ ", birth_date=" + df.format(birth_date) + ", diagnosis_level="
-				+ diagnosis_level + ", buildings=" + buildings + ", coins="
-				+ coins + ", app_rating=" + app_rating + ", picture_url="
-				+ picture_url + ", group=" + group.getId() + "]";
+				+ ", birth_date=" + df.format(birth_date) + ", buildings=" + buildings
+				+ ", coins=" + coins + ", time_in_city=" + time_in_city
+				+ ", app_rating=" + app_rating + ", picture_url=" + picture_url
+				+ ", room=" + room.getId() + "]";
 	}
+
 	
 }

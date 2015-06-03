@@ -16,7 +16,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "note")
-@NamedQuery(name="Note.findByInepCode", query="select n from Note n WHERE n.student.group.teacher.school.schoolData.inep = :inep")
+@NamedQuery(name="Note.findByInepCode", query="select n from Note n WHERE n.student.room.teacher.school.schoolData.inep = :inep")
 public class Note extends JsonBehaviour implements Serializable {
 	private static final long serialVersionUID = 1L;
 

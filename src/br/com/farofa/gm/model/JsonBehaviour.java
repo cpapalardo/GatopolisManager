@@ -46,6 +46,14 @@ public class JsonBehaviour implements Serializable{
 						Character c = s.charAt(0);
 						decField.set(this, c);
 					}
+					//if boolean
+					else if (type.equals(Boolean.class)) {
+						int bit = jsonObj.getInt(fieldName);
+						if (bit == 1)
+							decField.set(this, true);
+						else
+							decField.set(this, false);
+					}
 					//if date
 					else if (type.equals(Date.class)) {
 						String s = jsonObj.getString(fieldName);
@@ -85,11 +93,21 @@ public class JsonBehaviour implements Serializable{
 					//if primitive
 					if (type.equals(String.class) || type.equals(Integer.class) || type.equals(Character.class)) {
 						jsonObj.put(fieldName, value);
-					} 
+					}
+					//if boolean
+					else if (type.equals(Boolean.class)) {
+						Boolean bool = (Boolean) value;
+						if (bool)
+							jsonObj.put(fieldName, 1);
+						else
+							jsonObj.put(fieldName, 0);	
+					}
 					//if date
 					else if (type.equals(Date.class)) {
-						String date = new SimpleDateFormat("dd/MM/yyyy").format(value);
-						jsonObj.put(fieldName, date);
+						if (value != null) {
+							String date = new SimpleDateFormat("dd/MM/yyyy").format(value);
+							jsonObj.put(fieldName, date);
+						}
 					} else {
 						//if it is an object where extends jsonBehaviour
 						if (value instanceof JsonBehaviour) {

@@ -3,8 +3,8 @@ package br.com.farofa.gm.test;
 import java.util.List;
 import java.util.Random;
 
-import br.com.farofa.gm.dao.GroupDAO;
-import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.RoomDAO;
+import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.ReportStudentDAO;
 import br.com.farofa.gm.dao.ReportTeacherDAO;
 import br.com.farofa.gm.dao.SchoolDAO;
@@ -15,21 +15,17 @@ import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.TeacherDAO;
 import br.com.farofa.gm.dao.TeacherDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.SchoolData;
 import br.com.farofa.gm.model.Teacher;
-import br.com.farofa.gm.model.Transition;
-import br.com.farofa.gm.model.WrittenWord;
 
 public class SQLServerTests {
 	static SchoolDataDAO schoolDataDAO;
 	static SchoolDAO schoolDAO;
 	static TeacherDAO teacherDAO;
-	static GroupDAO groupDAO;
+	static RoomDAO groupDAO;
 	static StudentDAO studentDAO;
-	static Transition transitionDAO;
-	static WrittenWord writtenWordDAO;
 	static ReportStudentDAO reportStudentDAO;
 	static ReportTeacherDAO reportTeacherDAO;
 	
@@ -66,10 +62,10 @@ public class SQLServerTests {
 	}
 	
 	public static void testGroup(){
-		GroupDAO dao = new GroupDAOImpl(DataBaseManager.getEntityManager());
-		Group group = dao.findByNameAndSerieAndPeriodAndInep("Class", "Serie", 'M', "12345678");
+		RoomDAO dao = new RoomDAOImpl(DataBaseManager.getEntityManager());
+		Room group = dao.findByNameAndSerieAndPeriodAndInep("Class", "Serie", 'M', "12345678");
 		System.out.println(group.getName());
-		System.out.println(group.getPeriod());
+		System.out.println(group.getTerm());
 		DataBaseManager.close();
 	}
 	
@@ -88,9 +84,9 @@ public class SQLServerTests {
 	}
 	
 	public static void testCount () {
-		GroupDAO dao = new GroupDAOImpl(DataBaseManager.getEntityManager());
-		List<Group> groups = dao.findByInep("12345678");
-		for (Group group : groups) {
+		RoomDAO dao = new RoomDAOImpl(DataBaseManager.getEntityManager());
+		List<Room> groups = dao.findByInep("12345678");
+		for (Room group : groups) {
 			System.out.println(group.getQtdeAlunos());
 		}
 		DataBaseManager.close();

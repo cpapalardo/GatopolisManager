@@ -21,12 +21,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
-import br.com.farofa.gm.dao.GroupDAO;
-import br.com.farofa.gm.dao.GroupDAOImpl;
+import br.com.farofa.gm.dao.RoomDAO;
+import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.StudentDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.Group;
+import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
@@ -34,7 +34,7 @@ import br.com.farofa.gm.util.DateConverterUtil;
 
 @ManagedBean
 public class ImportBean {
-	private GroupDAO groupDAO;
+	private RoomDAO groupDAO;
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -57,7 +57,7 @@ public class ImportBean {
 	}
     
     public void upload() {
-    	groupDAO = new GroupDAOImpl(DataBaseManager.getEntityManager());
+    	groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
     	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
     	
         if(uploadedFile != null){
@@ -77,7 +77,7 @@ public class ImportBean {
     
 	private void proccessExcel(UploadedFile uploadedFile) throws Exception{
     	//Declaration of lines as objects
-    	Map<String,Group> groupMap = new HashMap<String,Group>();
+    	Map<String,Room> groupMap = new HashMap<String,Room>();
     	List<Student> studentList = new ArrayList<Student>();
     	
     	// Finds the workbook instance for XLSX file
@@ -170,11 +170,11 @@ public class ImportBean {
 			String groupKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + school.getSchoolData().getInep();
 			
 			//Declara Objetos
-			Group group = null;
+			Room group = null;
 			
 			//GroupMap
 			if(!groupMap.containsKey(groupKey)){
-				group = new Group(null, nomeDaTurma, serie, periodoChar, teacher, null);
+				group = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
 				groupMap.put(groupKey, group);
 			}else{
 				group = groupMap.get(groupKey);
@@ -189,8 +189,8 @@ public class ImportBean {
 		//Start Updating de DataBase
 		
 		//Group
-		for (Group group : groupMap.values()){
-			Group tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getPeriod(), 
+		for (Room group : groupMap.values()){
+			Room tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getTerm(), 
 					group.getTeacher().getSchool().getSchoolData().getInep());
 			if(tmp != null){
 				group.setId(tmp.getId());
@@ -201,7 +201,7 @@ public class ImportBean {
 		
 		//Student
 		for (Student student : studentList){
-			student.setDiagnosis_level("NOT_ENOUGH_INPUT");
+			//student.setDiagnosis_level("NOT_ENOUGH_INPUT");
 			studentDAO.save(student);
 		}
     }
