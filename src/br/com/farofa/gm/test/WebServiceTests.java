@@ -6,8 +6,8 @@ import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.farofa.gm.dao.GenericDAO;
-import br.com.farofa.gm.dao.GenericDAOImpl;
+import br.com.farofa.gm.dao.SchoolDAO;
+import br.com.farofa.gm.dao.SchoolDAOImpl;
 import br.com.farofa.gm.dao.SchoolDataDAO;
 import br.com.farofa.gm.dao.SchoolDataDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
@@ -26,7 +26,37 @@ import br.com.farofa.gm.webservice.TeacherWS;
 
 public class WebServiceTests {
 	public static void main(String[] args) {
-		testGameBird();
+		//testSaveSchool();
+	}
+	
+	public static void testEntityId() {
+		SchoolDataDAO sdDAO = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
+		SchoolDAO dao = new SchoolDAOImpl(DataBaseManager.getEntityManager());
+		
+		int num = new Random().nextInt(99999999);
+		String inep = String.valueOf(num);
+		
+		SchoolData sd = new SchoolData(inep, "Escola Teste");
+		sdDAO.save(sd);
+		
+		School school = new School(inep, "1234567890", "12345678", "email@email.com", sd);
+		dao.save(school);
+		
+		School expected = dao.findById(inep);
+		
+		System.out.println(expected.getId());
+		System.out.println(expected.getSchoolData().getName());
+	}
+	
+	public static void testSaveSchool() {
+		SchoolWS ws = new SchoolWS();
+		String json = "{\"inep\":\"30679551\", \"sync_code\":\"1234567890\", \"password\":\"12345678\", \"email\":\"email@email.com\", \"schoolData\":{\"inep\":\"30679551\", \"name\":\"Escola Teste\"}}";
+		ws.save(json);
+		/*SchoolData sd = new SchoolData("12345678", "Escola Teste");
+		School school = new School("12345678", "123456", "123456", "email@email.com", sd);
+		json = school.getJson();
+		System.out.println(json);*/
+		//ws.save(json);
 	}
 	
 	public static void testGameBird() {
@@ -81,7 +111,7 @@ public class WebServiceTests {
 	public static void testGroupWeb() {
 		RoomWS ws = new RoomWS();
 		SchoolData sd = new SchoolData("12345678", "Escola Teste");
-		School school = new School(sd, "1234567890", "1234", "escola@email.com");
+		School school = new School("12345678", "1234567890", "1234", "escola@email.com", sd);
 		Teacher teacher = new Teacher(1, "Rodrigo de Sordi", "1234", "rodsordi@hotmail.com", null, null, null, school);
 		Room group = new Room(null, "Grupo Malandro", "Seria Alpha", 'M', teacher, null);
 		String json = group.getJson();
@@ -105,7 +135,7 @@ public class WebServiceTests {
 		System.out.println(teacher);
 		
 		SchoolData sd = new SchoolData("12345678", "Escola Teste");
-		School school = new School(sd, "1234567890", "1234", "escola@email.com");
+		School school = new School("12345678", "1234567890", "1234", "escola@email.com", sd);
 		Teacher t2 = new Teacher(null, "Rodrigo de Sordi", "1234", "rodsordi@hotmail.com", null, null, null, school);
 		/*int id = ws.save(t2.getJson());
 		t2.setId(id);
@@ -131,7 +161,7 @@ public class WebServiceTests {
 			
 			System.out.println("sd.getName() = " + sd.getName());
 			
-			actual = new School(sd, "1234567890", "12345678", "email@email.com");
+			actual = new School(sd.getInep(), "1234567890", "12345678", "email@email.com", sd);
 			schoolWS.update(actual.getJson());
 			id = sd.getInep();
 		}

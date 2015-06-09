@@ -16,10 +16,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name="student")
 @NamedQuery(name="Student.findByInepCode", query="select s from Student s WHERE s.room.teacher.school.schoolData.inep = :inep")
-public class Student extends JsonBehaviour implements Serializable {
+public class Student implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -162,6 +164,50 @@ public class Student extends JsonBehaviour implements Serializable {
 				+ ", coins=" + coins + ", time_in_city=" + time_in_city
 				+ ", app_rating=" + app_rating + ", picture_url=" + picture_url
 				+ ", room=" + room.getId() + "]";
+	}
+	
+	@Override
+	public String getJson() {
+		JSONObject jsonObj = new JSONObject();
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy");
+		if (id != null) jsonObj.put("id", id);
+		if (name != null) jsonObj.put("name", name);
+		if (gender != null) jsonObj.put("gender", gender);
+		if (birth_date != null) jsonObj.put("birth_date", df.format(birth_date));
+		if (buildings != null) jsonObj.put("buildings", buildings);
+		if (coins != null) jsonObj.put("coins", coins);
+		if (time_in_city != null) jsonObj.put("time_in_city", time_in_city);
+		if (app_rating != null) jsonObj.put("app_rating", app_rating);
+		if (picture_url != null) jsonObj.put("picture_url", picture_url);
+		if (room != null && room.getId() != null) jsonObj.put("room", room.getId());
+		return jsonObj.toString();
+	}
+
+	@Override
+	public void setJson(String json) {
+		JSONObject jsonObj = new JSONObject(json);
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy");
+		if (!jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (!jsonObj.has("name")) name = jsonObj.getString("name");
+		if (!jsonObj.has("gender")) gender = jsonObj.getString("gender").charAt(0);
+		if (!jsonObj.has("birth_date")) {
+			try {
+				String date = jsonObj.getString("birth_date");
+				birth_date = df.parse(date);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (jsonObj.has("buildings")) buildings = jsonObj.getInt("buildings");
+		if (jsonObj.has("coins")) coins = jsonObj.getInt("coins");
+		if (jsonObj.has("time_in_city")) time_in_city = jsonObj.getInt("time_in_city");
+		if (jsonObj.has("app_rating")) app_rating = jsonObj.getInt("app_rating");
+		if (jsonObj.has("picture_url")) picture_url = jsonObj.getString("picture_url");
+		if (jsonObj.has("room")) {
+			room = new Room();
+			int id = jsonObj.getInt("room");
+			room.setId(id);
+		}
 	}
 
 	

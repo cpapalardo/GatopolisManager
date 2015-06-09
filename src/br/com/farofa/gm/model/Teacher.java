@@ -11,10 +11,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name = "teacher")
 @NamedQuery(name="Teacher.findByInepCode", query="select t from Teacher t WHERE t.school.schoolData.inep = :inep")
-public class Teacher extends JsonBehaviour implements Serializable {
+public class Teacher implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -129,7 +131,38 @@ public class Teacher extends JsonBehaviour implements Serializable {
 		return "Teacher [id=" + id + ", name=" + name + ", password="
 				+ password + ", email=" + email + ", question=" + question
 				+ ", answer=" + answer + ", picture_url=" + picture_url
-				+ ", school=" + school.getSchoolData().getInep() + "]";
+				+ ", school=" + (school != null ? school.getSchoolData().getInep() : 0) + "]";
+	}
+	
+	@Override
+	public String getJson() {
+		JSONObject jsonObj = new JSONObject();
+		if (id != null) jsonObj.put("id", id);
+		if (name != null) jsonObj.put("name", name);
+		if (password != null) jsonObj.put("password", password);
+		if (email != null) jsonObj.put("email", email);
+		if (question != null) jsonObj.put("question", question);
+		if (answer != null) jsonObj.put("answer", answer);
+		if (picture_url != null) jsonObj.put("picture_url", picture_url);
+		if (school != null && school.getId() != null) jsonObj.put("school", school.getId());
+		return jsonObj.toString();
+	}
+
+	@Override
+	public void setJson(String json) {
+		JSONObject jsonObj = new JSONObject(json);
+		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("name")) name = jsonObj.getString("name");
+		if (jsonObj.has("password")) password = jsonObj.getString("password");
+		if (jsonObj.has("email")) email = jsonObj.getString("email");
+		if (jsonObj.has("question")) question = jsonObj.getString("question").charAt(0);
+		if (jsonObj.has("answer")) answer = jsonObj.getString("answer");
+		if (jsonObj.has("picture_url")) picture_url = jsonObj.getString("picture_url");
+		if (jsonObj.has("school")) {
+			school = new School();
+			String id = jsonObj.getString("school");
+			school.setId(id);
+		}
 	}
 	
 }

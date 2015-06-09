@@ -27,7 +27,8 @@ public class GenericWSImpl<T extends JsonBehaviour, PK extends Serializable> imp
 			T entity = (T) Class.forName(clazz.getName()).newInstance();
 			entity.setJson(json);
 			dao.save(entity);
-			result = getIdentifier(entity);
+			Object id = DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
+			result = String.valueOf(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -116,15 +117,6 @@ public class GenericWSImpl<T extends JsonBehaviour, PK extends Serializable> imp
 		}
 		DataBaseManager.close();
 		return result.toString();
-	}
-	
-	private String getIdentifier(Object entity) {
-		Object identifier = DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
-		if (identifier instanceof JsonBehaviour) {
-			return getIdentifier (entity);
-		} else {
-			return String.valueOf(identifier);
-		}
 	}
 
 }

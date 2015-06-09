@@ -13,20 +13,18 @@
 		<class>br.com.farofa.gm.model.SchoolData</class>
 		<class>br.com.farofa.gm.model.School</class>
 		<class>br.com.farofa.gm.model.Teacher</class>
-		<class>br.com.farofa.gm.model.Group</class>
+		<class>br.com.farofa.gm.model.Room</class>
 		<class>br.com.farofa.gm.model.Student</class>
-		<class>br.com.farofa.gm.model.Transition</class>
-		<class>br.com.farofa.gm.model.WrittenWord</class>
+		<class>br.com.farofa.gm.model.GameBird</class>
+		<class>br.com.farofa.gm.model.Buildings</class>
 		<class>br.com.farofa.gm.model.Note</class>
 		<class>br.com.farofa.gm.model.ReportTeacher</class>
 		<class>br.com.farofa.gm.model.ReportStudent</class>
 
 		<properties>
 			<!-- dados da conexao -->
-			<property name="javax.persistence.jdbc.driver"
-				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste" />
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste" />
 			<property name="javax.persistence.jdbc.user" value="admin" />
 			<property name="javax.persistence.jdbc.password" value="admin" />
 
@@ -57,10 +55,8 @@
 
 		<properties>
 			<!-- dados da conexao -->
-			<property name="javax.persistence.jdbc.driver"
-				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste2" />
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste2" />
 			<property name="javax.persistence.jdbc.user" value="admin" />
 			<property name="javax.persistence.jdbc.password" value="admin" />
 

@@ -2,7 +2,9 @@ package br.com.farofa.gm.webservice;
 
 import java.io.Serializable;
 
-public interface GenericWS<T extends Serializable, PK extends Serializable> {
+import br.com.farofa.gm.model.JsonBehaviour;
+
+public interface GenericWS<T extends JsonBehaviour, PK extends Serializable> {
 	public String save(String json);
 	
 	public void update(String json);

@@ -254,7 +254,7 @@ public class GeralImportBean {
 			}
 			//SchoolMap
 			if(!schoolMap.containsKey(schoolKey)){
-				school = new School(sd, null, null, null);
+				school = new School(null, null, null, null, sd);
 				schoolMap.put(schoolKey, school);
 			}else{
 				school = schoolMap.get(schoolKey);

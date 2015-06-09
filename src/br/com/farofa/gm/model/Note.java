@@ -1,6 +1,8 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,15 +16,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name = "note")
 @NamedQuery(name="Note.findByInepCode", query="select n from Note n WHERE n.student.room.teacher.school.schoolData.inep = :inep")
-public class Note extends JsonBehaviour implements Serializable {
+public class Note implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	private Integer Id;
+	private Integer id;
 	
 	@Column(nullable=false, length=255)
 	private String note;
@@ -45,7 +49,7 @@ public class Note extends JsonBehaviour implements Serializable {
 	public Note(Integer id, String note, Date created_at, Teacher teacher,
 			Student student) {
 		super();
-		Id = id;
+		this.id = id;
 		this.note = note;
 		this.created_at = created_at;
 		this.teacher = teacher;
@@ -54,11 +58,11 @@ public class Note extends JsonBehaviour implements Serializable {
 
 
 	public Integer getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(Integer id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getNote() {
@@ -95,9 +99,46 @@ public class Note extends JsonBehaviour implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Note [Id=" + Id + ", note=" + note + ", created_at="
+		return "Note [Id=" + id + ", note=" + note + ", created_at="
 				+ created_at + ", teacher=" + teacher + ", student=" + student.getId()
 				+ "]";
 	}
 	
+	@Override
+	public String getJson() {
+		JSONObject jsonObj = new JSONObject();
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy");
+		if (id != null) jsonObj.put("id", id);
+		if (note != null) jsonObj.put("note", note);
+		if (created_at != null) jsonObj.put("created_at", df.format(created_at));
+		if (teacher != null && teacher.getId() != null) jsonObj.put("teacher", teacher);
+		if (student != null && student.getId() != null) jsonObj.put("student", student.getId());
+		return jsonObj.toString();
+	}
+
+	@Override
+	public void setJson(String json) {
+		JSONObject jsonObj = new JSONObject(json);
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy");
+		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("note")) note = jsonObj.getString("note");
+		if (jsonObj.has("created_at")) {
+			try {
+				String date = jsonObj.getString("created_at");
+				created_at = df.parse(date);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (jsonObj.has("teacher")) {
+			teacher = new Teacher();
+			int id = jsonObj.getInt("teacher");
+			teacher.setId(id);
+		}
+		if (jsonObj.has("student")) {
+			student = new Student();
+			int id = jsonObj.getInt("student");
+			student.setId(id);
+		}
+	}
 }

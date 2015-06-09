@@ -18,6 +18,7 @@ public class TeacherDAOTest extends TestCase {
 		SchoolData sd = new SchoolData();
 		sd.setInep("12345678");
 		School s = new School();
+		s.setId("12345678");
 		s.setSchoolData(sd);
 		Teacher t = new Teacher(null, "Professor Teste", "1234", "email@email.com", 'A', "Resposta Teste", null, s);
 		dao.save(t);

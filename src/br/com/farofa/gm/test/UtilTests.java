@@ -9,7 +9,7 @@ import br.com.farofa.gm.util.DateConverterUtil;
 
 public class UtilTests {
 	public static void main(String[] args) {
-		dateConverterUtilTest();
+		//dateConverterUtilTest();
 	}
 	
 	public static void dateConverterUtilTest(){

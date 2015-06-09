@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservice.gm.farofa.com.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice.gm.farofa.com.br" xmlns:intf="http://webservice.gm.farofa.com.br" xmlns:tns1="http://io.java" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservice.gm.farofa.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://io.java"/>
+   <element name="json" type="xsd:string"/>
+   <element name="json1" type="xsd:string"/>
+   <element name="json2" type="xsd:string"/>
+   <element name="saveReturn" type="xsd:string"/>
+   <element name="findAllReturn" type="xsd:string"/>
+   <element name="pk" type="xsd:anyType"/>
+   <element name="findByIdReturn" type="xsd:string"/>
+   <element name="inep" type="xsd:string"/>
+   <element name="findByInepReturn" type="xsd:string"/>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="updateRequest">
+
+      <wsdl:part element="impl:json" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByInepResponse">
+
+      <wsdl:part element="impl:findByInepReturn" name="findByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByInepRequest">
+
+      <wsdl:part element="impl:inep" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="findAllRequest">
+
+   </wsdl:message>
+
+   <wsdl:message name="findByIdRequest">
+
+      <wsdl:part element="impl:pk" name="pk">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByIdResponse">
+
+      <wsdl:part element="impl:findByIdReturn" name="findByIdReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveRequest">
+
+      <wsdl:part element="impl:json2" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findAllResponse">
+
+      <wsdl:part element="impl:findAllReturn" name="findAllReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateResponse">
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteRequest">
+
+      <wsdl:part element="impl:json1" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveResponse">
+
+      <wsdl:part element="impl:saveReturn" name="saveReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="StudentWS">
+
+      <wsdl:operation name="update" parameterOrder="json">
+
+         <wsdl:input message="impl:updateRequest" name="updateRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateResponse" name="updateResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="delete" parameterOrder="json">
+
+         <wsdl:input message="impl:deleteRequest" name="deleteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteResponse" name="deleteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="save" parameterOrder="json">
+
+         <wsdl:input message="impl:saveRequest" name="saveRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveResponse" name="saveResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findAll">
+
+         <wsdl:input message="impl:findAllRequest" name="findAllRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findAllResponse" name="findAllResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findById" parameterOrder="pk">
+
+         <wsdl:input message="impl:findByIdRequest" name="findByIdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findByIdResponse" name="findByIdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findByInepRequest" name="findByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findByInepResponse" name="findByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="StudentWSSoapBinding" type="impl:StudentWS">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="update">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="delete">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="save">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findAll">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findAllRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findAllResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findById">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByIdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByIdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="StudentWSService">
+
+      <wsdl:port binding="impl:StudentWSSoapBinding" name="StudentWS">
+
+         <wsdlsoap:address location="http://localhost:8080/GatopolisManager/services/StudentWS"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

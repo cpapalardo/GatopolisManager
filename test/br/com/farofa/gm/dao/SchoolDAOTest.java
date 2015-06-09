@@ -23,7 +23,7 @@ public class SchoolDAOTest extends TestCase {
 		SchoolData sd = new SchoolData(inep, "Escola Teste");
 		sdDAO.save(sd);
 		
-		School school = new School(sd, "1234567890", "12345678", "email@email.com");
+		School school = new School(inep, "1234567890", "12345678", "email@email.com", sd);
 		dao.save(school);
 		
 		School expected = dao.findById(inep);

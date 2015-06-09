@@ -12,10 +12,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name="room")
 @NamedQuery(name="Group.findByInepCode", query="select r from Room r WHERE r.teacher.school.schoolData.inep = :inep")
-public class Room extends JsonBehaviour implements Serializable {
+public class Room implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -104,6 +106,31 @@ public class Room extends JsonBehaviour implements Serializable {
 		return "Group [id=" + id + ", name=" + name + ", serie=" + serie
 				+ ", term=" + term + ", teacher=" + teacher.getId()
 				+ ", qtdeAlunos=" + qtdeAlunos + "]";
+	}
+	
+	@Override
+	public String getJson() {
+		JSONObject jsonObj = new JSONObject();
+		if (id != null) jsonObj.put("id", id);
+		if (name != null) jsonObj.put("name", name);
+		if (serie != null) jsonObj.put("serie", serie);
+		if (term != null) jsonObj.put("term", term);
+		if (teacher != null && teacher.getId() != null) jsonObj.put("teacher", teacher.getId());
+		return jsonObj.toString();
+	}
+
+	@Override
+	public void setJson(String json) {
+		JSONObject jsonObj = new JSONObject(json);
+		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("name")) name = jsonObj.getString("name");
+		if (jsonObj.has("serie")) serie = jsonObj.getString("serie");
+		if (jsonObj.has("term")) term = jsonObj.getString("term").charAt(0);
+		if (jsonObj.has("teacher")) {
+			teacher = new Teacher();
+			int id = jsonObj.getInt("teacher");
+			teacher.setId(id);
+		}
 	}
 	
 }

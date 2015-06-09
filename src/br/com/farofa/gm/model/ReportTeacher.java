@@ -16,10 +16,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name="report_teacher")
 @NamedQuery(name="ReportTeacher.findByInepCode", query="select rt from ReportTeacher rt WHERE rt.teacher.school.schoolData.inep = :inep")
-public class ReportTeacher extends JsonBehaviour implements Serializable {
+public class ReportTeacher implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -167,8 +169,40 @@ public class ReportTeacher extends JsonBehaviour implements Serializable {
 				+ ", aba_freq_duration=" + aba_freq_duration
 				+ ", transitions_duration=" + transitions_duration
 				+ ", grouping_duration=" + grouping_duration + ", teacher="
-				+ teacher.getId() + ", "
+				+ (teacher != null ? teacher.getId() : 0) + ", "
 				+ "access=" + df.format(access) + "]";
 	}
 	
+	@Override
+	public String getJson() {
+		JSONObject jsonObj = new JSONObject();
+		if (id != null) jsonObj.put("id", id);
+		if (dashboard_opened != null) jsonObj.put("dashboard_opened", dashboard_opened);
+		if (dashboard_duration != null) jsonObj.put("dashboard_duration", dashboard_duration);
+		if (aba_obs_duration != null) jsonObj.put("aba_obs_duration", aba_obs_duration);
+		if (aba_prod_duration != null) jsonObj.put("aba_prod_duration", aba_prod_duration);
+		if (aba_freq_duration != null) jsonObj.put("aba_freq_duration", aba_freq_duration);
+		if (transitions_duration != null) jsonObj.put("transitions_duration", transitions_duration);
+		if (grouping_duration != null) jsonObj.put("grouping_duration", grouping_duration);
+		if (teacher != null && teacher.getId() != null) jsonObj.put("teacher", teacher);
+		return jsonObj.toString();
+	}
+
+	@Override
+	public void setJson(String json) {
+		JSONObject jsonObj = new JSONObject(json);
+		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("dashboard_opened")) dashboard_opened = jsonObj.getInt("dashboard_opened");
+		if (jsonObj.has("dashboard_duration")) dashboard_duration = jsonObj.getInt("dashboard_duration");
+		if (jsonObj.has("aba_obs_duration")) aba_obs_duration = jsonObj.getInt("aba_obs_duration");
+		if (jsonObj.has("aba_prod_duration")) aba_prod_duration = jsonObj.getInt("aba_prod_duration");
+		if (jsonObj.has("aba_freq_duration")) aba_freq_duration = jsonObj.getInt("aba_freq_duration");
+		if (jsonObj.has("transitions_duration")) transitions_duration = jsonObj.getInt("transitions_duration");
+		if (jsonObj.has("grouping_duration")) grouping_duration = jsonObj.getInt("grouping_duration");
+		if (jsonObj.has("teacher")) {
+			teacher = new Teacher();
+			int id = jsonObj.getInt("teacher");
+			teacher.setId(id);
+		}
+	}
 }

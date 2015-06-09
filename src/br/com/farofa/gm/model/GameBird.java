@@ -16,10 +16,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.json.JSONObject;
+
 @Entity
 @Table(name = "game_bird")
 @NamedQuery(name="GameBird.findByInepCode", query="select gb from GameBird gb WHERE gb.student.room.teacher.school.schoolData.inep = :inep")
-public class GameBird extends JsonBehaviour implements Serializable {
+public class GameBird implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -126,4 +128,41 @@ public class GameBird extends JsonBehaviour implements Serializable {
 				+ ", played_date=" + df.format(played_date) + ", student=" + student.getId() + "]";
 	}
 	
+	@Override
+	public String getJson() {
+		JSONObject jsonObj = new JSONObject();
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy hh:mm:ss");
+		if (id != null) jsonObj.put("id", id);
+		if (completed != null) jsonObj.put("completed", completed);
+		if (time_wasted != null) jsonObj.put("time_wasted", time_wasted);
+		if (letters_time != null) jsonObj.put("letters_time", letters_time);
+		if (letters_faults != null) jsonObj.put("letters_faults", letters_faults);
+		if (played_date != null) jsonObj.put("played_date", df.format(played_date));
+		if (student != null && student.getId() != null) jsonObj.put("student", student.getId());
+		return jsonObj.toString();
+	}
+
+	@Override
+	public void setJson(String json) {
+		JSONObject jsonObj = new JSONObject(json);
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy hh:mm:ss");
+		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("completed")) completed = jsonObj.getBoolean("completed");
+		if (jsonObj.has("time_wasted")) time_wasted = jsonObj.getInt("time_wasted");
+		if (jsonObj.has("letters_time")) letters_time = jsonObj.getString("letters_time");
+		if (jsonObj.has("letters_faults")) letters_faults = jsonObj.getString("letters_faults");
+		if (jsonObj.has("played_date")) {
+			try {
+				String date = jsonObj.getString("played_date");
+				played_date = df.parse(date);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (jsonObj.has("student")) {
+			student = new Student();
+			int id = jsonObj.getInt("student");
+			student.setId(id);
+		}
+	}
 }

@@ -30,7 +30,7 @@ public class SQLServerTests {
 	static ReportTeacherDAO reportTeacherDAO;
 	
 	public static void main(String[] args) {
-		getIdAfterSaveTest();
+		//getIdAfterSaveTest();
 	}
 	
 	public static void getIdAfterSaveTest(){
