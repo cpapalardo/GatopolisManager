@@ -36,7 +36,7 @@
 		</properties>
 	</persistence-unit>
 	
-	<persistence-unit name="banco_teste2" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="gatopolis_v2_db">
 
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
@@ -56,9 +56,9 @@
 		<properties>
 			<!-- dados da conexao -->
 			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste2" />
-			<property name="javax.persistence.jdbc.user" value="admin" />
-			<property name="javax.persistence.jdbc.password" value="admin" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://lqs5qhczop.database.windows.net:1433;databaseName=gatopolis_v2_db" />
+			<property name="javax.persistence.jdbc.user" value="FarofaStudios@lqs5qhczop" />
+			<property name="javax.persistence.jdbc.password" value="Farofa2015" />
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />

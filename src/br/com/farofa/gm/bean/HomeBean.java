@@ -1,5 +1,8 @@
 package br.com.farofa.gm.bean;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -24,9 +27,22 @@ public class HomeBean {
 	@PostConstruct
 	public void init () {
 		enviroment = DataBaseManager.getEnviroment();
-		if(enviroment == Enviroment.banco_teste2.name())
+		if(enviroment == Enviroment.gatopolis_v2_db.name())
 			enviroment = "Ambiente de Produção";
 		access = "farofa2015";
+		
+
+		InetAddress addr;
+		try {
+			addr = InetAddress.getLocalHost();
+			String hostname = addr.getHostName();
+			enviroment = hostname;
+			if (enviroment.equals("RD00155D003742")) {
+				enviroment = "O nome dessa máquina é " + hostname;
+			}
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public String access () {

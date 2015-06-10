@@ -51,7 +51,7 @@ public class GeralImportBean {
 	private SchoolDataDAO schoolDataDAO;
 	private SchoolDAO schoolDAO;
 	private TeacherDAO teacherDAO;
-	private RoomDAO groupDAO;
+	private RoomDAO roomDAO;
 	private StudentDAO studentDAO;
 	
 	private boolean rendered;
@@ -84,7 +84,7 @@ public class GeralImportBean {
     	schoolDataDAO = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
     	schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
     	teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
-    	groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
+    	roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
     	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
     	
     	if (uploadedFile != null) {
@@ -107,7 +107,7 @@ public class GeralImportBean {
     	Map<String, SchoolData> schoolDataMap = new HashMap<String, SchoolData>();
     	Map<String, School> schoolMap = new HashMap<String, School>();
     	Map<String, Teacher> teacherMap = new HashMap<String, Teacher>();
-    	Map<String, Room> groupMap = new HashMap<String, Room>();
+    	Map<String, Room> roomMap = new HashMap<String, Room>();
     	List<Student> studentList = new ArrayList<Student>();
 		
 		// Finds the workbook instance for XLSX file
@@ -154,7 +154,7 @@ public class GeralImportBean {
 					}
 					
 					//Verifica se é base teste ou produção
-					if(DataBaseManager.getEnviroment() == Enviroment.banco_teste2.name()){
+					if(DataBaseManager.getEnviroment() == Enviroment.banco_teste.name()){
 						try {
 							nomeDaEscola = getSchoolNameByInep(codigoInepDaEscola);
 						} catch (Exception e) {
@@ -237,13 +237,13 @@ public class GeralImportBean {
 			String sdKey = codigoInepDaEscola + "-" + nomeDaEscola;
 			String schoolKey = sdKey;
 			String teacherKey = professor + "-" + emailProfessor + "-" + codigoInepDaEscola;
-			String groupKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola;
+			String roomKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola;
 			
 			//Declara objetos
 			SchoolData sd = null;
 			School school = null;
 			Teacher teacher = null;
-			Room group = null;
+			Room room = null;
 			
 			//SchoolDataMap
 			if(!schoolDataMap.containsKey(sdKey)){
@@ -266,16 +266,16 @@ public class GeralImportBean {
 			}else{
 				teacher = teacherMap.get(teacherKey);
 			}
-			//GroupMap
-			if(!groupMap.containsKey(groupKey)){
-				group = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
-				groupMap.put(groupKey, group);
+			//RoomMap
+			if(!roomMap.containsKey(roomKey)){
+				room = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
+				roomMap.put(roomKey, room);
 			}else{
-				group = groupMap.get(groupKey);
+				room = roomMap.get(roomKey);
 			}
 			
 			//StudentList
-			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, null, null, null, null, null, group);
+			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, null, null, null, null, null, room);
 			studentList.add(student);
 		}
 		
@@ -315,14 +315,14 @@ public class GeralImportBean {
 			}
 		}
 		
-		//Group
-		for (Room group : groupMap.values()){
-			Room tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getTerm(), 
-					group.getTeacher().getSchool().getSchoolData().getInep());
+		//Room
+		for (Room room : roomMap.values()){
+			Room tmp = roomDAO.findByNameAndSerieAndPeriodAndInep(room.getName(), room.getSerie(), room.getTerm(), 
+					room.getTeacher().getSchool().getSchoolData().getInep());
 			if(tmp != null){
-				group.setId(tmp.getId());
+				room.setId(tmp.getId());
 			}else{
-				groupDAO.save(group);
+				roomDAO.save(room);
 			}
 		}
 		

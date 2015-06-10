@@ -20,12 +20,12 @@ import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Teacher;
 
 @ManagedBean
-public class GroupManageBean {
+public class RoomManageBean {
 	private TeacherDAO teacherDAO;
-	private RoomDAO groupDAO;
+	private RoomDAO roomDAO;
 	
 	private School school;
-	private Room group;
+	private Room room;
 	private List<SelectItem> teacherItens;
 	
 	private Map<String, Object> sessionMap;
@@ -43,44 +43,44 @@ public class GroupManageBean {
 			teacherItens.add(new SelectItem (teacher.getId(), teacher.getName()));
 		}
 		
-		//Initiate group
-		if (sessionMap.containsKey("group")) {
-			group = (Room) sessionMap.get("group");
+		//Initiate room
+		if (sessionMap.containsKey("room")) {
+			room = (Room) sessionMap.get("room");
 		} else {
-			group = new Room ();
-			group.setTerm('M');
-			group.setTeacher(new Teacher());
+			room = new Room ();
+			room.setTerm('M');
+			room.setTeacher(new Teacher());
 		}
 		DataBaseManager.close();
 	}
 	
 	public String save () {
-		groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
-		if(group.getId() == null) {
-			groupDAO.save(group);
+		roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
+		if(room.getId() == null) {
+			roomDAO.save(room);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma adicionada com sucesso!"));
 		} else {
-			groupDAO.update(group);
-			sessionMap.remove("group");
+			roomDAO.update(room);
+			sessionMap.remove("room");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma alterada com sucesso!"));
 		}
 		DataBaseManager.close();
-		return "groups";		
+		return "rooms";		
 	}
 	
 	public String back () {
-		sessionMap.remove("group");
-		return "groups";
+		sessionMap.remove("room");
+		return "rooms";
 	}
 
 	//Getters and Setters
 	
-	public Room getGroup() {
-		return group;
+	public Room getRoom() {
+		return room;
 	}
 
-	public void setGroup(Room group) {
-		this.group = group;
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	public List<SelectItem> getTeacherItens() {

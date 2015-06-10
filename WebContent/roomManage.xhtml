@@ -10,7 +10,7 @@
 </h:head>
 
 <h:body>
-	<h:form id="group">
+	<h:form id="room">
 		<p:panel>
 			<h3>
 				<p:outputLabel value="Turma" />
@@ -18,30 +18,30 @@
 			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
 				
 				<p:outputLabel for="name" value="Nome" />
-				<p:inputText id="name" size="25" maxlength="75" value="#{groupManageBean.group.name}" />
+				<p:inputText id="name" size="25" maxlength="75" value="#{roomManageBean.room.name}" />
 				<p:message for="name" display="tooltip" />
 				
 				<p:outputLabel for="serie" value="Serie" />
-				<p:inputText id="serie" size="25" maxlength="75" value="#{groupManageBean.group.serie}" />
+				<p:inputText id="serie" size="25" maxlength="75" value="#{roomManageBean.room.serie}" />
 				<p:message for="serie" display="tooltip" />
 				
-				<p:outputLabel for="period" value="Periodo" />
-				<p:selectOneRadio id="period" value="#{groupManageBean.group.period}">
+				<p:outputLabel for="term" value="Periodo" />
+				<p:selectOneRadio id="term" value="#{roomManageBean.room.term}">
 		            <f:selectItem itemLabel="Manhã" itemValue="M" />
 		            <f:selectItem itemLabel="Tarde" itemValue="T" />
 		        </p:selectOneRadio>
 				<p:outputLabel value="" />
 				
 				<p:outputLabel for="teacher" value="Professor" />
-				<p:selectOneMenu id="teacher" value="#{groupManageBean.group.teacher.id}">
-					<f:selectItems value="#{groupManageBean.teacherItens}" />
+				<p:selectOneMenu id="teacher" value="#{roomManageBean.room.teacher.id}">
+					<f:selectItems value="#{roomManageBean.teacherItens}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="" />
 				
 			</h:panelGrid>
 	
-			<p:commandButton value="Salvar" type="submit" action="#{groupManageBean.save}" />
-			<p:commandButton value="Voltar" action="#{groupManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
+			<p:commandButton value="Salvar" type="submit" action="#{roomManageBean.save}" />
+			<p:commandButton value="Voltar" action="#{roomManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
 		</p:panel>
 	</h:form>
 </h:body>

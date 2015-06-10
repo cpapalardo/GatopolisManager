@@ -15,30 +15,30 @@ import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 
 @ManagedBean
-public class GroupsBean {
-	private RoomDAO groupDAO;
+public class RoomsBean {
+	private RoomDAO roomDAO;
 	
 	private School school;
-	private List<Room> groups = new ArrayList<Room>();
+	private List<Room> rooms = new ArrayList<Room>();
 	
 	private Map<String, Object> sessionMap;
 	
 	@PostConstruct
 	public void init () {
-		groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
+		roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
-		groups = groupDAO.findByInep(school.getSchoolData().getInep());
+		rooms = roomDAO.findByInep(school.getSchoolData().getInep());
 		DataBaseManager.close();
 	}
 	
 	public String novaTurma () {
-		return "groupManage";
+		return "roomManage";
 	}
 	
-	public String edit (Room group) {
-		sessionMap.put("group", group);
-		return "groupManage";
+	public String edit (Room room) {
+		sessionMap.put("room", room);
+		return "roomManage";
 	}
 	
 	public String back () {
@@ -48,11 +48,11 @@ public class GroupsBean {
 	
 	//Getters and Setters
 	
-	public List<Room> getGroups() {
-		return groups;
+	public List<Room> getRooms() {
+		return rooms;
 	}
 
-	public void setGroups(List<Room> groups) {
-		this.groups = groups;
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
 	}
 }

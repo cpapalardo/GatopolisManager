@@ -34,7 +34,7 @@ import br.com.farofa.gm.util.DateConverterUtil;
 
 @ManagedBean
 public class ImportBean {
-	private RoomDAO groupDAO;
+	private RoomDAO roomDAO;
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -57,7 +57,7 @@ public class ImportBean {
 	}
     
     public void upload() {
-    	groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
+    	roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
     	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
     	
         if(uploadedFile != null){
@@ -77,7 +77,7 @@ public class ImportBean {
     
 	private void proccessExcel(UploadedFile uploadedFile) throws Exception{
     	//Declaration of lines as objects
-    	Map<String,Room> groupMap = new HashMap<String,Room>();
+    	Map<String,Room> roomMap = new HashMap<String,Room>();
     	List<Student> studentList = new ArrayList<Student>();
     	
     	// Finds the workbook instance for XLSX file
@@ -167,35 +167,35 @@ public class ImportBean {
 			Date date = DateConverterUtil.stringToDate(dataDeNascimento);
 			
 			//Settando Keys
-			String groupKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + school.getSchoolData().getInep();
+			String roomKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + school.getSchoolData().getInep();
 			
 			//Declara Objetos
-			Room group = null;
+			Room room = null;
 			
-			//GroupMap
-			if(!groupMap.containsKey(groupKey)){
-				group = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
-				groupMap.put(groupKey, group);
+			//RoomMap
+			if(!roomMap.containsKey(roomKey)){
+				room = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
+				roomMap.put(roomKey, room);
 			}else{
-				group = groupMap.get(groupKey);
+				room = roomMap.get(roomKey);
 			}
 			
 			//StudentList
-			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, null, null, null, null, null, group);
+			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, null, null, null, null, null, room);
 			studentList.add(student);
 		}
 		
 		
 		//Start Updating de DataBase
 		
-		//Group
-		for (Room group : groupMap.values()){
-			Room tmp = groupDAO.findByNameAndSerieAndPeriodAndInep(group.getName(), group.getSerie(), group.getTerm(), 
-					group.getTeacher().getSchool().getSchoolData().getInep());
+		//Room
+		for (Room room : roomMap.values()){
+			Room tmp = roomDAO.findByNameAndSerieAndPeriodAndInep(room.getName(), room.getSerie(), room.getTerm(), 
+					room.getTeacher().getSchool().getSchoolData().getInep());
 			if(tmp != null){
-				group.setId(tmp.getId());
+				room.setId(tmp.getId());
 			}else{
-				groupDAO.save(group);
+				roomDAO.save(room);
 			}
 		}
 		

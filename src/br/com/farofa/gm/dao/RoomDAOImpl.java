@@ -18,15 +18,15 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 
 	@Override
 	public List<Room> findByInep(String inep) {
-		Query query = manager.createNamedQuery("Group.findByInepCode");
+		Query query = manager.createNamedQuery("Room.findByInepCode");
 		query.setParameter("inep", inep);
 		List<Room> result = query.getResultList();
 		
-		for (Room group : result) {
-			Query subQ = manager.createQuery("select s.id from Student s where s.group.id = :id");
-			subQ.setParameter("id", group.getId());
+		for (Room room : result) {
+			Query subQ = manager.createQuery("select s.id from Student s where s.room.id = :id");
+			subQ.setParameter("id", room.getId());
 			int qtdeAlunos = subQ.getResultList().size();
-			group.setQtdeAlunos(qtdeAlunos);
+			room.setQtdeAlunos(qtdeAlunos);
 		}
 		
 		return result;
@@ -34,7 +34,7 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 	
 	@Override
 	public List<Room> findByTeacher(Teacher teacher) {
-		String jpql = "select g from Group g where g.teacher.id = :id";
+		String jpql = "select g from Room g where g.teacher.id = :id";
 		Query query = manager.createQuery(jpql);
 		query.setParameter("id", teacher.getId());
 		
@@ -45,18 +45,18 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 	
 	@Override
 	public Room findByNameAndSerieAndPeriodAndInep(String name, String serie, Character period, String inep) {
-		String jpql = "select g from Group g where g.name = :name and g.serie = :serie and g.period = :period and g.teacher.school.schoolData.inep = :inep";
+		String jpql = "select g from Room g where g.name = :name and g.serie = :serie and g.period = :period and g.teacher.school.schoolData.inep = :inep";
 		Query query = manager.createQuery(jpql);
 		query.setParameter("name", name);
 		query.setParameter("serie", serie);
 		query.setParameter("period", period);
 		query.setParameter("inep", inep);
 		
-		Room group = null;
+		Room room = null;
 		if (query.getResultList().size() > 0)
-			group = (Room) query.getResultList().get(0);
+			room = (Room) query.getResultList().get(0);
 		
-		return group;
+		return room;
 	}
 	
 }

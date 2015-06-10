@@ -57,8 +57,8 @@ public class TeachersBean {
 		return "students";
 	}
 	
-	public String groups () {
-		return "groups";
+	public String rooms () {
+		return "rooms";
 	}
 	
 	

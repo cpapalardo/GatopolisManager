@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 @Entity
 @Table(name="room")
-@NamedQuery(name="Group.findByInepCode", query="select r from Room r WHERE r.teacher.school.schoolData.inep = :inep")
+@NamedQuery(name="Room.findByInepCode", query="select r from Room r WHERE r.teacher.school.schoolData.inep = :inep")
 public class Room implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
 	
@@ -103,7 +103,7 @@ public class Room implements Serializable, JsonBehaviour {
 
 	@Override
 	public String toString() {
-		return "Group [id=" + id + ", name=" + name + ", serie=" + serie
+		return "Room [id=" + id + ", name=" + name + ", serie=" + serie
 				+ ", term=" + term + ", teacher=" + teacher.getId()
 				+ ", qtdeAlunos=" + qtdeAlunos + "]";
 	}

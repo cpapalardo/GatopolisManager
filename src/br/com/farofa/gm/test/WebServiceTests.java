@@ -3,6 +3,8 @@ package br.com.farofa.gm.test;
 import java.util.Date;
 import java.util.Random;
 
+import junit.framework.TestCase;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,7 +26,7 @@ import br.com.farofa.gm.webservice.SchoolWS;
 import br.com.farofa.gm.webservice.StudentWS;
 import br.com.farofa.gm.webservice.TeacherWS;
 
-public class WebServiceTests {
+public class WebServiceTests extends TestCase {
 	public static void main(String[] args) {
 		//testSaveSchool();
 	}
@@ -68,8 +70,8 @@ public class WebServiceTests {
 		
 		String result = ws.save(json);
 		
-		int id = Integer.valueOf(result);
-		
+		//int id = Integer.valueOf(result);
+		assertNotNull(result);
 	}
 	
 	public static void testDelete() {
@@ -134,12 +136,13 @@ public class WebServiceTests {
 		teacher.setJson(ws.findById(1));
 		System.out.println(teacher);
 		
-		SchoolData sd = new SchoolData("12345678", "Escola Teste");
+		/*SchoolData sd = new SchoolData("12345678", "Escola Teste");
 		School school = new School("12345678", "1234567890", "1234", "escola@email.com", sd);
-		Teacher t2 = new Teacher(null, "Rodrigo de Sordi", "1234", "rodsordi@hotmail.com", null, null, null, school);
+		//Teacher t2 = new Teacher(null, "Rodrigo de Sordi", "1234", "rodsordi@hotmail.com", null, null, null, school);
 		/*int id = ws.save(t2.getJson());
 		t2.setId(id);
 		System.out.println(t2);*/
+		
 	}
 	
 	public static void testSchool(){

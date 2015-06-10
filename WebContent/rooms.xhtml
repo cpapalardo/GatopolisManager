@@ -10,45 +10,45 @@ xmlns:p="http://primefaces.org/ui">
 </h:head>
 
 <h:body>
-	<h:form id="groups">
+	<h:form id="rooms">
 		<p:panel>
 			<p:messages id="messages" autoUpdate="true" closable="true" />
 		
 			<h3><p:outputLabel value="Turmas"/></h3>
 			
-			<p:dataTable var="group" value="#{groupsBean.groups}">
+			<p:dataTable var="room" value="#{roomsBean.rooms}">
 				<p:column headerText="Nome">
-					<h:outputText value="#{group.name}" />
+					<h:outputText value="#{room.name}" />
 				</p:column>
 	
 				<p:column headerText="Periodo">
-					<h:outputText value="#{group.period == 'M'.charAt(0) ? 'Manhã' : 
-										  (group.period == 'T'.charAt(0) ? 'Tarde' : 
-										  (group.period == 'I'.charAt(0) ? 'Integral' : ''))}" />
+					<h:outputText value="#{room.term == 'M'.charAt(0) ? 'Manhã' : 
+										  (room.term == 'T'.charAt(0) ? 'Tarde' : 
+										  (room.term == 'I'.charAt(0) ? 'Integral' : ''))}" />
 				</p:column>
 	
 				<p:column headerText="Serie">
-					<h:outputText value="#{group.serie}" />
+					<h:outputText value="#{room.serie}" />
 				</p:column>
 				
 				<p:column headerText="Professor">
-					<h:outputText value="#{group.teacher.name}" />
+					<h:outputText value="#{room.teacher.name}" />
 				</p:column>
 				
 				<p:column headerText="Qtde Alunos">
-					<h:outputText value="#{group.qtdeAlunos}" />
+					<h:outputText value="#{room.qtdeAlunos}" />
 				</p:column>
 				
 				<p:column>
-        			<p:commandLink id="Edit" ajax="false" action="#{groupsBean.edit(group)}">
+        			<p:commandLink id="Edit" ajax="false" action="#{roomsBean.edit(room)}">
 	        			<h:outputText value="Editar" />
 	    			</p:commandLink>
 				</p:column>
 				
 			</p:dataTable>
 			
-			<p:commandButton value="Nova Turma" type="submit" action="#{groupsBean.novaTurma}" style="margin-top:10px"/>
-			<p:commandButton value="Voltar" action="#{groupsBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
+			<p:commandButton value="Nova Turma" type="submit" action="#{roomsBean.novaTurma}" style="margin-top:10px"/>
+			<p:commandButton value="Voltar" action="#{roomsBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
 			
 		</p:panel>
 	</h:form>

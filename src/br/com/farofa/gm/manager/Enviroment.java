@@ -1,5 +1,5 @@
 package br.com.farofa.gm.manager;
 
 public enum Enviroment {
-	banco_teste, banco_teste2;
+	banco_teste, gatopolis_v2_db;
 }

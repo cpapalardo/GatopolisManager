@@ -30,7 +30,14 @@ public class SQLServerTests {
 	static ReportTeacherDAO reportTeacherDAO;
 	
 	public static void main(String[] args) {
-		//getIdAfterSaveTest();
+		testSQLAzure();
+	}
+	
+	public static void testSQLAzure(){
+		SchoolDataDAO dao = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
+		SchoolData sd = new SchoolData("560650", "Escola X");
+		dao.save(sd);
+		DataBaseManager.close();
 	}
 	
 	public static void getIdAfterSaveTest(){
