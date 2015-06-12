@@ -10,6 +10,9 @@
       <parameter name="className" value="br.com.farofa.gm.webservice.SchoolWS"/>
       <parameter name="wsdlPortType" value="SchoolWS"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="loadSchoolsBySyncCode" qname="loadSchoolsBySyncCode" returnQName="retNS:loadSchoolsBySyncCodeReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:syncCode" type="tns:string"/>
+      </operation>
       <operation name="update" qname="update" soapAction="">
         <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json" type="tns:string"/>
       </operation>
@@ -27,7 +30,7 @@
       <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findByInep" qname="findByInep" returnQName="retNS:findByInepReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
+      <parameter name="allowedMethods" value="findByInep loadSchoolsBySyncCode findById save update delete findAll"/>
 
   </service>
 </deployment>

@@ -131,7 +131,7 @@ public class GameBird implements Serializable, JsonBehaviour {
 	@Override
 	public String getJson() {
 		JSONObject jsonObj = new JSONObject();
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy hh:mm:ss");
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
 		if (id != null) jsonObj.put("id", id);
 		if (completed != null) jsonObj.put("completed", completed);
 		if (time_wasted != null) jsonObj.put("time_wasted", time_wasted);
@@ -145,7 +145,7 @@ public class GameBird implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy hh:mm:ss");
+		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
 		if (jsonObj.has("id")) id = jsonObj.getInt("id");
 		if (jsonObj.has("completed")) completed = jsonObj.getBoolean("completed");
 		if (jsonObj.has("time_wasted")) time_wasted = jsonObj.getInt("time_wasted");

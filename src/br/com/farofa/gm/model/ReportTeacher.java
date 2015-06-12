@@ -161,7 +161,7 @@ public class ReportTeacher implements Serializable, JsonBehaviour {
 
 	@Override
 	public String toString() {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		return "ReportTeacher [id=" + id + ", dashboard_opened="
 				+ dashboard_opened + ", dashboard_duration="
 				+ dashboard_duration + ", aba_obs_duration=" + aba_obs_duration

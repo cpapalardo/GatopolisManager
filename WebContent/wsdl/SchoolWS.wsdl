@@ -5,6 +5,8 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://webservice.gm.farofa.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://io.java"/>
+   <element name="syncCode" type="xsd:string"/>
+   <element name="loadSchoolsBySyncCodeReturn" type="xsd:string"/>
    <element name="json" type="xsd:string"/>
    <element name="json1" type="xsd:string"/>
    <element name="json2" type="xsd:string"/>
@@ -16,14 +18,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="findByInepReturn" type="xsd:string"/>
   </schema>
  </wsdl:types>
-
-   <wsdl:message name="updateRequest">
-
-      <wsdl:part element="impl:json" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
 
    <wsdl:message name="findByInepResponse">
 
@@ -49,14 +43,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findByIdRequest">
-
-      <wsdl:part element="impl:pk" name="pk">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="findByIdResponse">
 
       <wsdl:part element="impl:findByIdReturn" name="findByIdReturn">
@@ -65,9 +51,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="saveRequest">
+   <wsdl:message name="loadSchoolsBySyncCodeResponse">
 
-      <wsdl:part element="impl:json2" name="json">
+      <wsdl:part element="impl:loadSchoolsBySyncCodeReturn" name="loadSchoolsBySyncCodeReturn">
 
       </wsdl:part>
 
@@ -101,7 +87,51 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="updateRequest">
+
+      <wsdl:part element="impl:json" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByIdRequest">
+
+      <wsdl:part element="impl:pk" name="pk">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveRequest">
+
+      <wsdl:part element="impl:json2" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="loadSchoolsBySyncCodeRequest">
+
+      <wsdl:part element="impl:syncCode" name="syncCode">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="SchoolWS">
+
+      <wsdl:operation name="loadSchoolsBySyncCode" parameterOrder="syncCode">
+
+         <wsdl:input message="impl:loadSchoolsBySyncCodeRequest" name="loadSchoolsBySyncCodeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:loadSchoolsBySyncCodeResponse" name="loadSchoolsBySyncCodeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="update" parameterOrder="json">
 
@@ -180,6 +210,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:binding name="SchoolWSSoapBinding" type="impl:SchoolWS">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="loadSchoolsBySyncCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="loadSchoolsBySyncCodeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="loadSchoolsBySyncCodeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="update">
 
