@@ -51,7 +51,7 @@ public class WebServiceTests extends TestCase {
 	}
 	
 	public static void testSaveSchool() {
-		SchoolWS ws = new SchoolWS();
+		/*SchoolWS ws = new SchoolWS();
 		String json = "{\"inep\":\"30679551\", \"sync_code\":\"1234567890\", \"password\":\"12345678\", \"email\":\"email@email.com\", \"schoolData\":{\"inep\":\"30679551\", \"name\":\"Escola Teste\"}}";
 		ws.save(json);
 		/*SchoolData sd = new SchoolData("12345678", "Escola Teste");

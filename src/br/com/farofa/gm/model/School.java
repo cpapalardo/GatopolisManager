@@ -91,7 +91,12 @@ public class School implements Serializable, JsonBehaviour {
 		if (sync_code != null) jsonObj.put("sync_code", sync_code);
 		if (password != null) jsonObj.put("password", password);
 		if (email != null) jsonObj.put("email", email);
-		if (schoolData != null && schoolData.getInep() != null) jsonObj.put("schoolData", schoolData.getInep());
+		if (schoolData != null && schoolData.getInep() != null) {
+			JSONObject sub = new JSONObject();
+			sub.put("inep", schoolData.getInep());
+			sub.put("name", schoolData.getName());
+			jsonObj.put("schoolData", sub);
+		}
 		return jsonObj.toString();
 	}
 
@@ -103,9 +108,12 @@ public class School implements Serializable, JsonBehaviour {
 		if (jsonObj.has("password")) password = jsonObj.getString("password");
 		if (jsonObj.has("email")) email = jsonObj.getString("email");
 		if (jsonObj.has("schoolData")) {
+			JSONObject sub = (JSONObject)jsonObj.get("schoolData");
 			schoolData = new SchoolData();
-			String inep = jsonObj.getString("schoolData");
+			String inep = sub.getString("inep");
+			String name = sub.getString("name");
 			schoolData.setInep(inep);
+			schoolData.setName(name);
 		}
 	}
 }
