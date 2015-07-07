@@ -1,0 +1,71 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+     http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="banco_teste" transaction-type="RESOURCE_LOCAL">
+
+		<!-- provedor/implementacao do JPA -->
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<!-- entidade mapeada -->
+		<class>br.com.farofa.gm.model.SchoolData</class>
+		<class>br.com.farofa.gm.model.School</class>
+		<class>br.com.farofa.gm.model.Teacher</class>
+		<class>br.com.farofa.gm.model.Room</class>
+		<class>br.com.farofa.gm.model.Student</class>
+		<class>br.com.farofa.gm.model.GameBird</class>
+		<class>br.com.farofa.gm.model.Buildings</class>
+		<class>br.com.farofa.gm.model.Note</class>
+		<class>br.com.farofa.gm.model.ReportTeacher</class>
+		<class>br.com.farofa.gm.model.ReportStudent</class>
+
+		<properties>
+			<!-- dados da conexao -->
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste" />
+			<property name="javax.persistence.jdbc.user" value="admin" />
+			<property name="javax.persistence.jdbc.password" value="admin" />
+
+			<!-- propriedades do hibernate -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="gatopolis_v2_db">
+
+		<!-- provedor/implementacao do JPA -->
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<!-- entidade mapeada -->
+		<class>br.com.farofa.gm.model.SchoolData</class>
+		<class>br.com.farofa.gm.model.School</class>
+		<class>br.com.farofa.gm.model.Teacher</class>
+		<class>br.com.farofa.gm.model.Group</class>
+		<class>br.com.farofa.gm.model.Student</class>
+		<class>br.com.farofa.gm.model.Transition</class>
+		<class>br.com.farofa.gm.model.WrittenWord</class>
+		<class>br.com.farofa.gm.model.Note</class>
+		<class>br.com.farofa.gm.model.ReportTeacher</class>
+		<class>br.com.farofa.gm.model.ReportStudent</class>
+
+		<properties>
+			<!-- dados da conexao -->
+			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://lqs5qhczop.database.windows.net:1433;databaseName=gatopolis_v2_db" />
+			<property name="javax.persistence.jdbc.user" value="FarofaStudios@lqs5qhczop" />
+			<property name="javax.persistence.jdbc.password" value="Farofa2015" />
+
+			<!-- propriedades do hibernate -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+
+		</properties>
+	</persistence-unit>
+	
+</persistence>
