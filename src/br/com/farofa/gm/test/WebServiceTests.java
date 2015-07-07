@@ -1,6 +1,7 @@
 package br.com.farofa.gm.test;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import junit.framework.TestCase;
@@ -8,11 +9,14 @@ import junit.framework.TestCase;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import br.com.farofa.gm.dao.BuildingsDAO;
+import br.com.farofa.gm.dao.BuildingsDAOImpl;
 import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDAOImpl;
 import br.com.farofa.gm.dao.SchoolDataDAO;
 import br.com.farofa.gm.dao.SchoolDataDAOImpl;
 import br.com.farofa.gm.manager.DataBaseManager;
+import br.com.farofa.gm.model.Buildings;
 import br.com.farofa.gm.model.GameBird;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
@@ -28,7 +32,63 @@ import br.com.farofa.gm.webservice.TeacherWS;
 
 public class WebServiceTests extends TestCase {
 	public static void main(String[] args) {
-		//testSaveSchool();
+		testSchoolDataFindByInep();
+	}
+	
+	public static void testSchoolDataFindByInep () {
+		SchoolDataWS ws = new SchoolDataWS ();
+		String json = ws.findByInep("12345678");
+		System.out.println(json);
+	}
+	
+	public static void testTeacherFindByInep () {
+		TeacherWS ws = new TeacherWS ();
+		String json = ws.findByInep("123456789");
+		System.out.println(json);
+	}
+	
+	public static void testRoomSave () {
+		RoomWS ws = new RoomWS();
+		String json = "{\"id\":\"0\", \"name\":\"Turma Um\", \"serie\":\"Serie Um\", \"term\":\"T\", \"teacher\":\"1\"}";
+		String id = ws.save(json);
+		System.out.println(id);
+	}
+	
+	public static void testStudentSave () {
+		String json = "{\"id\":\"0\", \"name\":\"Alunocaio\", \"gender\":\"M\", \"birth_date\":\"01/01/2005 00:00:00\", \"buildings\":\"0\", \"coins\":\"0\", \"time_in_city\":\"0\", \"app_rating\":\"0\", \"picture_url\":\"\", \"room\":\"3\"}";
+		StudentWS ws = new StudentWS();
+		ws.save(json);
+	}
+	
+	public static void testTeacherSave () {
+		String json = "{\"id\":\"0\", \"name\":\"Murilo Pugliesi\", \"nickname\":\"\", \"password\":\"1234\", \"email\":\"murillo@farofastudios.com.br\", \"question\":\"A\", \"answer\":\"a\", \"picture_url\":\"\", \"school\":\"12345678\"}";			
+		Teacher teacher = new Teacher();
+		teacher.setJson(json);
+		System.out.println(teacher);
+		
+		TeacherWS ws = new TeacherWS ();
+		System.out.println(ws.save(json));
+	}
+	
+	public static void testSchoolLoad () {
+		SchoolWS ws = new SchoolWS ();
+		String json = ws.loadSchoolsBySyncCode("432142457");
+		System.out.println(json);
+	}
+	
+	public static void testSchoolSave () {
+		String json = "{\"sync_code\":\"947764259\", \"password\":\"115092\", \"email\":\"caio@farofastudios.com.br\", \"schoolData\":{\"inep\":\"87654321\", \"name\":\"Escola Lok\"}}";
+		SchoolWS ws = new SchoolWS ();
+		ws.save(json);
+		
+	}
+	
+	public static void testBuildings() {
+		BuildingsDAO dao = new BuildingsDAOImpl(DataBaseManager.getEntityManager());
+		List<Buildings> buildingsList = dao.findByInep("12345678");
+		for (Buildings buildings : buildingsList) {
+			System.out.println(buildings);
+		}
 	}
 	
 	public static void testEntityId() {
@@ -65,7 +125,7 @@ public class WebServiceTests extends TestCase {
 		GameBirdWS ws = new GameBirdWS();
 		Student student = new Student();
 		student.setId(1);
-		GameBird gb = new GameBird(null, true, 100, "", "", new Date(), student);
+		GameBird gb = new GameBird(null, true, 100, "", "", "", new Date(), student);
 		String json = gb.getJson();
 		
 		String result = ws.save(json);
@@ -84,7 +144,7 @@ public class WebServiceTests extends TestCase {
 		String json = actual.getJson();
 		ws.save(json);
 		
-		ws.delete(inep);
+		ws.delete(json);
 		
 		json = ws.findById(inep);
 	}
@@ -114,7 +174,7 @@ public class WebServiceTests extends TestCase {
 		RoomWS ws = new RoomWS();
 		SchoolData sd = new SchoolData("12345678", "Escola Teste");
 		School school = new School("12345678", "1234567890", "1234", "escola@email.com", sd);
-		Teacher teacher = new Teacher(1, "Rodrigo de Sordi", "1234", "rodsordi@hotmail.com", null, null, null, school);
+		Teacher teacher = new Teacher(1, "Rodrigo de Sordi", "yei", "1234", "rodsordi@hotmail.com", null, null, null, school);
 		Room group = new Room(null, "Grupo Malandro", "Seria Alpha", 'M', teacher, null);
 		String json = group.getJson();
 		int id = Integer.valueOf(ws.save(json));

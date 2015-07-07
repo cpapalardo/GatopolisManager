@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import org.json.JSONObject;
 
 @Entity
-@Table(name = "teacher")
+@Table(name = "buildings")
 @NamedQuery(name="Buildings.findByInepCode", query="select b from Buildings b WHERE b.student.room.teacher.school.schoolData.inep = :inep")
 public class Buildings implements Serializable, JsonBehaviour {
 	private static final long serialVersionUID = 1L;
@@ -109,7 +109,9 @@ public class Buildings implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("id")) 
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("name")) name = jsonObj.getString("name");
 		if (jsonObj.has("positionX")) positionX = jsonObj.getInt("positionX");
 		if (jsonObj.has("positionY")) positionY = jsonObj.getInt("positionY");

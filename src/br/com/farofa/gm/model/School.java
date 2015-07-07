@@ -22,10 +22,10 @@ public class School implements Serializable, JsonBehaviour {
 	@Column(name="inep")
 	private String id;
 	
-	@Column(nullable=false, length=10)
+	@Column(nullable=false, length=9)
 	private String sync_code;
 	
-	@Column(nullable=false, length=8)
+	@Column(nullable=false, length=45)
 	private String password;
 	
 	@Column(nullable=true, length= 255)
@@ -91,11 +91,11 @@ public class School implements Serializable, JsonBehaviour {
 		if (sync_code != null) jsonObj.put("sync_code", sync_code);
 		if (password != null) jsonObj.put("password", password);
 		if (email != null) jsonObj.put("email", email);
-		if (schoolData != null && schoolData.getInep() != null) {
-			JSONObject sub = new JSONObject();
-			sub.put("inep", schoolData.getInep());
-			sub.put("name", schoolData.getName());
-			jsonObj.put("schoolData", sub);
+		if (schoolData != null) {
+			JSONObject subJson = new JSONObject();
+			subJson.put("inep", schoolData.getInep());
+			subJson.put("name", schoolData.getName());
+			jsonObj.put("schoolData", subJson);
 		}
 		return jsonObj.toString();
 	}
@@ -108,12 +108,11 @@ public class School implements Serializable, JsonBehaviour {
 		if (jsonObj.has("password")) password = jsonObj.getString("password");
 		if (jsonObj.has("email")) email = jsonObj.getString("email");
 		if (jsonObj.has("schoolData")) {
-			JSONObject sub = (JSONObject)jsonObj.get("schoolData");
+			JSONObject subJson = (JSONObject)jsonObj.get("schoolData");
 			schoolData = new SchoolData();
-			String inep = sub.getString("inep");
-			String name = sub.getString("name");
-			schoolData.setInep(inep);
-			schoolData.setName(name);
+			id = subJson.getString("inep");
+			schoolData.setInep(subJson.getString("inep"));
+			schoolData.setName(subJson.getString("name"));
 		}
 	}
 }

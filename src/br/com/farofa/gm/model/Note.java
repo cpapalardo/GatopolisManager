@@ -107,7 +107,7 @@ public class Note implements Serializable, JsonBehaviour {
 	@Override
 	public String getJson() {
 		JSONObject jsonObj = new JSONObject();
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (id != null) jsonObj.put("id", id);
 		if (note != null) jsonObj.put("note", note);
 		if (created_at != null) jsonObj.put("created_at", df.format(created_at));
@@ -119,8 +119,10 @@ public class Note implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		if (jsonObj.has("id")) 
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("note")) note = jsonObj.getString("note");
 		if (jsonObj.has("created_at")) {
 			try {

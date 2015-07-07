@@ -16,7 +16,7 @@ public class GameBirdWSTest extends TestCase {
 		GameBirdWS ws = new GameBirdWS();
 		Student student = new Student();
 		student.setId(1);
-		GameBird gb = new GameBird(null, true, 100, "", "", new Date(), student);
+		GameBird gb = new GameBird(null, true, 100, "", "", "", new Date(), student);
 		String json = gb.getJson();
 		
 		String result = ws.save(json);

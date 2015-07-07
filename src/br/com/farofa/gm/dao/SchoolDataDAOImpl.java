@@ -1,6 +1,9 @@
 package br.com.farofa.gm.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import br.com.farofa.gm.model.SchoolData;
 
@@ -9,11 +12,5 @@ public class SchoolDataDAOImpl extends GenericDAOImpl<SchoolData, String> implem
 	public SchoolDataDAOImpl(EntityManager manager) {
 		super(SchoolData.class, manager);
 	}
-
-	/*@Override
-	public List<SchoolData> findByInep(String inep) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
 
 }

@@ -191,7 +191,9 @@ public class ReportTeacher implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("id")) 
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("dashboard_opened")) dashboard_opened = jsonObj.getInt("dashboard_opened");
 		if (jsonObj.has("dashboard_duration")) dashboard_duration = jsonObj.getInt("dashboard_duration");
 		if (jsonObj.has("aba_obs_duration")) aba_obs_duration = jsonObj.getInt("aba_obs_duration");

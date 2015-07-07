@@ -30,7 +30,7 @@ public class SQLServerTests {
 	static ReportTeacherDAO reportTeacherDAO;
 	
 	public static void main(String[] args) {
-		testSQLAzure();
+		//testSQLAzure();
 	}
 	
 	public static void testSQLAzure(){
@@ -45,7 +45,7 @@ public class SQLServerTests {
 		SchoolData sd = new SchoolData("12345678", "Escola X");
 		School s = new School();
 		s.setSchoolData(sd);
-		Teacher teacher = new Teacher(null, "Nome", "1234", "email@email.com", 'A', "Resposta X", null, s);
+		Teacher teacher = new Teacher(null, "Nome", "haa", "1234", "email@email.com", 'A', "Resposta X", null, s);
 		dao.save(teacher);
 		System.out.println(teacher.getId());
 		DataBaseManager.close();

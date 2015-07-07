@@ -15,7 +15,7 @@ public class DataBaseManager {
 
 	public static EntityManager getEntityManager() {
 		if(manager == null || !manager.isOpen()){
-			factory = Persistence.createEntityManagerFactory(getEnviroment());
+			factory = Persistence.createEntityManagerFactory(Enviroment.gatopolis_v2_db.name());
 			manager = factory.createEntityManager();
 		}
 		return manager;
@@ -23,7 +23,7 @@ public class DataBaseManager {
 	
 	public static EntityManagerFactory getFactory() {
 		if(factory == null || !factory.isOpen()){
-			factory = Persistence.createEntityManagerFactory(getEnviroment());
+			factory = Persistence.createEntityManagerFactory(Enviroment.gatopolis_v2_db.name());
 		}
 		return factory;
 	}
@@ -48,7 +48,7 @@ public class DataBaseManager {
 				enviroment = Enviroment.gatopolis_v2_db.name();
 			}
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			System.out.println("Hostname can not be resolved");
 		}
 		return enviroment;
 	}

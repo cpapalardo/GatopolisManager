@@ -169,7 +169,7 @@ public class Student implements Serializable, JsonBehaviour {
 	@Override
 	public String getJson() {
 		JSONObject jsonObj = new JSONObject();
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (id != null) jsonObj.put("id", id);
 		if (name != null) jsonObj.put("name", name);
 		if (gender != null) jsonObj.put("gender", gender);
@@ -186,11 +186,13 @@ public class Student implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy");
-		if (!jsonObj.has("id")) id = jsonObj.getInt("id");
-		if (!jsonObj.has("name")) name = jsonObj.getString("name");
-		if (!jsonObj.has("gender")) gender = jsonObj.getString("gender").charAt(0);
-		if (!jsonObj.has("birth_date")) {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		if (jsonObj.has("id"))
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
+		if (jsonObj.has("name")) name = jsonObj.getString("name");
+		if (jsonObj.has("gender")) gender = jsonObj.getString("gender").charAt(0);
+		if (jsonObj.has("birth_date")) {
 			try {
 				String date = jsonObj.getString("birth_date");
 				birth_date = df.parse(date);

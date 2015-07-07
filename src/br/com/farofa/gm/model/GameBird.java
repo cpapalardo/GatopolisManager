@@ -34,6 +34,9 @@ public class GameBird implements Serializable, JsonBehaviour {
 	@Column(nullable=false, length=255)
 	private Integer time_wasted;
 	
+	@Column(nullable=false, length=45)
+	private String letters_sequence;
+	
 	@Column(nullable=false, length=255)
 	private String letters_time;
 	
@@ -50,13 +53,14 @@ public class GameBird implements Serializable, JsonBehaviour {
 	
 	public GameBird(){}
 
-	public GameBird(Integer id, Boolean completed, Integer time_wasted,
+	public GameBird(Integer id, Boolean completed, Integer time_wasted, String letters_sequence,
 			String letters_time, String letters_faults, Date played_date,
 			Student student) {
 		super();
 		this.id = id;
 		this.completed = completed;
 		this.time_wasted = time_wasted;
+		this.letters_sequence = letters_sequence;
 		this.letters_time = letters_time;
 		this.letters_faults = letters_faults;
 		this.played_date = played_date;
@@ -119,11 +123,19 @@ public class GameBird implements Serializable, JsonBehaviour {
 		this.student = student;
 	}
 
+	public String getLetters_sequence() {
+		return letters_sequence;
+	}
+
+	public void setLetters_sequence(String letters_sequence) {
+		this.letters_sequence = letters_sequence;
+	}
+
 	@Override
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return "GameBird [id=" + id + ", completed=" + completed
-				+ ", time_wasted=" + time_wasted + ", letters_time="
+				+ ", time_wasted=" + time_wasted + ", letter_sequence=" + letters_sequence + ", letters_time="
 				+ letters_time + ", letters_faults=" + letters_faults
 				+ ", played_date=" + df.format(played_date) + ", student=" + student.getId() + "]";
 	}
@@ -131,10 +143,11 @@ public class GameBird implements Serializable, JsonBehaviour {
 	@Override
 	public String getJson() {
 		JSONObject jsonObj = new JSONObject();
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (id != null) jsonObj.put("id", id);
 		if (completed != null) jsonObj.put("completed", completed);
 		if (time_wasted != null) jsonObj.put("time_wasted", time_wasted);
+		if (letters_sequence != null) jsonObj.put("letters_sequence", letters_sequence);
 		if (letters_time != null) jsonObj.put("letters_time", letters_time);
 		if (letters_faults != null) jsonObj.put("letters_faults", letters_faults);
 		if (played_date != null) jsonObj.put("played_date", df.format(played_date));
@@ -145,10 +158,13 @@ public class GameBird implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		if (jsonObj.has("id")) 
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("completed")) completed = jsonObj.getBoolean("completed");
 		if (jsonObj.has("time_wasted")) time_wasted = jsonObj.getInt("time_wasted");
+		if (jsonObj.has("letters_sequence")) letters_sequence = jsonObj.getString("letters_sequence");
 		if (jsonObj.has("letters_time")) letters_time = jsonObj.getString("letters_time");
 		if (jsonObj.has("letters_faults")) letters_faults = jsonObj.getString("letters_faults");
 		if (jsonObj.has("played_date")) {

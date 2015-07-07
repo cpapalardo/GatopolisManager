@@ -107,7 +107,7 @@ public class ReportStudent implements Serializable, JsonBehaviour {
 	@Override
 	public String getJson() {
 		JSONObject jsonObj = new JSONObject();
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if (id != null) jsonObj.put("id", id);
 		if (date_accessed != null) jsonObj.put("date_accessed", df.format(date_accessed));
 		if (view_count != null) jsonObj.put("view_count", view_count);
@@ -119,8 +119,10 @@ public class ReportStudent implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		DateFormat df = new SimpleDateFormat("yy/MM/yyyy HH:mm:ss");
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		if (jsonObj.has("id")) 
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("view_count")) view_count = jsonObj.getInt("view_count");
 		if (jsonObj.has("date_accessed")) {
 			try {

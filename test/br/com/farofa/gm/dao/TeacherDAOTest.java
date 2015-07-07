@@ -1,5 +1,7 @@
 package br.com.farofa.gm.dao;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -13,17 +15,17 @@ public class TeacherDAOTest extends TestCase {
 
 	@Test
 	public void testSave() {
-		TeacherDAO dao = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+		TeacherDAO tDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
 		
 		SchoolData sd = new SchoolData();
 		sd.setInep("12345678");
 		School s = new School();
 		s.setId("12345678");
 		s.setSchoolData(sd);
-		Teacher t = new Teacher(null, "Professor Teste", "1234", "email@email.com", 'A', "Resposta Teste", null, s);
-		dao.save(t);
+		Teacher t = new Teacher(null, "Professor Teste", null, "1234", "email@email.com", 'A', "Resposta Teste", null, s);
+		tDAO.save(t);
 		
-		Teacher expected = dao.findById(t.getId());
+		Teacher expected = tDAO.findById(t.getId());
 		
 		assertNotNull(expected);
 		assertNotNull(t.getId());
@@ -38,12 +40,49 @@ public class TeacherDAOTest extends TestCase {
 
 	@Test
 	public void testUpdate() {
-		fail("Not yet implemented");
+		TeacherDAO dao = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+		Teacher teacher = dao.findById(1);
+		
+		teacher.setName("Professor Alterado");
+		teacher.setEmail("emailalterado@email.com");
+		teacher.setAnswer("Resposta Alterada");
+		teacher.setNickname("Nick Name Alterado");
+		teacher.setPassword("alterado");
+		teacher.setQuestion('B');
+		
+		dao.update(teacher);
+		
+		Teacher expected = dao.findById(1);
+		
+		assertNotNull(expected);
+		
+		assertEquals(expected.getName(), teacher.getName());
+		assertEquals(expected.getEmail(), teacher.getEmail());
+		assertEquals(expected.getAnswer(), teacher.getAnswer());
+		assertEquals(expected.getNickname(), teacher.getNickname());
+		assertEquals(expected.getPassword(), teacher.getPassword());
+		assertEquals(expected.getQuestion(), teacher.getQuestion());
 	}
 
 	@Test
 	public void testDelete() {
-		fail("Not yet implemented");
+		TeacherDAO tDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+		
+		SchoolData sd = new SchoolData();
+		sd.setInep("12345678");
+		School s = new School();
+		s.setId("12345678");
+		s.setSchoolData(sd);
+		Teacher t = new Teacher(null, "Professor Teste", null, "1234", "email@email.com", 'A', "Resposta Teste", null, s);
+		tDAO.save(t);
+		
+		tDAO.delete(t);
+		
+		assertNotNull(t.getId());
+		
+		Teacher expected = tDAO.findById(t.getId());
+		
+		assertNull(expected);
 	}
 
 	@Test
@@ -53,12 +92,19 @@ public class TeacherDAOTest extends TestCase {
 
 	@Test
 	public void testFindByInep() {
-		fail("Not yet implemented");
+		TeacherDAO tDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+		Teacher teacher = tDAO.findById(1);
+		assertNotNull(teacher);
 	}
 
 	@Test
 	public void testFindAll() {
-		fail("Not yet implemented");
+		TeacherDAO tDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
+		
+		List<Teacher> teachers = tDAO.findAll();
+		
+		assertNotNull(teachers);
+		assertTrue(teachers.size() > 0);
 	}
 
 }

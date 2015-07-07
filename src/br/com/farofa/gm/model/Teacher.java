@@ -26,7 +26,10 @@ public class Teacher implements Serializable, JsonBehaviour {
 	@Column(nullable=false, length=255)
 	private String name;
 	
-	@Column(nullable=false, length=4)
+	@Column(nullable=true, length=45)
+	private String nickname;
+	
+	@Column(nullable=true, length=45)
 	private String password;
 	
 	@Column(nullable=false, length=255)
@@ -48,11 +51,12 @@ public class Teacher implements Serializable, JsonBehaviour {
 	public Teacher() {}
 	
 	
-	public Teacher(Integer id, String name, String password, String email,
+	public Teacher(Integer id, String name, String nickname, String password, String email,
 			Character question, String answer, String picture_url, School school) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.nickname = nickname;
 		this.password = password;
 		this.email = email;
 		this.question = question;
@@ -76,6 +80,14 @@ public class Teacher implements Serializable, JsonBehaviour {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getPassword() {
@@ -131,7 +143,7 @@ public class Teacher implements Serializable, JsonBehaviour {
 		return "Teacher [id=" + id + ", name=" + name + ", password="
 				+ password + ", email=" + email + ", question=" + question
 				+ ", answer=" + answer + ", picture_url=" + picture_url
-				+ ", school=" + (school != null ? school.getSchoolData().getInep() : 0) + "]";
+				+ ", school=" + (school != null ? school.getSchoolData() != null ? school.getSchoolData().getInep() : 0 : 0) + "]";
 	}
 	
 	@Override
@@ -139,6 +151,7 @@ public class Teacher implements Serializable, JsonBehaviour {
 		JSONObject jsonObj = new JSONObject();
 		if (id != null) jsonObj.put("id", id);
 		if (name != null) jsonObj.put("name", name);
+		if (nickname != null) jsonObj.put("nickname", nickname);
 		if (password != null) jsonObj.put("password", password);
 		if (email != null) jsonObj.put("email", email);
 		if (question != null) jsonObj.put("question", question);
@@ -151,17 +164,25 @@ public class Teacher implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("id"))
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("name")) name = jsonObj.getString("name");
+		if (jsonObj.has("nickname")) nickname = jsonObj.getString("nickname");
 		if (jsonObj.has("password")) password = jsonObj.getString("password");
 		if (jsonObj.has("email")) email = jsonObj.getString("email");
 		if (jsonObj.has("question")) question = jsonObj.getString("question").charAt(0);
 		if (jsonObj.has("answer")) answer = jsonObj.getString("answer");
 		if (jsonObj.has("picture_url")) picture_url = jsonObj.getString("picture_url");
 		if (jsonObj.has("school")) {
+			String inep = jsonObj.getString("school");
+			
+			SchoolData sd = new SchoolData();
+			sd.setInep(inep);
+			
 			school = new School();
-			String id = jsonObj.getString("school");
-			school.setId(id);
+			school.setId(inep);
+			school.setSchoolData(sd);
 		}
 	}
 	

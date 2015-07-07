@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 
 import org.apache.commons.codec.net.URLCodec;
 
+import br.com.farofa.gm.webservice.WebServiceExeptionManager;
+
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
 import com.microsoft.azure.storage.blob.CloudBlobContainer;
@@ -23,17 +25,35 @@ public class BlobStorage {
 		String url = null;
 		try {
 			if (!name.contains(".jpg") && !name.contains(".bmp") && !name.contains(".gif"))
-				name = name + ".jpg";
+				name += ".jpg";
 			
-			File photo = new File(name);
+			File file = new File(name);
 			
+			/*url = "";
+			url += "file.isFile() = " + file.isFile() + "\n";
+			url += "file.isDirectory() = " + file.isDirectory() + "\n";
+			url += "file.getCanonicalPath() = " + file.getCanonicalPath() + "\n";
+			url += "file.getAbsolutePath() = " + file.getAbsolutePath() + "\n";
+			url += "file.getParent() = " + file.getParent() + "\n";
+			url += "file.canRead() = " + file.canRead() + "\n";
+			url += "file.canWrite() = " + file.canWrite() + "\n";
+			url += "Files.isReadable(file.toPath()) = " + Files.isReadable(file.toPath()) + "\n";
+			
+			if (file.isDirectory()) {
+				for (File f : file.listFiles()) {
+					url += f.getName() + "\n";
+				}
+			}*/
+
 			URLCodec codec = new URLCodec();
-			byte[] data = codec.decode(encodedPhoto.getBytes());
+			String photo = codec.decode(encodedPhoto);
+			byte[] data = codec.decode(encodedPhoto.getBytes()); 
 			
 			@SuppressWarnings("resource")
-			FileOutputStream stream = new FileOutputStream(photo);
-			stream.write(data);
-			
+			FileOutputStream outputStream = new FileOutputStream(file.getName());
+			outputStream.write(data);
+			outputStream.close();
+
 			// Retrieve storage account from connection-string.
 			CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
 
@@ -44,13 +64,14 @@ public class BlobStorage {
 			CloudBlobContainer container = blobClient.getContainerReference(containerName);
 
 			// Create or overwrite the "myimage.jpg" blob with contents from a
-			CloudBlockBlob blob = container.getBlockBlobReference(photo.getName());
-			blob.upload(new FileInputStream(photo), photo.length());
+			CloudBlockBlob blob = container.getBlockBlobReference(file.getName());
+			blob.upload(new FileInputStream (file), file.length());
 
-			url = container.getUri() + "/" + photo.getName();
+			url = container.getUri() + "/" + file.getName();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return WebServiceExeptionManager.GetExceptionMessage(e);
 		}
 		
 		return url;

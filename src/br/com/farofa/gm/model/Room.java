@@ -122,7 +122,9 @@ public class Room implements Serializable, JsonBehaviour {
 	@Override
 	public void setJson(String json) {
 		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) id = jsonObj.getInt("id");
+		if (jsonObj.has("id")) 
+			if (jsonObj.getInt("id") != 0)
+				id = jsonObj.getInt("id");
 		if (jsonObj.has("name")) name = jsonObj.getString("name");
 		if (jsonObj.has("serie")) serie = jsonObj.getString("serie");
 		if (jsonObj.has("term")) term = jsonObj.getString("term").charAt(0);

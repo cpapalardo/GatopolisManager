@@ -261,7 +261,7 @@ public class GeralImportBean {
 			}
 			//TeacherMap
 			if(!teacherMap.containsKey(teacherKey)){
-				teacher = new Teacher(null, professor, null, emailProfessor, null, null, null, school);
+				teacher = new Teacher(null, professor, null, null, emailProfessor, null, null, null, school);
 				teacherMap.put(teacherKey, teacher);
 			}else{
 				teacher = teacherMap.get(teacherKey);

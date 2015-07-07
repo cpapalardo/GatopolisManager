@@ -18,7 +18,7 @@ public class GameBirdDA0Test extends TestCase{
 		
 		Student st = new Student();
 		st.setId(1);
-		GameBird gb = new GameBird(null, true, 1, "", "", new Date(), st);
+		GameBird gb = new GameBird(null, true, 1, "", "", "", new Date(), st);
 		dao.save(gb);
 		
 		GameBird expected = dao.findById(st.getId());
