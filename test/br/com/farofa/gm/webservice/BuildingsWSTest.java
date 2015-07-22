@@ -1,19 +1,9 @@
 package br.com.farofa.gm.webservice;
 
-import static org.junit.Assert.fail;
-
-import java.util.List;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.dao.BuildingsDAO;
-import br.com.farofa.gm.dao.BuildingsDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.Buildings;
 
 public class BuildingsWSTest {
 
-	@Test
+	/*@Test
 	public void testGenericWSImpl() {
 		fail("Not yet implemented");
 	}
@@ -50,6 +40,6 @@ public class BuildingsWSTest {
 	@Test
 	public void testFindAll() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }

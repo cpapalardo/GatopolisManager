@@ -1,13 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 
 import br.com.farofa.gm.model.Buildings;
 
+@Named
 public class BuildingsDAOImpl extends GenericDAOImpl<Buildings, Integer> implements BuildingsDAO {
-
-	public BuildingsDAOImpl(EntityManager manager) {
-		super(Buildings.class, manager);
-	}
 
 }

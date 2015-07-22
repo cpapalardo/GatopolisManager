@@ -8,7 +8,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <element name="syncCode" type="xsd:string"/>
    <element name="loadSchoolsBySyncCodeReturn" type="xsd:string"/>
    <element name="json" type="xsd:string"/>
+   <element name="updateReturn" type="xsd:string"/>
    <element name="json1" type="xsd:string"/>
+   <element name="deleteReturn" type="xsd:string"/>
    <element name="json2" type="xsd:string"/>
    <element name="saveReturn" type="xsd:string"/>
    <element name="findAllReturn" type="xsd:string"/>
@@ -36,6 +38,10 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </wsdl:message>
 
    <wsdl:message name="deleteResponse">
+
+      <wsdl:part element="impl:deleteReturn" name="deleteReturn">
+
+      </wsdl:part>
 
    </wsdl:message>
 
@@ -68,6 +74,10 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </wsdl:message>
 
    <wsdl:message name="updateResponse">
+
+      <wsdl:part element="impl:updateReturn" name="updateReturn">
+
+      </wsdl:part>
 
    </wsdl:message>
 

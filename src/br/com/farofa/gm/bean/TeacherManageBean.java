@@ -5,22 +5,24 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.dao.StudentDAOImpl;
 import br.com.farofa.gm.dao.TeacherDAO;
-import br.com.farofa.gm.dao.TeacherDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class TeacherManageBean {
+	@Inject
 	private TeacherDAO teacherDAO;
+	@Inject
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -35,7 +37,6 @@ public class TeacherManageBean {
 	
 	@PostConstruct
 	public void init() {
-		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		
@@ -50,8 +51,6 @@ public class TeacherManageBean {
 	}
 
 	public String save() {
-		teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
-		
 		//Valida email
 		String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(emailPattern);
@@ -73,7 +72,6 @@ public class TeacherManageBean {
 		}
 		
 		sessionMap.remove("teacher");
-		DataBaseManager.close();
 		return "teachers";
 	}
 

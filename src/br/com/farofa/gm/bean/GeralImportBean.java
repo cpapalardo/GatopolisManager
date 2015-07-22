@@ -14,9 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -27,17 +29,10 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
 import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.SchoolDAO;
-import br.com.farofa.gm.dao.SchoolDAOImpl;
 import br.com.farofa.gm.dao.SchoolDataDAO;
-import br.com.farofa.gm.dao.SchoolDataDAOImpl;
 import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.dao.StudentDAOImpl;
 import br.com.farofa.gm.dao.TeacherDAO;
-import br.com.farofa.gm.dao.TeacherDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.manager.Enviroment;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.SchoolData;
@@ -46,12 +41,18 @@ import br.com.farofa.gm.model.Teacher;
 import br.com.farofa.gm.util.DateConverterUtil;
 import br.com.farofa.gm.util.SyncCodeGeneratorUtil;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class GeralImportBean {
+	@Inject
 	private SchoolDataDAO schoolDataDAO;
+	@Inject
 	private SchoolDAO schoolDAO;
+	@Inject
 	private TeacherDAO teacherDAO;
+	@Inject
 	private RoomDAO roomDAO;
+	@Inject
 	private StudentDAO studentDAO;
 	
 	private boolean rendered;
@@ -81,12 +82,6 @@ public class GeralImportBean {
     }
     
     public void upload () {
-    	schoolDataDAO = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
-    	schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
-    	teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
-    	roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
-    	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
-    	
     	if (uploadedFile != null) {
     		try {
     			proccessExcel(uploadedFile);
@@ -98,8 +93,6 @@ public class GeralImportBean {
     	}else{
         	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Não foi possível concluir o envio do arquivo!"));
         }
-    	
-    	DataBaseManager.close();
     }
     
     private void proccessExcel(UploadedFile uploadedFile) throws Exception{
@@ -138,6 +131,7 @@ public class GeralImportBean {
 			
 			String nomeDaEscola = null;
 			
+			boolean flagError = false;
 			// For each row, iterate through each columns
 			Iterator<Cell> cellIterator = row.cellIterator();
 			while (cellIterator.hasNext()) {
@@ -153,17 +147,20 @@ public class GeralImportBean {
 			 			codigoInepDaEscola = cell.getStringCellValue();
 					}
 					
-					//Verifica se é base teste ou produção
-					if(DataBaseManager.getEnviroment() == Enviroment.banco_teste.name()){
-						try {
-							nomeDaEscola = getSchoolNameByInep(codigoInepDaEscola);
-						} catch (Exception e) {
-							e.printStackTrace();
-							continue;
-						}
-					}else{
-						nomeDaEscola = "Escola Teste";
+					List<SchoolData> sdList = schoolDataDAO.findByInep(codigoInepDaEscola);
+					if (sdList == null || sdList.size() == 0) {
+						System.out.println("Inep = " + codigoInepDaEscola);
+						System.out.println("sdList == null: " + (sdList == null) + " sdList.size() == 0: " + (sdList.size() == 0));
+						System.out.println("Inep não cadastrado no banco de dados!");
+						flagError = true;
 					}
+					
+					/*try {
+						nomeDaEscola = getSchoolNameByInep(codigoInepDaEscola);
+					} catch (Exception e) {
+						e.printStackTrace();
+						continue;
+					}*/
 				} 
 				//Nome da turma
 				else if (columnIndex == 1) {
@@ -205,6 +202,10 @@ public class GeralImportBean {
 				else if (columnIndex == 8) {
 					sexo = cell.getStringCellValue().trim();
 				}
+			}
+			
+			if (flagError) {
+				break;
 			}
 			
 			System.out.print(codigoInepDaEscola + "\t");
@@ -333,6 +334,7 @@ public class GeralImportBean {
 		}
 	}
     
+	@SuppressWarnings("unused")
 	private String getSchoolNameByInep (String inep) throws Exception {
     	String url = "http://www.fnde.gov.br/pddeinfo/index.php/pddeinfo/escola/consultar";
    	 
@@ -362,6 +364,8 @@ public class GeralImportBean {
 			System.out.println(result);
 		}catch (Exception e){
 			System.out.println("INEP inexistente");
+			e.printStackTrace();
+			throw e;
 		}
 		
 		return result;

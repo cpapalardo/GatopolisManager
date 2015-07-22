@@ -5,23 +5,25 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.TeacherDAO;
-import br.com.farofa.gm.dao.TeacherDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Teacher;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class RoomManageBean {
+	@Inject
 	private TeacherDAO teacherDAO;
+	@Inject
 	private RoomDAO roomDAO;
 	
 	private School school;
@@ -32,7 +34,6 @@ public class RoomManageBean {
 	
 	@PostConstruct
 	public void init () {
-		teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		
@@ -51,11 +52,9 @@ public class RoomManageBean {
 			room.setTerm('M');
 			room.setTeacher(new Teacher());
 		}
-		DataBaseManager.close();
 	}
 	
 	public String save () {
-		roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
 		if(room.getId() == null) {
 			roomDAO.save(room);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma adicionada com sucesso!"));
@@ -64,7 +63,6 @@ public class RoomManageBean {
 			sessionMap.remove("room");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma alterada com sucesso!"));
 		}
-		DataBaseManager.close();
 		return "rooms";		
 	}
 	

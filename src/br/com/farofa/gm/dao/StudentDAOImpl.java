@@ -2,18 +2,14 @@ package br.com.farofa.gm.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 import javax.persistence.Query;
 
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
 
-
+@Named
 public class StudentDAOImpl extends GenericDAOImpl<Student, Integer> implements StudentDAO {
-	
-	public StudentDAOImpl(EntityManager manager) {
-		super(Student.class, manager);
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override

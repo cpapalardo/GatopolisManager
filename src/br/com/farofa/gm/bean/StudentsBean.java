@@ -5,20 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.dao.StudentDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class StudentsBean {
+	@Inject
 	private RoomDAO groupDAO;
+	@Inject
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -28,12 +30,9 @@ public class StudentsBean {
 	
 	@PostConstruct
 	public void init () {
-		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-		
 		school = (School) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("school");
 		students = studentDAO.findByInep(school.getSchoolData().getInep());
-		DataBaseManager.close();
 	}
 	
 	public String novoAluno () {
@@ -59,9 +58,7 @@ public class StudentsBean {
 	
 	public String groupName (int id) {
 		String name = null;
-		groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
 		name = groupDAO.findById(id).getName();
-		DataBaseManager.close();
 		return name;
 	}
 	

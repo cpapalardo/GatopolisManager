@@ -24,35 +24,20 @@ public class BlobStorage {
 	public String savePhoto(String encodedPhoto, String name) {
 		String url = null;
 		try {
-			if (!name.contains(".jpg") && !name.contains(".bmp") && !name.contains(".gif"))
+			if (!name.contains(".jpg") && !name.contains(".bmp") && !name.contains(".gif") && !name.contains(".jpeg"))
 				name += ".jpg";
+			final String photoPath = "d:\\home\\site\\wwwroot\\webapps\\";
+			name = name.replace(' ', '_');
+			File file = new File(photoPath + name);
 			
-			File file = new File(name);
-			
-			/*url = "";
-			url += "file.isFile() = " + file.isFile() + "\n";
-			url += "file.isDirectory() = " + file.isDirectory() + "\n";
-			url += "file.getCanonicalPath() = " + file.getCanonicalPath() + "\n";
-			url += "file.getAbsolutePath() = " + file.getAbsolutePath() + "\n";
-			url += "file.getParent() = " + file.getParent() + "\n";
-			url += "file.canRead() = " + file.canRead() + "\n";
-			url += "file.canWrite() = " + file.canWrite() + "\n";
-			url += "Files.isReadable(file.toPath()) = " + Files.isReadable(file.toPath()) + "\n";
-			
-			if (file.isDirectory()) {
-				for (File f : file.listFiles()) {
-					url += f.getName() + "\n";
-				}
-			}*/
-
 			URLCodec codec = new URLCodec();
-			String photo = codec.decode(encodedPhoto);
-			byte[] data = codec.decode(encodedPhoto.getBytes()); 
+			byte[] data = codec.decode(encodedPhoto.getBytes());
 			
-			@SuppressWarnings("resource")
-			FileOutputStream outputStream = new FileOutputStream(file.getName());
-			outputStream.write(data);
-			outputStream.close();
+			//FileUtils.writeByteArrayToFile(file, data);
+			
+			FileOutputStream out = new FileOutputStream(file);
+			out.write(data);
+			out.close();
 
 			// Retrieve storage account from connection-string.
 			CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
@@ -71,7 +56,7 @@ public class BlobStorage {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return WebServiceExeptionManager.GetExceptionMessage(e);
+			return WebServiceExeptionManager.getExceptionMessage(e);
 		}
 		
 		return url;

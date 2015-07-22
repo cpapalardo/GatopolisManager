@@ -1,18 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import java.util.List;
-import java.util.Random;
-
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.SchoolData;
 
 public class SchoolDataDAOTest extends TestCase {
 
-	@Test
+	/*@Test
 	public void testSave() {
 		SchoolDataDAO dao = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
 		
@@ -114,6 +106,6 @@ public class SchoolDataDAOTest extends TestCase {
 		assertNotNull(sdList);
 		assertTrue(sdList.size() > 0);
 		assertEquals("12345678", sdList.get(0).getInep());
-	}
+	}*/
 
 }

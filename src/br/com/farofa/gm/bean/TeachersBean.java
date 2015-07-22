@@ -5,17 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.dao.TeacherDAO;
-import br.com.farofa.gm.dao.TeacherDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Teacher;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class TeachersBean {
+	@Inject
 	private TeacherDAO teacherDAO;
 	
 	private School school;
@@ -26,12 +28,10 @@ public class TeachersBean {
 	
 	@PostConstruct
 	public void init () {
-		teacherDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		sessionMap.remove ("teacher");
 		teachers = teacherDAO.findByInep(school.getSchoolData().getInep());
-		DataBaseManager.close();
 	}
 	
 	public String create () {

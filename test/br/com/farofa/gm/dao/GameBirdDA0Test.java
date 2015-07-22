@@ -1,18 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import java.util.Date;
-
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.GameBird;
-import br.com.farofa.gm.model.Student;
 
 public class GameBirdDA0Test extends TestCase{
 
-	@Test
+	/*@Test
 	public void testSave() {
 		GameBirdDAO dao = new GameBirdDAOImpl(DataBaseManager.getEntityManager());
 		
@@ -50,6 +42,6 @@ public class GameBirdDA0Test extends TestCase{
 	@Test
 	public void testFindByInep() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }

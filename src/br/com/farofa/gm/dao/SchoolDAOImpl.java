@@ -1,16 +1,13 @@
 package br.com.farofa.gm.dao;
 
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 import javax.persistence.Query;
 
 import br.com.farofa.gm.model.School;
 
+@Named
 public class SchoolDAOImpl extends GenericDAOImpl<School, String> implements SchoolDAO {
-
-	public SchoolDAOImpl(EntityManager manager) {
-		super(School.class, manager);
-	}
-
+	
 	@Override
 	public School findBySyncCode(String syncCode) {
 		String jpql = "select s from School s where s.sync_code = :sync_code";

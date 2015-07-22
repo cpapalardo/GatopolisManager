@@ -4,27 +4,15 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://webservice.gm.farofa.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
-   <element name="savePhoto">
-    <complexType>
-     <sequence>
-      <element name="encodedPhoto" type="xsd:string"/>
-      <element name="name" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="savePhotoResponse">
-    <complexType>
-     <sequence>
-      <element name="savePhotoReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
+   <element name="encodedPhoto" type="xsd:string"/>
+   <element name="name" type="xsd:string"/>
+   <element name="savePhotoReturn" type="xsd:string"/>
   </schema>
  </wsdl:types>
 
    <wsdl:message name="savePhotoResponse">
 
-      <wsdl:part element="impl:savePhotoResponse" name="parameters">
+      <wsdl:part element="impl:savePhotoReturn" name="savePhotoReturn">
 
       </wsdl:part>
 
@@ -32,7 +20,11 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:message name="savePhotoRequest">
 
-      <wsdl:part element="impl:savePhoto" name="parameters">
+      <wsdl:part element="impl:encodedPhoto" name="encodedPhoto">
+
+      </wsdl:part>
+
+      <wsdl:part element="impl:name" name="name">
 
       </wsdl:part>
 
@@ -40,7 +32,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:portType name="StorageWS">
 
-      <wsdl:operation name="savePhoto">
+      <wsdl:operation name="savePhoto" parameterOrder="encodedPhoto name">
 
          <wsdl:input message="impl:savePhotoRequest" name="savePhotoRequest">
 

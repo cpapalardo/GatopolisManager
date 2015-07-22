@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.bean.item.ReportStudentItem;
 import br.com.farofa.gm.bean.item.ReportTeacherItem;
 import br.com.farofa.gm.dao.SchoolDAO;
-import br.com.farofa.gm.dao.SchoolDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.School;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class ReportBean {
+	@Inject
 	private SchoolDAO schoolDAO;
 	
-	public int schoolId;
+	private int schoolId;
 	private List <SelectItem> schoolItens;
 	
 	private List <ReportTeacherItem> rtiList;
@@ -26,11 +28,9 @@ public class ReportBean {
 
 	@PostConstruct
 	public void init () {
-		schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
 		schoolItens = new ArrayList<SelectItem> ();
 		for (School school : schoolDAO.findAll())
 			schoolItens.add (new SelectItem (school.getSchoolData().getInep(), school.getSchoolData().getName()));
-		DataBaseManager.close();
 	}
 	
 	public void showReport () {

@@ -3,12 +3,12 @@
   <ns1:parameter name="sendMultiRefs" value="true"/>
   <ns1:parameter name="disablePrettyXML" value="true"/>
   <ns1:parameter name="adminPassword" value="admin"/>
-  <ns1:parameter name="attachments.Directory" value="/Users/rodrigosordi/Documents/workspaces/workspace - web/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/GatopolisManagerHibernate/WEB-INF/attachments"/>
+  <ns1:parameter name="attachments.Directory" value="/Users/rodrigosordi/workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/GatopolisManager/WEB-INF/attachments"/>
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -22,54 +22,52 @@
  <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
  <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
  <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
- <ns1:service name="StorageWS" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="savePhoto" qname="ns1:savePhoto" returnQName="ns1:savePhotoReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:encodedPhoto" type="xsd:string"/>
-   <ns2:parameter qname="ns1:name" type="xsd:string"/>
+ <ns1:service name="GameBirdWS" provider="java:RPC" style="document" use="literal">
+  <ns2:operation name="update" qname="update" returnQName="ns1:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:json" type="xsd:string"/>
   </ns2:operation>
-  <ns1:parameter name="allowedMethods" value="savePhoto"/>
-  <ns1:parameter name="wsdlPortType" value="StorageWS"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns2:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:json1" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="save" qname="save" returnQName="ns3:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:json2" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="findAll" qname="findAll" returnQName="ns4:findAllReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="findById" qname="findById" returnQName="ns5:findByIdReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:pk" type="xsd:anyType"/>
+  </ns1:operation>
+  <ns1:operation name="findByInep" qname="findByInep" returnQName="ns6:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:inep" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="GameBirdWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.GameBirdWS"/>
+  <ns1:parameter name="wsdlServicePort" value="GameBirdWS"/>
   <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="wsdlServicePort" value="StorageWS"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlServiceElement" value="GameBirdWSService"/>
+ </ns1:service>
+ <ns1:service name="StorageWS" provider="java:RPC" style="document" use="literal">
+  <ns1:operation name="savePhoto" qname="savePhoto" returnQName="ns7:savePhotoReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns7:encodedPhoto" type="xsd:string"/>
+   <ns1:parameter qname="ns7:name" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="savePhoto"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="StorageWS"/>
   <ns1:parameter name="className" value="br.com.farofa.gm.webservice.StorageWS"/>
+  <ns1:parameter name="wsdlServicePort" value="StorageWS"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
   <ns1:parameter name="wsdlServiceElement" value="StorageWSService"/>
  </ns1:service>
- <ns1:service name="GameBirdWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns2:json" type="xsd:string" xmlns:ns2="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ <ns1:service name="TeacherWS" provider="java:RPC" style="document" use="literal">
+  <ns1:operation name="update" qname="update" returnQName="ns8:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns8="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns8:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns3:json1" type="xsd:string" xmlns:ns3="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
-  <ns1:operation name="save" qname="save" returnQName="ns4:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns4:json2" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:operation name="findAll" qname="findAll" returnQName="ns5:findAllReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="findById" qname="findById" returnQName="ns6:findByIdReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns6:pk" type="xsd:anyType"/>
-  </ns1:operation>
-  <ns1:operation name="findByInep" qname="findByInep" returnQName="ns7:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns7:inep" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="GameBirdWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.GameBirdWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="GameBirdWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="GameBirdWSService"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
- </ns1:service>
- <ns1:service name="NoteWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns8:json" type="xsd:string" xmlns:ns8="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns9:json1" type="xsd:string" xmlns:ns9="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns9:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns10:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns10:json2" type="xsd:string"/>
@@ -81,23 +79,21 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns13:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns13="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns13:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="NoteWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.NoteWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="NoteWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="NoteWSService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="TeacherWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.TeacherWS"/>
+  <ns1:parameter name="wsdlServicePort" value="TeacherWS"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="TeacherWSService"/>
  </ns1:service>
- <ns1:service name="TeacherWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns14:json" type="xsd:string" xmlns:ns14="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ <ns1:service name="NoteWS" provider="java:RPC" style="document" use="literal">
+  <ns1:operation name="update" qname="update" returnQName="ns14:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns14="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns14:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns15:json1" type="xsd:string" xmlns:ns15="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns15:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns15="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns15:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns16:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns16="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns16:json2" type="xsd:string"/>
@@ -109,23 +105,21 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns19:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns19:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="TeacherWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.TeacherWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="TeacherWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="TeacherWSService"/>
+  <ns1:parameter name="wsdlPortType" value="NoteWS"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlServicePort" value="NoteWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.NoteWS"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="NoteWSService"/>
  </ns1:service>
  <ns1:service name="StudentWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns20:json" type="xsd:string" xmlns:ns20="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="update" qname="update" returnQName="ns20:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns20="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns20:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns21:json1" type="xsd:string" xmlns:ns21="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns21:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns21="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns21:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns22:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns22="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns22:json2" type="xsd:string"/>
@@ -137,26 +131,24 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns25:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns25="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns25:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="StudentWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.StudentWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
   <ns1:parameter name="wsdlPortType" value="StudentWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="StudentWSService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlServicePort" value="StudentWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.StudentWS"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="StudentWSService"/>
  </ns1:service>
  <ns1:service name="SchoolWS" provider="java:RPC" style="document" use="literal">
   <ns1:operation name="loadSchoolsBySyncCode" qname="loadSchoolsBySyncCode" returnQName="ns26:loadSchoolsBySyncCodeReturn" returnType="xsd:string" soapAction="" xmlns:ns26="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns26:syncCode" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns27:json" type="xsd:string" xmlns:ns27="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="update" qname="update" returnQName="ns27:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns27="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns27:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns28:json1" type="xsd:string" xmlns:ns28="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns28:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns28="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns28:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns29:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns29="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns29:json2" type="xsd:string"/>
@@ -169,11 +161,11 @@
    <ns1:parameter qname="ns32:inep" type="xsd:string"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="findByInep loadSchoolsBySyncCode findById save update delete findAll"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="SchoolWS"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.SchoolWS"/>
-  <ns1:parameter name="wsdlServicePort" value="SchoolWS"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlServicePort" value="SchoolWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.SchoolWS"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
   <ns1:parameter name="wsdlServiceElement" value="SchoolWSService"/>
  </ns1:service>
@@ -194,23 +186,21 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns38:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns38="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns38:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
+  <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="SchoolDataWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.SchoolDataWS"/>
   <ns1:parameter name="wsdlServicePort" value="SchoolDataWS"/>
   <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.SchoolDataWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="SchoolDataWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="SchoolDataWSService"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="SchoolDataWSService"/>
  </ns1:service>
  <ns1:service name="ReportStudentWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns39:json" type="xsd:string" xmlns:ns39="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="update" qname="update" returnQName="ns39:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns39="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns39:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns40:json1" type="xsd:string" xmlns:ns40="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns40:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns40="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns40:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns41:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns41="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns41:json2" type="xsd:string"/>
@@ -222,16 +212,14 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns44:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns44="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns44:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
+  <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="ReportStudentWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.ReportStudentWS"/>
   <ns1:parameter name="wsdlServicePort" value="ReportStudentWS"/>
   <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.ReportStudentWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="ReportStudentWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="ReportStudentWSService"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="ReportStudentWSService"/>
  </ns1:service>
  <ns1:service name="AdminService" provider="java:MSG">
   <ns1:parameter name="allowedMethods" value="AdminService"/>
@@ -244,11 +232,11 @@
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
  <ns1:service name="ReportTeacherWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns45:json" type="xsd:string" xmlns:ns45="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="update" qname="update" returnQName="ns45:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns45="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns45:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns46:json1" type="xsd:string" xmlns:ns46="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns46:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns46="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns46:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns47:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns47="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns47:json2" type="xsd:string"/>
@@ -260,23 +248,21 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns50:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns50="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns50:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="ReportTeacherWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.ReportTeacherWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
   <ns1:parameter name="wsdlPortType" value="ReportTeacherWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="ReportTeacherWSService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlServicePort" value="ReportTeacherWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.ReportTeacherWS"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="ReportTeacherWSService"/>
  </ns1:service>
- <ns1:service name="RoomWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns51:json" type="xsd:string" xmlns:ns51="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ <ns1:service name="BuildingsWS" provider="java:RPC" style="document" use="literal">
+  <ns1:operation name="update" qname="update" returnQName="ns51:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns51="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns51:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns52:json1" type="xsd:string" xmlns:ns52="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns52:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns52="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns52:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns53:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns53="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns53:json2" type="xsd:string"/>
@@ -288,23 +274,21 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns56:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns56="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns56:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="RoomWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.RoomWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="RoomWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="RoomWSService"/>
+  <ns1:parameter name="wsdlPortType" value="BuildingsWS"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlServicePort" value="BuildingsWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.BuildingsWS"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="BuildingsWSService"/>
  </ns1:service>
- <ns1:service name="BuildingsWS" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="update" qname="update" soapAction="">
-   <ns1:parameter qname="ns57:json" type="xsd:string" xmlns:ns57="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ <ns1:service name="RoomWS" provider="java:RPC" style="document" use="literal">
+  <ns1:operation name="update" qname="update" returnQName="ns57:updateReturn" returnType="xsd:string" soapAction="" xmlns:ns57="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns57:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="delete" qname="delete" soapAction="">
-   <ns1:parameter qname="ns58:json1" type="xsd:string" xmlns:ns58="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="delete" qname="delete" returnQName="ns58:deleteReturn" returnType="xsd:string" soapAction="" xmlns:ns58="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns58:json1" type="xsd:string"/>
   </ns1:operation>
   <ns1:operation name="save" qname="save" returnQName="ns59:saveReturn" returnType="xsd:string" soapAction="" xmlns:ns59="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns59:json2" type="xsd:string"/>
@@ -316,16 +300,14 @@
   <ns1:operation name="findByInep" qname="findByInep" returnQName="ns62:findByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns62="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns62:inep" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="sendMultiRefs" value="false"/>
-  <ns1:parameter name="wsdlServicePort" value="BuildingsWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.BuildingsWS"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="allowedMethods" value="findByInep findById save update delete findAll"/>
-  <ns1:parameter name="wsdlPortType" value="BuildingsWS"/>
-  <ns1:parameter name="wsdlServiceElement" value="BuildingsWSService"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="RoomWS"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.RoomWS"/>
+  <ns1:parameter name="wsdlServicePort" value="RoomWS"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="sendXsiTypes" value="false"/>
+  <ns1:parameter name="wsdlServiceElement" value="RoomWSService"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>

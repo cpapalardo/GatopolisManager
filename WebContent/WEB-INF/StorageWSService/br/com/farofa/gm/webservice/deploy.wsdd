@@ -2,7 +2,7 @@
 
   <!-- Services from StorageWSService WSDL service -->
 
-  <service name="StorageWS" provider="java:RPC" style="wrapped" use="literal">
+  <service name="StorageWS" provider="java:RPC" style="document" use="literal">
       <parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
       <parameter name="wsdlServiceElement" value="StorageWSService"/>
       <parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
@@ -10,7 +10,7 @@
       <parameter name="className" value="br.com.farofa.gm.webservice.StorageWS"/>
       <parameter name="wsdlPortType" value="StorageWS"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation xmlns:operNS="http://webservice.gm.farofa.com.br" xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="savePhoto" qname="operNS:savePhoto" returnQName="retNS:savePhotoReturn" returnType="rtns:string" soapAction="">
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="savePhoto" qname="savePhoto" returnQName="retNS:savePhotoReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:encodedPhoto" type="tns:string"/>
         <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
       </operation>

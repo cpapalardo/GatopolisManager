@@ -1,18 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import java.util.Random;
-
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.SchoolData;
 
 public class SchoolDAOTest extends TestCase {
 
-	@Test
+	/*@Test
 	public void testSave() {
 		SchoolDataDAO sdDAO = new SchoolDataDAOImpl(DataBaseManager.getEntityManager());
 		SchoolDAO dao = new SchoolDAOImpl(DataBaseManager.getEntityManager());
@@ -58,6 +50,6 @@ public class SchoolDAOTest extends TestCase {
 	@Test
 	public void testFindAll() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }

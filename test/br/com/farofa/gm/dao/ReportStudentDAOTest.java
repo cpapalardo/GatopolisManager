@@ -1,19 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import java.util.Date;
-
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.ReportStudent;
-import br.com.farofa.gm.model.Student;
-import br.com.farofa.gm.model.Teacher;
 
 public class ReportStudentDAOTest extends TestCase {
 
-	@Test
+	/*@Test
 	public void testSave() {
 		ReportStudentDAO dao = new ReportStudentDAOImpl(DataBaseManager.getEntityManager());
 		Teacher teacher = new Teacher();
@@ -61,5 +52,5 @@ public class ReportStudentDAOTest extends TestCase {
 	public void testFindAll() {
 		fail("Not yet implemented");
 	}
-
+*/
 }

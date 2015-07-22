@@ -7,9 +7,9 @@ import br.com.farofa.gm.model.JsonBehaviour;
 public interface GenericWS<T extends JsonBehaviour, PK extends Serializable> {
 	public String save(String json);
 	
-	public void update(String json);
+	public String update(String json);
 	
-	public void delete(String json);
+	public String delete(String json);
 	
 	public String findById(PK pk);
 	

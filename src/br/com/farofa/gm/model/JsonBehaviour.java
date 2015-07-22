@@ -5,5 +5,5 @@ import java.io.Serializable;
 
 public interface JsonBehaviour extends Serializable {
 	public String getJson();
-	public void setJson (String json);
+	void setJson (String json);
 }

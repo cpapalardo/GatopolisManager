@@ -1,16 +1,13 @@
 package br.com.farofa.gm.dao;
 
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 import javax.persistence.Query;
 
 import br.com.farofa.gm.model.Teacher;
 
-
+@Named
 public class TeacherDAOImpl extends GenericDAOImpl<Teacher, Integer> implements TeacherDAO {
-	public TeacherDAOImpl(EntityManager manager) {
-		super(Teacher.class, manager);
-	}
-
+	
 	@Override
 	public Teacher findByNameAndInep(String name, String inep) {
 		String jpql = "select t from Teacher t where t.name = :name and t.school.schoolData.inep = :inep";

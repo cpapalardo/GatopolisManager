@@ -1,19 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import java.util.List;
-
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.SchoolData;
-import br.com.farofa.gm.model.Teacher;
 
 public class TeacherDAOTest extends TestCase {
 
-	@Test
+	/*@Test
 	public void testSave() {
 		TeacherDAO tDAO = new TeacherDAOImpl(DataBaseManager.getEntityManager());
 		
@@ -105,6 +96,6 @@ public class TeacherDAOTest extends TestCase {
 		
 		assertNotNull(teachers);
 		assertTrue(teachers.size() > 0);
-	}
+	}*/
 
 }

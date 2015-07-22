@@ -1,22 +1,20 @@
 package br.com.farofa.gm.bean;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
-import br.com.farofa.gm.manager.Enviroment;
 import br.com.farofa.gm.model.School;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class HomeBean {
-	private SchoolDAO schoolDAO;
+	@Inject
+	private SchoolDAOImpl schoolDAO;
 	
 	private String enviroment;
 	
@@ -26,30 +24,13 @@ public class HomeBean {
 	
 	@PostConstruct
 	public void init () {
-		enviroment = DataBaseManager.getEnviroment();
-		if(enviroment == Enviroment.gatopolis_v2_db.name())
-			enviroment = "Ambiente de Produção";
 		access = "farofa2015";
-		
-
-		InetAddress addr;
-		try {
-			addr = InetAddress.getLocalHost();
-			String hostname = addr.getHostName();
-			enviroment = hostname;
-			if (enviroment.equals("RD00155D003742")) {
-				enviroment = "O nome dessa máquina é " + hostname;
-			}
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public String access () {
-		schoolDAO = new SchoolDAOImpl(DataBaseManager.getEntityManager());
+		System.out.println(syncCode);
 		if (syncCode != null && !syncCode.equals("")) {
 			School school = schoolDAO.findBySyncCode (syncCode);
-			DataBaseManager.close();
 			
 			if (school != null) {
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("schoolName", school.getSchoolData().getName());  

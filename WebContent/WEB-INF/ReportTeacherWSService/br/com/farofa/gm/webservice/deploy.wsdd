@@ -10,10 +10,10 @@
       <parameter name="className" value="br.com.farofa.gm.webservice.ReportTeacherWS"/>
       <parameter name="wsdlPortType" value="ReportTeacherWS"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation name="update" qname="update" soapAction="">
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="update" qname="update" returnQName="retNS:updateReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json" type="tns:string"/>
       </operation>
-      <operation name="delete" qname="delete" soapAction="">
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="delete" qname="delete" returnQName="retNS:deleteReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json1" type="tns:string"/>
       </operation>
       <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="save" qname="save" returnQName="retNS:saveReturn" returnType="rtns:string" soapAction="">

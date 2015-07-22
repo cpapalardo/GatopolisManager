@@ -1,22 +1,19 @@
 package br.com.farofa.gm.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.com.farofa.gm.manager.DataBaseManager;
-
-@SuppressWarnings("unchecked")
+@Named
 public class GenericDAOImpl<T extends Serializable, PK extends Serializable> implements GenericDAO<T, PK> {
-	private Class<T> clazz;
+	@Inject
 	protected EntityManager manager;
-	
-	public GenericDAOImpl(Class<T> clazz, EntityManager manager) {
-		this.clazz = clazz;
-		this.manager = manager;
-	}
+	private Class<T> entityClass;
 	
 	@Override
 	public void save(T entity) {
@@ -46,8 +43,8 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public void delete(T entity) {
 		try{
 			manager.getTransaction().begin();
-			Object pk = DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
-			entity = (T) manager.find(clazz, pk);
+			Object pk = null;//DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
+			entity = (T) manager.find(getEntityClass(), pk);
 			manager.remove(entity);
 			manager.getTransaction().commit();
 		}catch(Exception e){
@@ -61,7 +58,7 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		T result = null;
 		try {
 			manager.getTransaction().begin();
-			result = (T) manager.find(clazz, pk);
+			result = (T) manager.find(getEntityClass(), pk);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,11 +68,12 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	}
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		List<T> result = null;
 		try {
 			manager.getTransaction().begin();
-			result = manager.createQuery(("FROM " + clazz.getName())).getResultList();
+			result = manager.createQuery(("FROM " + getEntityClass().getName())).getResultList();
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,14 +83,26 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<T> findByInep(String inep) {
 		List<T> result = null;
 		
-		Query query = manager.createNamedQuery(clazz.getSimpleName() + ".findByInepCode");
+		Query query = manager.createNamedQuery(getEntityClass().getSimpleName() + ".findByInepCode");
 		query.setParameter("inep", inep);
 		result = query.getResultList();
 			
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
+	private Class<T> getEntityClass () {
+		if (entityClass == null) {
+			entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		}
+		return entityClass;
+	}
+	
+	public void setEntityManager (EntityManager manager) {
+		this.manager = manager;
+	}
 }

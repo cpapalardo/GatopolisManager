@@ -5,23 +5,25 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.dao.StudentDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class StudentManageBean {
+	@Inject
 	private RoomDAO groupDAO;
+	@Inject
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -45,7 +47,6 @@ public class StudentManageBean {
 		}
 		
 		//Load groups
-		groupDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
 		List<Room> groups = groupDAO.findByInep (school.getSchoolData().getInep());
 		studentGroupItens = new ArrayList <SelectItem> ();
 		for (Room group : groups) {
@@ -56,11 +57,9 @@ public class StudentManageBean {
 				periodo = "Integral";
 			studentGroupItens.add(new SelectItem(group.getId(), group.getName() + " " + group.getSerie() + " " + periodo));			
 		}
-		DataBaseManager.close();
 	}
 	
 	public String save () {
-		studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
 		if (student.getId() == null) {
 			//student.setDiagnosis_level("NOT_ENOUGH_INPUT");
 			studentDAO.save(student);
@@ -70,7 +69,6 @@ public class StudentManageBean {
 			sessionMap.remove("student");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno alterado com sucesso!"));
 		}
-		DataBaseManager.close();
 		return "students";
 	}
 	

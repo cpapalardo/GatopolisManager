@@ -2,19 +2,15 @@ package br.com.farofa.gm.dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 import javax.persistence.Query;
 
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.Teacher;
 
-
 @SuppressWarnings("unchecked")
+@Named
 public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDAO {
-	
-	public RoomDAOImpl(EntityManager manager) {
-		super(Room.class, manager);
-	}
 
 	@Override
 	public List<Room> findByInep(String inep) {
@@ -44,12 +40,12 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 	}
 	
 	@Override
-	public Room findByNameAndSerieAndPeriodAndInep(String name, String serie, Character period, String inep) {
-		String jpql = "select g from Room g where g.name = :name and g.serie = :serie and g.period = :period and g.teacher.school.schoolData.inep = :inep";
+	public Room findByNameAndSerieAndPeriodAndInep(String name, String serie, Character term, String inep) {
+		String jpql = "select g from Room g where g.name = :name and g.serie = :serie and g.term = :term and g.teacher.school.schoolData.inep = :inep";
 		Query query = manager.createQuery(jpql);
 		query.setParameter("name", name);
 		query.setParameter("serie", serie);
-		query.setParameter("period", period);
+		query.setParameter("term", term);
 		query.setParameter("inep", inep);
 		
 		Room room = null;

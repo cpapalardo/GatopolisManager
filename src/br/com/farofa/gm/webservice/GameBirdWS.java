@@ -4,8 +4,4 @@ import br.com.farofa.gm.model.GameBird;
 
 public class GameBirdWS extends GenericWSImpl<GameBird, Integer> {
 
-	public GameBirdWS() {
-		super(GameBird.class);
-	}
-
 }

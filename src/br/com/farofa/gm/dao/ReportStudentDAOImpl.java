@@ -1,13 +1,10 @@
 package br.com.farofa.gm.dao;
 
-import javax.persistence.EntityManager;
+import javax.inject.Named;
 
 import br.com.farofa.gm.model.ReportStudent;
 
+@Named
 public class ReportStudentDAOImpl extends GenericDAOImpl<ReportStudent, Integer> implements ReportStudentDAO {
-
-	public ReportStudentDAOImpl(EntityManager manager) {
-		super(ReportStudent.class, manager);
-	}
 
 }

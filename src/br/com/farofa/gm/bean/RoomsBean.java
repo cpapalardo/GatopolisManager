@@ -5,17 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class RoomsBean {
+	@Inject
 	private RoomDAO roomDAO;
 	
 	private School school;
@@ -25,11 +27,9 @@ public class RoomsBean {
 	
 	@PostConstruct
 	public void init () {
-		roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		rooms = roomDAO.findByInep(school.getSchoolData().getInep());
-		DataBaseManager.close();
 	}
 	
 	public String novaTurma () {

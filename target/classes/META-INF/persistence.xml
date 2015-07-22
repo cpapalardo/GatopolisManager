@@ -24,7 +24,7 @@
 		<properties>
 			<!-- dados da conexao -->
 			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.180:1433;databaseName=banco_teste" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://192.168.0.177:1433;databaseName=banco_teste" />
 			<property name="javax.persistence.jdbc.user" value="admin" />
 			<property name="javax.persistence.jdbc.password" value="admin" />
 

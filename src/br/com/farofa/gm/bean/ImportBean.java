@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -22,19 +24,19 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
 import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
 import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.dao.StudentDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
 import br.com.farofa.gm.util.DateConverterUtil;
 
-@ManagedBean
+@Named
+@RequestScoped
 public class ImportBean {
+	@Inject
 	private RoomDAO roomDAO;
+	@Inject
 	private StudentDAO studentDAO;
 	
 	private School school;
@@ -57,9 +59,6 @@ public class ImportBean {
 	}
     
     public void upload() {
-    	roomDAO = new RoomDAOImpl(DataBaseManager.getEntityManager());
-    	studentDAO = new StudentDAOImpl(DataBaseManager.getEntityManager());
-    	
         if(uploadedFile != null){
         	try{
         		proccessExcel(uploadedFile);
@@ -71,8 +70,6 @@ public class ImportBean {
         }else{
         	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Não foi possível concluir o envio do arquivo!"));
         }
-        
-        DataBaseManager.close();
     }
     
 	private void proccessExcel(UploadedFile uploadedFile) throws Exception{

@@ -1,70 +1,77 @@
 package br.com.farofa.gm.webservice;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import org.json.JSONObject;
 
 import br.com.farofa.gm.dao.GenericDAO;
 import br.com.farofa.gm.dao.GenericDAOImpl;
-import br.com.farofa.gm.manager.DataBaseManager;
+import br.com.farofa.gm.database.DatabaseManager;
 import br.com.farofa.gm.model.JsonBehaviour;
 
-@SuppressWarnings("unchecked")
 public class GenericWSImpl<T extends JsonBehaviour, PK extends Serializable> implements GenericWS<T, PK> {
+	private GenericDAO<T,PK> dao;
+	private Class<T> entityClass;
 	
-	private Class<T> clazz;
-	
-	public GenericWSImpl(Class<T> clazz) {
-		this.clazz = clazz;
+	public GenericWSImpl() {
+		dao = new GenericDAOImpl<T, PK> ();
+		dao.setEntityManager(DatabaseManager.getEntityManager());
 	}
 	
 	@Override
 	public String save(String json) {
 		String result = null;
-		GenericDAO<T,PK> dao = new GenericDAOImpl<T,PK>(clazz, DataBaseManager.getEntityManager());
 		try {
-			T entity = (T) Class.forName(clazz.getName()).newInstance();
+			T entity = getEntityClass().newInstance();
 			entity.setJson(json);
 			dao.save(entity);
-			Object id = DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
+			Object id = DatabaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
 			result = String.valueOf(id);
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
 		}
-		DataBaseManager.close();
 		return result;
 	}
 
 	@Override
-	public void update(String json) {
-		GenericDAO<T,PK> dao = new GenericDAOImpl<T, PK>(clazz, DataBaseManager.getEntityManager());
+	public String update(String json) {
+		String result = null;
 		try {
-			T entity = (T) Class.forName(clazz.getName()).newInstance();
+			T entity = getEntityClass().newInstance();
 			entity.setJson(json);
 			dao.update(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
 		}
-		DataBaseManager.close();
+		return result;
 	}
 
 	@Override
-	public void delete(String json) {
-		GenericDAO<T,PK> dao = new GenericDAOImpl<T, PK>(clazz, DataBaseManager.getEntityManager());
+	public String delete(String json) {
+		String result = null;
 		try {
-			T entity = (T) Class.forName(clazz.getName()).newInstance();
+			T entity = getEntityClass().newInstance();
 			entity.setJson(json);
 			dao.delete(entity);
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
 		}
-		DataBaseManager.close();
+		return result;
 	}
 
 	@Override
 	public String findById(PK pk) {
-		GenericDAO<T,PK> dao = new GenericDAOImpl<T, PK>(clazz, DataBaseManager.getEntityManager());
 		String result = null;
 		try {
 			T t = dao.findById(pk);
@@ -72,51 +79,66 @@ public class GenericWSImpl<T extends JsonBehaviour, PK extends Serializable> imp
 				result = t.getJson();
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
 		}
-		DataBaseManager.close();
 		return result;
 	}
 
 	@Override
 	public String findByInep(String inep) {
-		GenericDAO<T,PK> dao = new GenericDAOImpl<T, PK>(clazz, DataBaseManager.getEntityManager());
-		JSONObject result = new JSONObject();
+		String result = null;
+		JSONObject jsonObj = new JSONObject();
 		try {
 			List<T> list = dao.findByInep(inep);
 			if (list != null && list.size() > 0) {
 				for (int i = 0; i < list.size(); i++) {
-					String key = clazz.getSimpleName() + "-" + i;
+					String key = getEntityClass().getSimpleName() + "-" + i;
 					String json = list.get(i).getJson();
-					JSONObject jsonObj = new JSONObject(json);
-					result.put(key, jsonObj);
+					JSONObject tmp = new JSONObject(json);
+					jsonObj.put(key, tmp);
 				}
 			}
+			result = jsonObj.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
 		}
-		DataBaseManager.close();
-		return result.toString();
+		return result;
 	}
 
 	@Override
 	public String findAll() {
-		GenericDAO<T,PK> dao = new GenericDAOImpl<T, PK>(clazz, DataBaseManager.getEntityManager());
-		JSONObject result = new JSONObject();
+		String result = null;
+		JSONObject jsonObj = new JSONObject();
 		try {
 			List<T> list = dao.findAll();
 			if (list != null && list.size() > 0) {
 				for (int i = 0; i < list.size(); i++) {
-					String key = clazz.getSimpleName() + "-" + i;
+					String key = getEntityClass().getSimpleName() + "-" + i;
 					String json = list.get(i).getJson();
-					JSONObject jsonObj = new JSONObject(json);
-					result.put(key, jsonObj);
+					JSONObject tmp = new JSONObject(json);
+					jsonObj.put(key, tmp);
 				}
 			}
+			result = jsonObj.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
 		}
-		DataBaseManager.close();
-		return result.toString();
+		return result;
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	private Class<T> getEntityClass () {
+		if (entityClass == null) {
+			entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		}
+		return entityClass;
+	}
 }
