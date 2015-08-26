@@ -1,8 +1,6 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,17 +14,21 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.json.JSONObject;
-
+@SuppressWarnings("serial")
 @Entity
 @Table(name="student")
-@NamedQuery(name="Student.findByInepCode", query="select s from Student s WHERE s.room.teacher.school.schoolData.inep = :inep")
-public class Student implements Serializable, JsonBehaviour {
-	private static final long serialVersionUID = 1L;
-	
+@NamedQuery(name="Student.findByInepCode", query="select s from Student s WHERE s.room.teacher.school.schoolData.inep = :inep and s.isDeleted = false")
+public class Student extends JsonBehaviour implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	@Column(name="is_deleted", nullable=false)
+	private Boolean isDeleted;
+	
+	/*@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="created_at", nullable=true)
+	private Date createdAt;*/
 	
 	@Column(nullable=false, length=255)
 	private String name;
@@ -37,6 +39,9 @@ public class Student implements Serializable, JsonBehaviour {
 	@Temporal(TemporalType.DATE)
 	@Column(nullable=false)
 	private Date birth_date;
+	
+	@Column(nullable=false, length=45)
+	private String phase;
 	
 	@Column(nullable=true)
 	private Integer buildings;
@@ -57,30 +62,26 @@ public class Student implements Serializable, JsonBehaviour {
 	@JoinColumn(name="room_id", nullable=false)
 	private Room room;
 	
-	public Student () {}
+	public Student() {}
+	
+	public Student(String json) {
+		super.setJson(json);
+	}
 
-	public Student(Integer id, String name, Character gender, Date birth_date,
+	public Student(String name, Character gender, Date birth_date, String phase,
 			Integer buildings, Integer coins, Integer time_in_city,
 			Integer app_rating, String picture_url, Room room) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.birth_date = birth_date;
+		this.phase = phase;
 		this.buildings = buildings;
 		this.coins = coins;
 		this.time_in_city = time_in_city;
 		this.app_rating = app_rating;
 		this.picture_url = picture_url;
 		this.room = room;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -156,61 +157,44 @@ public class Student implements Serializable, JsonBehaviour {
 		this.room = room;
 	}
 
+	public String getPhase() {
+		return phase;
+	}
+
+	public void setPhase(String phase) {
+		this.phase = phase;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	/*public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}*/
+
 	@Override
 	public String toString() {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		return "Student [id=" + id + ", name=" + name + ", gender=" + gender
-				+ ", birth_date=" + df.format(birth_date) + ", buildings=" + buildings
+		return "Student [name=" + name + ", gender=" + gender + ", birth_date="
+				+ birth_date + ", phase=" + phase + ", buildings=" + buildings
 				+ ", coins=" + coins + ", time_in_city=" + time_in_city
 				+ ", app_rating=" + app_rating + ", picture_url=" + picture_url
-				+ ", room=" + room.getId() + "]";
+				+ ", room=" + room + "]";
 	}
-	
-	@Override
-	public String getJson() {
-		JSONObject jsonObj = new JSONObject();
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		if (id != null) jsonObj.put("id", id);
-		if (name != null) jsonObj.put("name", name);
-		if (gender != null) jsonObj.put("gender", gender);
-		if (birth_date != null) jsonObj.put("birth_date", df.format(birth_date));
-		if (buildings != null) jsonObj.put("buildings", buildings);
-		if (coins != null) jsonObj.put("coins", coins);
-		if (time_in_city != null) jsonObj.put("time_in_city", time_in_city);
-		if (app_rating != null) jsonObj.put("app_rating", app_rating);
-		if (picture_url != null) jsonObj.put("picture_url", picture_url);
-		if (room != null && room.getId() != null) jsonObj.put("room", room.getId());
-		return jsonObj.toString();
-	}
-
-	@Override
-	public void setJson(String json) {
-		JSONObject jsonObj = new JSONObject(json);
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		if (jsonObj.has("id"))
-			if (jsonObj.getInt("id") != 0)
-				id = jsonObj.getInt("id");
-		if (jsonObj.has("name")) name = jsonObj.getString("name");
-		if (jsonObj.has("gender")) gender = jsonObj.getString("gender").charAt(0);
-		if (jsonObj.has("birth_date")) {
-			try {
-				String date = jsonObj.getString("birth_date");
-				birth_date = df.parse(date);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		if (jsonObj.has("buildings")) buildings = jsonObj.getInt("buildings");
-		if (jsonObj.has("coins")) coins = jsonObj.getInt("coins");
-		if (jsonObj.has("time_in_city")) time_in_city = jsonObj.getInt("time_in_city");
-		if (jsonObj.has("app_rating")) app_rating = jsonObj.getInt("app_rating");
-		if (jsonObj.has("picture_url")) picture_url = jsonObj.getString("picture_url");
-		if (jsonObj.has("room")) {
-			room = new Room();
-			int id = jsonObj.getInt("room");
-			room.setId(id);
-		}
-	}
-
-	
 }

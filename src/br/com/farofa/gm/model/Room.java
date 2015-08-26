@@ -12,17 +12,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.json.JSONObject;
-
+@SuppressWarnings("serial")
 @Entity
 @Table(name="room")
-@NamedQuery(name="Room.findByInepCode", query="select r from Room r WHERE r.teacher.school.schoolData.inep = :inep")
-public class Room implements Serializable, JsonBehaviour {
-	private static final long serialVersionUID = 1L;
-	
+@NamedQuery(name="Room.findByInepCode", query="select r from Room r WHERE r.teacher.school.schoolData.inep = :inep and r.isDeleted = false")
+public class Room extends JsonBehaviour implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	@Column(name="is_deleted", nullable=false)
+	private Boolean isDeleted;
 	
 	@Column(nullable=false, length=45)
 	private String name;
@@ -42,23 +42,18 @@ public class Room implements Serializable, JsonBehaviour {
 	
 	public Room(){}
 	
-	public Room(Integer id, String name, String serie, Character term,
+	public Room(String json){
+		super.setJson(json);
+	}
+	
+	public Room(String name, String serie, Character term,
 			Teacher teacher, Integer qtdeAlunos) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.serie = serie;
 		this.term = term;
 		this.teacher = teacher;
 		this.qtdeAlunos = qtdeAlunos;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getName() {
@@ -101,38 +96,27 @@ public class Room implements Serializable, JsonBehaviour {
 		this.qtdeAlunos = qtdeAlunos;
 	}
 
-	@Override
-	public String toString() {
-		return "Room [id=" + id + ", name=" + name + ", serie=" + serie
-				+ ", term=" + term + ", teacher=" + teacher.getId()
-				+ ", qtdeAlunos=" + qtdeAlunos + "]";
+	public Integer getId() {
+		return id;
 	}
-	
-	@Override
-	public String getJson() {
-		JSONObject jsonObj = new JSONObject();
-		if (id != null) jsonObj.put("id", id);
-		if (name != null) jsonObj.put("name", name);
-		if (serie != null) jsonObj.put("serie", serie);
-		if (term != null) jsonObj.put("term", term);
-		if (teacher != null && teacher.getId() != null) jsonObj.put("teacher", teacher.getId());
-		return jsonObj.toString();
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 	@Override
-	public void setJson(String json) {
-		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) 
-			if (jsonObj.getInt("id") != 0)
-				id = jsonObj.getInt("id");
-		if (jsonObj.has("name")) name = jsonObj.getString("name");
-		if (jsonObj.has("serie")) serie = jsonObj.getString("serie");
-		if (jsonObj.has("term")) term = jsonObj.getString("term").charAt(0);
-		if (jsonObj.has("teacher")) {
-			teacher = new Teacher();
-			int id = jsonObj.getInt("teacher");
-			teacher.setId(id);
-		}
+	public String toString() {
+		return super.toString() + "Room [name=" + name + ", serie=" + serie
+				+ ", term=" + term + ", teacher=" + teacher.getId()
+				+ ", qtdeAlunos=" + qtdeAlunos + "]";
 	}
 	
 }

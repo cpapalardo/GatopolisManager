@@ -11,14 +11,20 @@ import javax.inject.Named;
 
 import br.com.farofa.gm.bean.item.ReportStudentItem;
 import br.com.farofa.gm.bean.item.ReportTeacherItem;
-import br.com.farofa.gm.dao.SchoolDAO;
-import br.com.farofa.gm.model.School;
+import br.com.farofa.gm.dao.ReportStudentDAO;
+import br.com.farofa.gm.dao.ReportTeacherDAO;
+import br.com.farofa.gm.dao.SchoolDataDAO;
+import br.com.farofa.gm.model.SchoolData;
 
 @Named
 @RequestScoped
 public class ReportBean {
 	@Inject
-	private SchoolDAO schoolDAO;
+	private SchoolDataDAO schoolDataDAO;
+	@Inject
+	private ReportTeacherDAO reportTeacherDAO;
+	@Inject
+	private ReportStudentDAO reportStudentDAO;
 	
 	private int schoolId;
 	private List <SelectItem> schoolItens;
@@ -29,13 +35,14 @@ public class ReportBean {
 	@PostConstruct
 	public void init () {
 		schoolItens = new ArrayList<SelectItem> ();
-		for (School school : schoolDAO.findAll())
-			schoolItens.add (new SelectItem (school.getSchoolData().getInep(), school.getSchoolData().getName()));
+		for (SchoolData schoolData : schoolDataDAO.findAll()) {
+			schoolItens.add (new SelectItem (schoolData.getInep(), schoolData.getName()));
+		}
 	}
 	
 	public void showReport () {
-		/*rtiList = new ReportTeacherDAOImpl().findReportTeacherItensBySchool(schoolId);
-		rsiList = new ReportStudentDAOImpl().findReportStudentItensBySchool(schoolId);*/
+		/*rtiList = reportTeacherDAO.findReportTeacherItensBySchool(schoolId);
+		rsiList = reportStudentDAO.findReportStudentItensBySchool(schoolId);*/
 	}
 	
 	public String back(){

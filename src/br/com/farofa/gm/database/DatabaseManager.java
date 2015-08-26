@@ -10,13 +10,13 @@ public class DatabaseManager {
 	
 	public static EntityManagerFactory getFactory () {
 		if (factory == null) 
-			factory = Persistence.createEntityManagerFactory(PersistenceUnitFactory.getPersisteceUnit());
+			factory = Persistence.createEntityManagerFactory("gatopolis_v2_db");
 		return factory;
 	}
 	
 	public static EntityManager getEntityManager () {
-		if (em == null || !em.isOpen())
-			em = getFactory().createEntityManager();
+		if (em == null || !em.isOpen()) 
+				em = getFactory().createEntityManager();
 		return em;
 	}
 	

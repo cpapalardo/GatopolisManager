@@ -26,14 +26,12 @@ public class BlobStorage {
 		try {
 			if (!name.contains(".jpg") && !name.contains(".bmp") && !name.contains(".gif") && !name.contains(".jpeg"))
 				name += ".jpg";
-			final String photoPath = "d:\\home\\site\\wwwroot\\webapps\\";
+			final String photoPath = "d:\\home\\site\\wwwroot\\webapps\\images\\";
 			name = name.replace(' ', '_');
 			File file = new File(photoPath + name);
 			
 			URLCodec codec = new URLCodec();
 			byte[] data = codec.decode(encodedPhoto.getBytes());
-			
-			//FileUtils.writeByteArrayToFile(file, data);
 			
 			FileOutputStream out = new FileOutputStream(file);
 			out.write(data);
@@ -53,6 +51,7 @@ public class BlobStorage {
 			blob.upload(new FileInputStream (file), file.length());
 
 			url = container.getUri() + "/" + file.getName();
+			file.delete();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

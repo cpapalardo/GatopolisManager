@@ -59,22 +59,6 @@
 				<p:outputLabel for="email" value="E-mail" />
 				<p:inputText id="email" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.email}" requiredMessage="O campo e-mail deve ser preenchido!" />
 				<p:message for="email" display="tooltip" />
-					
-				<p:outputLabel for="question" value="Pergunta Secreta" />
-				<p:selectOneMenu id="question" maxlength="15" value="#{teacherManageBean.teacher.question}" required="true">
-					<f:selectItem itemLabel="Qual é o nome do seu amigo de infância favorito?" itemValue="A" />
-					<f:selectItem itemLabel="Qual o nome da escola que você estudou na 6a série?" itemValue="B" />
-					<f:selectItem itemLabel="Qual era o número do telefone de casa quando você era criança?" itemValue="C" />
-					<f:selectItem itemLabel="Qual é o primeiro e o último nome do seu primo mais velho?" itemValue="D" />
-					<f:selectItem itemLabel="Em que cidade os seus pais se conheceram?" itemValue="E" />
-					<f:selectItem itemLabel="Onde você estava quando você deu o primeiro beijo?" itemValue="F" />
-					<f:selectItem itemLabel="Qual país é as férias dos teus sonhos?" itemValue="G" />
-				</p:selectOneMenu>
-				<p:outputLabel value="" />
-					
-				<p:outputLabel for="answer" value="Resposta" />
-				<p:inputText id="answer" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.answer}" requiredMessage="O campo resposta deve ser preenchido!" />
-				<p:message for="answer" display="tooltip" />
 				
 	    	</h:panelGrid>
 	

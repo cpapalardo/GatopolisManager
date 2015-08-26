@@ -9,15 +9,28 @@ public class SchoolWS extends GenericWSImpl<School, String> {
 	
 	private SchoolDAO dao;
 	
-	public SchoolWS() {
+	public String findBySyncCode(String syncCode) {
 		dao = new SchoolDAOImpl();
 		dao.setEntityManager(DatabaseManager.getEntityManager());
-	}
-	
-	public String loadSchoolsBySyncCode(String syncCode) {
 		String result = null;
 		try {
 			School school = dao.findBySyncCode(syncCode);
+			result = school.getJson();
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+		} finally {
+			DatabaseManager.close();
+		}
+		return result;
+	}
+	
+	public String findByName (String schoolName) {
+		dao = new SchoolDAOImpl();
+		dao.setEntityManager(DatabaseManager.getEntityManager());
+		String result = null;
+		try {
+			School school = dao.findByName(schoolName);
 			result = school.getJson();
 		} catch (Exception e) {
 			e.printStackTrace();

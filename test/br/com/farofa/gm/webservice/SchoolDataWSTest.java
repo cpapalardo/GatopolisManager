@@ -1,16 +1,9 @@
 package br.com.farofa.gm.webservice;
 
-import java.util.Random;
-
 import junit.framework.TestCase;
 
-import org.json.JSONObject;
-import org.junit.Test;
-
-import br.com.farofa.gm.model.SchoolData;
-
 public class SchoolDataWSTest extends TestCase {
-	@Test
+	/*@Test
 	public void testSave() {
 		SchoolDataWS ws = new SchoolDataWS();
 		
@@ -148,6 +141,6 @@ public class SchoolDataWSTest extends TestCase {
 		assertNotNull(json);
 		assertNotNull(s);
 		assertTrue(json.contains("SchoolData-0"));
-	}
+	}*/
 
 }

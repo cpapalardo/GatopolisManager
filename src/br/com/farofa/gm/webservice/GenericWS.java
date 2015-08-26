@@ -9,8 +9,6 @@ public interface GenericWS<T extends JsonBehaviour, PK extends Serializable> {
 	
 	public String update(String json);
 	
-	public String delete(String json);
-	
 	public String findById(PK pk);
 	
 	public String findByInep (String inep);

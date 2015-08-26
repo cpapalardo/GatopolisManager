@@ -2,13 +2,9 @@ package br.com.farofa.gm.webservice;
 
 import junit.framework.TestCase;
 
-import org.junit.Test;
-
-import br.com.farofa.gm.model.Teacher;
-
 public class TeacherWSTest extends TestCase {
 
-	@Test
+	/*@Test
 	public void testSave() {
 		fail("Not yet implemented");
 	}
@@ -39,6 +35,6 @@ public class TeacherWSTest extends TestCase {
 	@Test
 	public void testFindAll() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }

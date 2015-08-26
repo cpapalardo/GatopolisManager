@@ -15,9 +15,12 @@
 		<class>br.com.farofa.gm.model.Teacher</class>
 		<class>br.com.farofa.gm.model.Room</class>
 		<class>br.com.farofa.gm.model.Student</class>
-		<class>br.com.farofa.gm.model.GameBird</class>
-		<class>br.com.farofa.gm.model.Buildings</class>
 		<class>br.com.farofa.gm.model.Note</class>
+		<class>br.com.farofa.gm.model.Transition</class>
+		<class>br.com.farofa.gm.model.GameBird</class>
+		<class>br.com.farofa.gm.model.GameSuperCat</class>
+		<class>br.com.farofa.gm.model.GameSuperCatChallenge</class>
+		<class>br.com.farofa.gm.model.Building</class>
 		<class>br.com.farofa.gm.model.ReportTeacher</class>
 		<class>br.com.farofa.gm.model.ReportStudent</class>
 
@@ -30,13 +33,14 @@
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
-			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 
 		</properties>
 	</persistence-unit>
 	
-	<persistence-unit name="gatopolis_v2_db">
+	<persistence-unit name="gatopolis_v2_db" transaction-type="RESOURCE_LOCAL">
 
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
@@ -45,11 +49,14 @@
 		<class>br.com.farofa.gm.model.SchoolData</class>
 		<class>br.com.farofa.gm.model.School</class>
 		<class>br.com.farofa.gm.model.Teacher</class>
-		<class>br.com.farofa.gm.model.Group</class>
+		<class>br.com.farofa.gm.model.Room</class>
 		<class>br.com.farofa.gm.model.Student</class>
-		<class>br.com.farofa.gm.model.Transition</class>
-		<class>br.com.farofa.gm.model.WrittenWord</class>
 		<class>br.com.farofa.gm.model.Note</class>
+		<class>br.com.farofa.gm.model.Transition</class>
+		<class>br.com.farofa.gm.model.GameBird</class>
+		<class>br.com.farofa.gm.model.GameSuperCat</class>
+		<class>br.com.farofa.gm.model.GameSuperCatChallenge</class>
+		<class>br.com.farofa.gm.model.Building</class>
 		<class>br.com.farofa.gm.model.ReportTeacher</class>
 		<class>br.com.farofa.gm.model.ReportStudent</class>
 
@@ -64,7 +71,6 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-
 		</properties>
 	</persistence-unit>
 	

@@ -33,6 +33,7 @@ import br.com.farofa.gm.dao.SchoolDAO;
 import br.com.farofa.gm.dao.SchoolDataDAO;
 import br.com.farofa.gm.dao.StudentDAO;
 import br.com.farofa.gm.dao.TeacherDAO;
+import br.com.farofa.gm.model.Phase;
 import br.com.farofa.gm.model.Room;
 import br.com.farofa.gm.model.School;
 import br.com.farofa.gm.model.SchoolData;
@@ -262,21 +263,21 @@ public class GeralImportBean {
 			}
 			//TeacherMap
 			if(!teacherMap.containsKey(teacherKey)){
-				teacher = new Teacher(null, professor, null, null, emailProfessor, null, null, null, school);
+				teacher = new Teacher(professor, null, null, emailProfessor, null, school);
 				teacherMap.put(teacherKey, teacher);
 			}else{
 				teacher = teacherMap.get(teacherKey);
 			}
 			//RoomMap
 			if(!roomMap.containsKey(roomKey)){
-				room = new Room(null, nomeDaTurma, serie, periodoChar, teacher, null);
+				room = new Room(nomeDaTurma, serie, periodoChar, teacher, null);
 				roomMap.put(roomKey, room);
 			}else{
 				room = roomMap.get(roomKey);
 			}
 			
 			//StudentList
-			Student student = new Student(null, nomeCompletoDoAluno, sexoChar, date, null, null, null, null, null, room);
+			Student student = new Student(nomeCompletoDoAluno, sexoChar, date, Phase.NOT_ENOUGH_INPUT.name(), null, null, null, null, null, room);
 			studentList.add(student);
 		}
 		
@@ -329,7 +330,7 @@ public class GeralImportBean {
 		
 		//Student
 		for (Student student : studentList){
-			//student.setDiagnosis_level("NOT_ENOUGH_INPUT");
+			student.setPhase("NOT_ENOUGH_INPUT");
 			studentDAO.save(student);
 		}
 	}

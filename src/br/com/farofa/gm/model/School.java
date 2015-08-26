@@ -1,6 +1,7 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,15 +10,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.json.JSONObject;
-
+@SuppressWarnings("serial")
 @Entity
 @Table(name="school")
 @NamedQuery(name="School.findByInepCode", query="select s from School s WHERE s.schoolData.inep = :inep")
-public class School implements Serializable, JsonBehaviour {
-	private static final long serialVersionUID = 1L;
-	
+public class School extends JsonBehaviour implements Serializable {
 	@Id
 	@Column(name="inep")
 	private String id;
@@ -31,11 +31,19 @@ public class School implements Serializable, JsonBehaviour {
 	@Column(nullable=true, length= 255)
 	private String email;
 	
+	/*@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=true, name="created_at")
+	private Date createdAt;*/
+	
 	@OneToOne
 	@PrimaryKeyJoinColumn(name="inep")
 	private SchoolData schoolData;
 	
-	public School () {}
+	public School() {}
+	
+	public School(String json) {
+		super.setJson(json);
+	}
 	
 	public School(String id, String sync_code, String password,
 			String email, SchoolData schoolData) {
@@ -77,42 +85,16 @@ public class School implements Serializable, JsonBehaviour {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+	/*public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}*/
+
 	@Override
 	public String toString() {
 		return "School [" + "id=" + id + ", sync_code=" + sync_code
 				+ ", password=" + password + ", email=" + email + ", schoolData=" + (schoolData != null ? schoolData.getInep() : "null") + "]";
-	}
-
-	@Override
-	public String getJson() {
-		JSONObject jsonObj = new JSONObject();
-		if (id != null) jsonObj.put("id", id);
-		if (sync_code != null) jsonObj.put("sync_code", sync_code);
-		if (password != null) jsonObj.put("password", password);
-		if (email != null) jsonObj.put("email", email);
-		if (schoolData != null) {
-			JSONObject subJson = new JSONObject();
-			subJson.put("inep", schoolData.getInep());
-			subJson.put("name", schoolData.getName());
-			jsonObj.put("schoolData", subJson);
-		}
-		return jsonObj.toString();
-	}
-
-	@Override
-	public void setJson(String json) {
-		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) id = jsonObj.getString("id");
-		if (jsonObj.has("sync_code")) sync_code = jsonObj.getString("sync_code");
-		if (jsonObj.has("password")) password = jsonObj.getString("password");
-		if (jsonObj.has("email")) email = jsonObj.getString("email");
-		if (jsonObj.has("schoolData")) {
-			JSONObject subJson = (JSONObject)jsonObj.get("schoolData");
-			schoolData = new SchoolData();
-			id = subJson.getString("inep");
-			schoolData.setInep(subJson.getString("inep"));
-			schoolData.setName(subJson.getString("name"));
-		}
 	}
 }

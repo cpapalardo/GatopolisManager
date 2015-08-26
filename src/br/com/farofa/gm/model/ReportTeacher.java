@@ -16,17 +16,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.json.JSONObject;
-
+@SuppressWarnings("serial")
 @Entity
 @Table(name="report_teacher")
-@NamedQuery(name="ReportTeacher.findByInepCode", query="select rt from ReportTeacher rt WHERE rt.teacher.school.schoolData.inep = :inep")
-public class ReportTeacher implements Serializable, JsonBehaviour {
-	private static final long serialVersionUID = 1L;
-	
+@NamedQuery(name="ReportTeacher.findByInepCode", query="select rt from ReportTeacher rt WHERE rt.teacher.school.schoolData.inep = :inep and rt.isDeleted = false")
+public class ReportTeacher extends JsonBehaviour implements Serializable {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	
+	@Column(name="is_deleted", nullable=false)
+	private Boolean isDeleted;
 	
 	@Column(nullable=true)
 	private Integer dashboard_opened;
@@ -57,17 +57,18 @@ public class ReportTeacher implements Serializable, JsonBehaviour {
 	@JoinColumn(name="teacher_id", nullable=false)
 	private Teacher teacher;
 	
-	public ReportTeacher() {
-		super();
+	public ReportTeacher() {}
+	
+	public ReportTeacher(String json) {
+		super.setJson(json);
 	}
 
-	public ReportTeacher(Integer id, Integer dashboard_opened,
+	public ReportTeacher(Integer dashboard_opened,
 			Integer dashboard_duration, Integer aba_obs_duration,
 			Integer aba_prod_duration, Integer aba_freq_duration,
 			Integer transitions_duration, Integer grouping_duration,
 			Date access, Teacher teacher) {
 		super();
-		this.id = id;
 		this.dashboard_opened = dashboard_opened;
 		this.dashboard_duration = dashboard_duration;
 		this.aba_obs_duration = aba_obs_duration;
@@ -77,14 +78,6 @@ public class ReportTeacher implements Serializable, JsonBehaviour {
 		this.grouping_duration = grouping_duration;
 		this.access = access;
 		this.teacher = teacher;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Integer getDashboard_opened() {
@@ -159,10 +152,26 @@ public class ReportTeacher implements Serializable, JsonBehaviour {
 		this.access = access;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		return "ReportTeacher [id=" + id + ", dashboard_opened="
+		return super.toString() + "ReportTeacher [dashboard_opened="
 				+ dashboard_opened + ", dashboard_duration="
 				+ dashboard_duration + ", aba_obs_duration=" + aba_obs_duration
 				+ ", aba_prod_duration=" + aba_prod_duration
@@ -173,38 +182,4 @@ public class ReportTeacher implements Serializable, JsonBehaviour {
 				+ "access=" + df.format(access) + "]";
 	}
 	
-	@Override
-	public String getJson() {
-		JSONObject jsonObj = new JSONObject();
-		if (id != null) jsonObj.put("id", id);
-		if (dashboard_opened != null) jsonObj.put("dashboard_opened", dashboard_opened);
-		if (dashboard_duration != null) jsonObj.put("dashboard_duration", dashboard_duration);
-		if (aba_obs_duration != null) jsonObj.put("aba_obs_duration", aba_obs_duration);
-		if (aba_prod_duration != null) jsonObj.put("aba_prod_duration", aba_prod_duration);
-		if (aba_freq_duration != null) jsonObj.put("aba_freq_duration", aba_freq_duration);
-		if (transitions_duration != null) jsonObj.put("transitions_duration", transitions_duration);
-		if (grouping_duration != null) jsonObj.put("grouping_duration", grouping_duration);
-		if (teacher != null && teacher.getId() != null) jsonObj.put("teacher", teacher);
-		return jsonObj.toString();
-	}
-
-	@Override
-	public void setJson(String json) {
-		JSONObject jsonObj = new JSONObject(json);
-		if (jsonObj.has("id")) 
-			if (jsonObj.getInt("id") != 0)
-				id = jsonObj.getInt("id");
-		if (jsonObj.has("dashboard_opened")) dashboard_opened = jsonObj.getInt("dashboard_opened");
-		if (jsonObj.has("dashboard_duration")) dashboard_duration = jsonObj.getInt("dashboard_duration");
-		if (jsonObj.has("aba_obs_duration")) aba_obs_duration = jsonObj.getInt("aba_obs_duration");
-		if (jsonObj.has("aba_prod_duration")) aba_prod_duration = jsonObj.getInt("aba_prod_duration");
-		if (jsonObj.has("aba_freq_duration")) aba_freq_duration = jsonObj.getInt("aba_freq_duration");
-		if (jsonObj.has("transitions_duration")) transitions_duration = jsonObj.getInt("transitions_duration");
-		if (jsonObj.has("grouping_duration")) grouping_duration = jsonObj.getInt("grouping_duration");
-		if (jsonObj.has("teacher")) {
-			teacher = new Teacher();
-			int id = jsonObj.getInt("teacher");
-			teacher.setId(id);
-		}
-	}
 }

@@ -11,8 +11,7 @@
       <parameter name="wsdlPortType" value="StorageWS"/>
       <parameter name="typeMappingVersion" value="1.2"/>
       <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="savePhoto" qname="savePhoto" returnQName="retNS:savePhotoReturn" returnType="rtns:string" soapAction="">
-        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:encodedPhoto" type="tns:string"/>
-        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:value" type="tns:string"/>
       </operation>
       <parameter name="allowedMethods" value="savePhoto"/>
 

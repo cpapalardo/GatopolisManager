@@ -41,6 +41,7 @@ public class StudentManageBean {
 		if(!sessionMap.containsKey("student")){
 			student = new Student();
 			student.setGender('M');
+			student.setPhase("NOT_ENOUGH_INPUT");
 			student.setRoom(new Room());
 		}else{
 			student = (Student) sessionMap.get("student");

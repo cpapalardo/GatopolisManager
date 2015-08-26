@@ -1,17 +1,10 @@
 package br.com.farofa.gm.webservice;
 
-import java.util.Random;
-
 import junit.framework.TestCase;
-
-import org.junit.Test;
-
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.SchoolData;
 
 public class SchoolWSTest extends TestCase {
 
-	@Test
+	/*@Test
 	public void testSave() {
 		SchoolDataWS sdWS = new SchoolDataWS();
 		SchoolWS ws = new SchoolWS();
@@ -70,5 +63,5 @@ public class SchoolWSTest extends TestCase {
 	public void testFindAll() {
 		fail("Not yet implemented");
 	}
-
+*/
 }
