@@ -2,7 +2,6 @@ package br.com.farofa.gm.ws;
 
 import java.util.List;
 
-import br.com.farofa.gm.azure.BlobStorage;
 import br.com.farofa.gm.dao.BuildingDAO;
 import br.com.farofa.gm.dao.BuildingDAOImpl;
 import br.com.farofa.gm.dao.GameBirdDAO;
@@ -44,25 +43,25 @@ import br.com.farofa.gm.model.SchoolData;
 import br.com.farofa.gm.model.Student;
 import br.com.farofa.gm.model.Teacher;
 import br.com.farofa.gm.model.Transition;
+import br.com.farofa.gm.webservice.WebServiceExeptionManager;
 
 public class Server {
 	//School Data
 	
 	public String findSchoolDataByInep (String inep) {
 		String result = null;
-		SchoolDataDAO dao = null;
 		try {
-			dao = new SchoolDataDAOImpl();
+			SchoolDataDAO dao = new SchoolDataDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			SchoolData schoolData = dao.findById(inep);
+			
 			if (schoolData != null) 
 				result = schoolData.getJson();
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -71,12 +70,11 @@ public class Server {
 	
 	public String saveOrUpdateSchool (String json) {
 		String result = null;
-		SchoolDAO dao = null;
+		
 		try {
-			dao = new SchoolDAOImpl ();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			School school = new School (json);
+			SchoolDAO dao = new SchoolDAOImpl ();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if ("" == school.getId()) 
 				dao.save(school);
 			else
@@ -85,19 +83,15 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 	
 	public String findSchoolByInep (String inep) {
 		String result = null;
-		SchoolDAO dao = null;
 		try {
-			dao = new SchoolDAOImpl();
+			SchoolDAO dao = new SchoolDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			School school = dao.findById(inep);
 			if (school != null) 
 				result = school.getJson();
@@ -105,18 +99,16 @@ public class Server {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
 	
 	public String findSchoolBySyncCode (String syncCode) {
 		String result = null;
-		SchoolDAO dao = null;
 		try {
-			dao = new SchoolDAOImpl();
+			SchoolDAO dao = new SchoolDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			School school = dao.findBySyncCode(syncCode);
 			if (school != null) 
 				result = school.getJson();
@@ -124,18 +116,16 @@ public class Server {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
 	
 	public String findSchoolByName (String name) {
 		String result = null;
-		SchoolDAO dao = null;
 		try {
-			dao = new SchoolDAOImpl();
+			SchoolDAO dao = new SchoolDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			School school = dao.findByName(name);
 			if (school != null)
 				result = school.getJson();
@@ -143,7 +133,7 @@ public class Server {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -152,12 +142,10 @@ public class Server {
 	
 	public String saveOrUpdateTeacher (String json) {
 		String result = null;
-		TeacherDAO dao = null;
 		try {
-			dao = new TeacherDAOImpl ();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			Teacher teacher = new Teacher (json);
+			TeacherDAO dao = new TeacherDAOImpl ();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (teacher != null && (teacher.getId() == null || teacher.getId() == 0)) 
 				dao.save(teacher);
 			else
@@ -166,26 +154,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 	
 	public String findTeacherByInep (String inep) {
 		String result = null;
-		TeacherDAO dao = null;
 		try {
-			dao = new TeacherDAOImpl();
+			TeacherDAO dao = new TeacherDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<Teacher> teachers = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(teachers);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -194,12 +178,10 @@ public class Server {
 	
 	public String saveOrUpdateRoom(String json) {
 		String result = null;
-		RoomDAO dao = null;
 		try {
-			dao = new RoomDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			Room room = new Room(json);
+			RoomDAO dao = new RoomDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (room != null && (room.getId() == null || room.getId() == 0))
 				dao.save(room);
 			else
@@ -208,26 +190,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findRoomByInep(String inep) {
 		String result = null;
-		RoomDAO dao = null;
 		try {
-			dao = new RoomDAOImpl();
+			RoomDAO dao = new RoomDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<Room> rooms = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(rooms);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -236,12 +214,10 @@ public class Server {
 	
 	public String saveOrUpdateStudent(String json) {
 		String result = null;
-		StudentDAO dao = null;
 		try {
-			dao = new StudentDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			Student student = new Student(json);
+			StudentDAO dao = new StudentDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (student != null && (student.getId() == null || student.getId() == 0))
 				dao.save(student);
 			else
@@ -250,26 +226,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findStudentByInep(String inep) {
 		String result = null;
-		StudentDAO dao = null;
 		try {
-			dao = new StudentDAOImpl();
+			StudentDAO dao = new StudentDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<Student> students = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(students);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -278,12 +250,10 @@ public class Server {
 	
 	public String saveOrUpdateGameSuperCat(String json) {
 		String result = null;
-		GameSuperCatDAO dao = null;
 		try {
-			dao = new GameSuperCatDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			GameSuperCat gameSuperCat = new GameSuperCat(json);
+			GameSuperCatDAO dao = new GameSuperCatDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (gameSuperCat != null && (gameSuperCat.getId() == null || gameSuperCat.getId() == 0))
 				dao.save(gameSuperCat);
 			else
@@ -292,26 +262,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findGameSuperCatByInep(String inep) {
 		String result = null;
-		GameSuperCatDAO dao = null;
 		try {
-			dao = new GameSuperCatDAOImpl();
+			GameSuperCatDAO dao = new GameSuperCatDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<GameSuperCat> gameSuperCats = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(gameSuperCats);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -320,12 +286,10 @@ public class Server {
 	
 	public String saveOrUpdateGameBird(String json) {
 		String result = null;
-		GameBirdDAO dao = null;
 		try {
-			dao = new GameBirdDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			GameBird gameBird = new GameBird(json);
+			GameBirdDAO dao = new GameBirdDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (gameBird != null && (gameBird.getId() == null || gameBird.getId() == 0))
 				dao.save(gameBird);
 			else
@@ -334,26 +298,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findGameBirdByInep(String inep) {
 		String result = null;
-		GameBirdDAO dao = null;
 		try {
-			dao = new GameBirdDAOImpl();
+			GameBirdDAO dao = new GameBirdDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<GameBird> gameBirds = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(gameBirds);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -362,12 +322,10 @@ public class Server {
 	
 	public String saveOrUpdateBuilding(String json) {
 		String result = null;
-		BuildingDAO dao = null;
 		try {
-			dao = new BuildingDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			Building building = new Building(json);
+			BuildingDAO dao = new BuildingDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (building != null && (building.getId() == null || building.getId() == 0))
 				dao.save(building);
 			else
@@ -376,26 +334,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findBuildingByInep(String inep) {
 		String result = null;
-		BuildingDAO dao = null;
 		try {
-			dao = new BuildingDAOImpl();
+			BuildingDAO dao = new BuildingDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<Building> buildings = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(buildings);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -403,12 +357,10 @@ public class Server {
 	
 	public String saveOrUpdateNote(String json) {
 		String result = null;
-		NoteDAO dao = null;
 		try {
-			dao = new NoteDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			Note note = new Note(json);
+			NoteDAO dao = new NoteDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (note != null && (note.getId() == null || note.getId() == 0))
 				dao.save(note);
 			else
@@ -417,26 +369,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findNoteByInep(String inep) {
 		String result = null;
-		NoteDAO dao = null;
 		try {
-			dao = new NoteDAOImpl();
+			NoteDAO dao = new NoteDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<Note> notes = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(notes);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -445,12 +393,10 @@ public class Server {
 	
 	public String saveOrUpdateTransition(String json) {
 		String result = null;
-		TransitionDAO dao = null;
 		try {
-			dao = new TransitionDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			Transition transition = new Transition(json);
+			TransitionDAO dao = new TransitionDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (transition != null && (transition.getId() == null || transition.getId() == 0))
 				dao.save(transition);
 			else
@@ -459,26 +405,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findTransitionByInep(String inep) {
 		String result = null;
-		TransitionDAO dao = null;
 		try {
-			dao = new TransitionDAOImpl();
+			TransitionDAO dao = new TransitionDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<Transition> transitions = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(transitions);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -487,12 +429,10 @@ public class Server {
 	
 	public String saveOrUpdateReportTeacher(String json) {
 		String result = null;
-		ReportTeacherDAO dao = null;
 		try {
-			dao = new ReportTeacherDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			ReportTeacher reportTeacher = new ReportTeacher(json);
+			ReportTeacherDAO dao = new ReportTeacherDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (reportTeacher != null && (reportTeacher.getId() == null || reportTeacher.getId() == 0))
 				dao.save(reportTeacher);
 			else
@@ -501,26 +441,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findReportTeacherByInep(String inep) {
 		String result = null;
-		ReportTeacherDAO dao = null;
 		try {
-			dao = new ReportTeacherDAOImpl();
+			ReportTeacherDAO dao = new ReportTeacherDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<ReportTeacher> reportTeachers = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(reportTeachers);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -529,12 +465,10 @@ public class Server {
 	
 	public String saveOrUpdateReportStudent(String json) {
 		String result = null;
-		ReportStudentDAO dao = null;
 		try {
-			dao = new ReportStudentDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			ReportStudent reportStudent = new ReportStudent(json);
+			ReportStudentDAO dao = new ReportStudentDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (reportStudent != null && (reportStudent.getId() == null || reportStudent.getId() == 0))
 				dao.save(reportStudent);
 			else
@@ -543,26 +477,22 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findReportStudentByInep(String inep) {
 		String result = null;
-		ReportStudentDAO dao = null;
 		try {
-			dao = new ReportStudentDAOImpl();
+			ReportStudentDAO dao = new ReportStudentDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<ReportStudent> reportStudents = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(reportStudents);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
 	}
@@ -571,12 +501,10 @@ public class Server {
 	
 	public String saveOrUpdateGameSuperCatChallenge(String json) {
 		String result = null;
-		GameSuperCatChallengeDAO dao = null;
 		try {
-			dao = new GameSuperCatChallengeDAOImpl();
-			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			GameSuperCatChallenge gameSuperCatChallenge = new GameSuperCatChallenge(json);
+			GameSuperCatChallengeDAO dao = new GameSuperCatChallengeDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
 			if (gameSuperCatChallenge != null && (gameSuperCatChallenge.getId() == null || gameSuperCatChallenge.getId() == 0))
 				dao.save(gameSuperCatChallenge);
 			else
@@ -585,39 +513,23 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
-		} finally {
-			dao.close();
 		}
 		return result;
 	}
 
 	public String findGameSuperCatChallengeByInep(String inep) {
 		String result = null;
-		GameSuperCatChallengeDAO dao = null;
 		try {
-			dao = new GameSuperCatChallengeDAOImpl();
+			GameSuperCatChallengeDAO dao = new GameSuperCatChallengeDAOImpl();
 			dao.setEntityManager(DatabaseManager.getEntityManager());
-			
 			List<GameSuperCatChallenge> gameSuperCatChallenges = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(gameSuperCatChallenges);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
 		} finally {
-			dao.close();
+			DatabaseManager.close();
 		}
 		return result;
-	}
-	
-	public String savePhoto(String value) {
-		String url = null;
-		if (value != null && value.contains(";")) {
-			String name = value.split(";")[0];
-			String encodedPhoto = value.split(";")[1];
-			
-			BlobStorage bs = new BlobStorage();
-			url = bs.savePhoto(encodedPhoto, name);
-		}
-		return url;
 	}
 }

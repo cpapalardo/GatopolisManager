@@ -13,6 +13,7 @@ public class EntityManagerProducer {
 	@Produces
 	@RequestScoped
 	public EntityManager createEntityManager() {
+		System.out.println(PersistenceUnitFactory.getPersisteceUnit());
 		return factory.createEntityManager();
 	}
 	

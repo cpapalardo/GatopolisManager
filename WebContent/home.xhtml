@@ -31,7 +31,7 @@ xmlns:p="http://primefaces.org/ui">
 			<br />
 			<br />
 			<p:outputLabel value="Código da Escola" />
-			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px" onkeypress="return validateNumbers (event)" maxlength="9"/>
+			<p:inputText value="#{homeBean.syncCode}" style="margin-left:20px" onkeypress="return validateNumbers (event)"/>
 			<br />
 			<br />
 			<p:commandButton type="submit" value="Acessar" action="#{homeBean.access}" />
@@ -46,7 +46,7 @@ xmlns:p="http://primefaces.org/ui">
 			
 			
 			<h4><p:outputLabel value="Acesso aos Relatórios"/></h4>
-			<p:password value="#{homeBean.password}" style="margin-left:20px" maxlength="45"/>
+			<p:password value="#{homeBean.password}" style="margin-left:20px"/>
 			<p:commandButton type="submit" value="Entrar" action="#{homeBean.entering}" style="margin-left:20px"/>
 			<br />
 			<br />

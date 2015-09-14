@@ -18,41 +18,44 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	@Override
 	public void save(T entity) {
 		try {
-			manager.getTransaction().begin();
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			manager.persist(entity);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
+			//manager.getTransaction().rollback();
 		}
 	}
 	
 	@Override
 	public void update(T entity) {
 		try {
-			manager.getTransaction().begin();
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			manager.merge(entity);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
+			//manager.getTransaction().rollback();
 		}
 	}
 	
 	@Override
 	public void delete(T entity) {
 		try{
-			manager.getTransaction().begin();
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			Object pk = null;//DataBaseManager.getFactory().getPersistenceUnitUtil().getIdentifier(entity);
 			entity = (T) manager.find(getEntityClass(), pk);
 			manager.remove(entity);
 			manager.getTransaction().commit();
 		}catch(Exception e){
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
+			//manager.getTransaction().rollback();
 		}
 	}
 	
@@ -60,13 +63,14 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public T findById(PK pk) {
 		T result = null;
 		try {
-			manager.getTransaction().begin();
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			result = (T) manager.find(getEntityClass(), pk);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
+			//manager.getTransaction().rollback();
 		}
 		return result;
 	}
@@ -76,12 +80,13 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public List<T> findAll() {
 		List<T> result = null;
 		try {
-			manager.getTransaction().begin();
+			if (!manager.getTransaction().isActive())
+				manager.getTransaction().begin();
 			result = manager.createQuery(("FROM " + getEntityClass().getSimpleName())).getResultList();
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
+			//manager.getTransaction().rollback();
 			throw e;
 		}
 		return result;
@@ -91,32 +96,16 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	@SuppressWarnings("unchecked")
 	public List<T> findByInep(String inep) {
 		List<T> result = null;
-		try {
+		if (!manager.getTransaction().isActive())
 			manager.getTransaction().begin();
-			
-			Query query = manager.createNamedQuery(getEntityClass().getSimpleName() + ".findByInepCode");
-			query.setParameter("inep", inep);
-			result = query.getResultList();
-			
-			manager.getTransaction().commit();
-		} catch (Exception e) {
-			e.printStackTrace();
-			manager.getTransaction().rollback();
-			throw e;
-		}
+		
+		Query query = manager.createNamedQuery(getEntityClass().getSimpleName() + ".findByInepCode");
+		query.setParameter("inep", inep);
+		result = query.getResultList();
+		
+		manager.getTransaction().commit();
 			
 		return result;
-	}
-	
-	@Override
-	public void setEntityManager (EntityManager manager) {
-		this.manager = manager;
-	}
-	
-	@Override
-	public void close () {
-		if (manager != null && manager.isOpen())
-			manager.close();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -127,4 +116,7 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 		return entityClass;
 	}
 	
+	public void setEntityManager (EntityManager manager) {
+		this.manager = manager;
+	}
 }

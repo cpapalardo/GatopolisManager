@@ -63,7 +63,7 @@
 		<properties>
 			<!-- dados da conexao -->
 			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://khib9ap6ny.database.windows.net:1433;databaseName=gatopolis_v2_db" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://lqs5qhczop.database.windows.net:1433;databaseName=gatopolis_v2_db" />
 			<property name="javax.persistence.jdbc.user" value="FarofaStudios@lqs5qhczop" />
 			<property name="javax.persistence.jdbc.password" value="Farofa2015" />
 
@@ -71,7 +71,6 @@
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="create" />
 		</properties>
 	</persistence-unit>
 	
