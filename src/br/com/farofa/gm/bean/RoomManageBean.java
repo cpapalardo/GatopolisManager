@@ -51,6 +51,7 @@ public class RoomManageBean {
 			room = new Room ();
 			room.setTerm('M');
 			room.setTeacher(new Teacher());
+			room.setIsDeleted(false);
 		}
 	}
 	

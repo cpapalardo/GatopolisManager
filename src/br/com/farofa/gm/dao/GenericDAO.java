@@ -21,4 +21,6 @@ public interface GenericDAO<T extends Serializable, PK extends Serializable> {
 	public List<T> findAll();
 	
 	public void setEntityManager(EntityManager manager);
+	
+	public void close();
 }

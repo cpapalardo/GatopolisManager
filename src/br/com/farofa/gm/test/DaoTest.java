@@ -40,8 +40,15 @@ import br.com.farofa.gm.model.Teacher;
 @RequestScoped
 public class DaoTest {
 	public static void main(String[] args) {
-		//testCreate();
-		testFindAll ();
+		testConcurrence ();	
+	}
+	
+	public static void testConcurrence () {
+		for (int i = 0; i < 5; i++) {
+			Finding f = new Finding(i);
+			Thread t = new Thread (f);
+			t.start();
+		}
 	}
 	
 	public static void testFindAll () {
@@ -136,4 +143,29 @@ public class DaoTest {
 			System.out.println(schoolData);
 		}
 	}
+}
+
+class Finding implements Runnable {
+	int num;
+	public Finding (int num) {
+		this.num = num;
+	}
+
+	@Override
+	public void run() {
+		SchoolDataDAO schoolDataDAO = new SchoolDataDAOImpl ();
+		schoolDataDAO.setEntityManager(DatabaseManager.getEntityManager());
+		for (int i = 0; i < 5; i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			for (SchoolData sd : schoolDataDAO.findAll()) {
+				System.out.println("Finding " + num + ": " + "schoolData");
+			}
+		}
+		schoolDataDAO.close();
+	}
+	
 }

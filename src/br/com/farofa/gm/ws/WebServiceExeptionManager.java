@@ -1,4 +1,4 @@
-package br.com.farofa.gm.webservice;
+package br.com.farofa.gm.ws;
 
 public class WebServiceExeptionManager {
 	public static String getExceptionMessage (Exception e) {

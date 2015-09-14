@@ -26,9 +26,9 @@ public class Student extends JsonBehaviour implements Serializable {
 	@Column(name="is_deleted", nullable=false)
 	private Boolean isDeleted;
 	
-	/*@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_at", nullable=true)
-	private Date createdAt;*/
+	private Date createdAt;
 	
 	@Column(nullable=false, length=255)
 	private String name;
@@ -181,13 +181,13 @@ public class Student extends JsonBehaviour implements Serializable {
 		this.isDeleted = isDeleted;
 	}
 
-	/*public Date getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
-	}*/
+	}
 
 	@Override
 	public String toString() {

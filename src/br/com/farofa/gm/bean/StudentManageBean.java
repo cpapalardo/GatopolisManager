@@ -43,6 +43,7 @@ public class StudentManageBean {
 			student.setGender('M');
 			student.setPhase("NOT_ENOUGH_INPUT");
 			student.setRoom(new Room());
+			student.setIsDeleted(false);
 		}else{
 			student = (Student) sessionMap.get("student");
 		}

@@ -31,9 +31,9 @@ public class School extends JsonBehaviour implements Serializable {
 	@Column(nullable=true, length= 255)
 	private String email;
 	
-	/*@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=true, name="created_at")
-	private Date createdAt;*/
+	private Date createdAt;
 	
 	@OneToOne
 	@PrimaryKeyJoinColumn(name="inep")
@@ -85,12 +85,12 @@ public class School extends JsonBehaviour implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-	/*public Date getCreatedAt() {
+	public Date getCreatedAt() {
 		return createdAt;
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
-	}*/
+	}
 
 	@Override
 	public String toString() {

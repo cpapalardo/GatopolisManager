@@ -7,7 +7,19 @@ import br.com.farofa.gm.model.Teacher;
 
 public class JsonBehaviourTest {
 	public static void main(String[] args) {
-		testModelClass();
+		testDefaults();
+	}
+	
+	public static void testDefaults () {
+		Teacher teacher = new Teacher ();
+		teacher.setId(0);
+		teacher.setName ("Rodrigo");
+		teacher.setNickname ("Sordi");
+		teacher.setPassword ("1234");
+		teacher.setEmail ("email@email.com");
+		teacher.setPicture_url (null);
+		teacher.setSchool (null);
+		System.out.println(teacher.getJson());
 	}
 	
 	public static void testModelClass () {

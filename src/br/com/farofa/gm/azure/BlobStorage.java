@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 
 import org.apache.commons.codec.net.URLCodec;
 
-import br.com.farofa.gm.webservice.WebServiceExeptionManager;
+import br.com.farofa.gm.ws.WebServiceExeptionManager;
 
 import com.microsoft.azure.storage.CloudStorageAccount;
 import com.microsoft.azure.storage.blob.CloudBlobClient;
