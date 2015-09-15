@@ -10,9 +10,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.farofa.gm.dao.TeacherDAO;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.Teacher;
+import br.com.farofa.gatopolisws.dao.TeacherDAO;
+import br.com.farofa.gatopolisws.model.School;
+import br.com.farofa.gatopolisws.model.Teacher;
 
 @Named
 @RequestScoped

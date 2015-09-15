@@ -7,8 +7,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.farofa.gm.dao.SchoolDAOImpl;
-import br.com.farofa.gm.model.School;
+import br.com.farofa.gatopolisws.dao.SchoolDAOImpl;
+import br.com.farofa.gatopolisws.model.School;
 
 @Named
 @RequestScoped

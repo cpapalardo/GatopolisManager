@@ -23,13 +23,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.primefaces.model.UploadedFile;
 
-import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.model.Phase;
-import br.com.farofa.gm.model.Room;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.Student;
-import br.com.farofa.gm.model.Teacher;
+import br.com.farofa.gatopolisws.dao.RoomDAO;
+import br.com.farofa.gatopolisws.dao.StudentDAO;
+import br.com.farofa.gatopolisws.model.Room;
+import br.com.farofa.gatopolisws.model.School;
+import br.com.farofa.gatopolisws.model.Student;
+import br.com.farofa.gatopolisws.model.Teacher;
 import br.com.farofa.gm.util.DateConverterUtil;
 
 @Named
@@ -179,7 +178,7 @@ public class ImportBean {
 			}
 			
 			//StudentList
-			Student student = new Student(nomeCompletoDoAluno, sexoChar, date, Phase.NOT_ENOUGH_INPUT.name(), null, null, null, null, null, room);
+			Student student = new Student(nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
 			studentList.add(student);
 		}
 		

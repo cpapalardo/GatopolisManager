@@ -1,9 +1,9 @@
 package br.com.farofa.gm.test;
 
-import br.com.farofa.gm.model.Room;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.SchoolData;
-import br.com.farofa.gm.model.Teacher;
+import br.com.farofa.gatopolisws.model.Room;
+import br.com.farofa.gatopolisws.model.School;
+import br.com.farofa.gatopolisws.model.SchoolData;
+import br.com.farofa.gatopolisws.model.Teacher;
 
 public class JsonBehaviourTest {
 	public static void main(String[] args) {

@@ -9,39 +9,52 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-import br.com.farofa.gm.dao.BuildingDAO;
-import br.com.farofa.gm.dao.BuildingDAOImpl;
-import br.com.farofa.gm.dao.GameSuperCatChallengeDAO;
-import br.com.farofa.gm.dao.GameSuperCatChallengeDAOImpl;
-import br.com.farofa.gm.dao.GameSuperCatDAO;
-import br.com.farofa.gm.dao.GameSuperCatDAOImpl;
-import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.RoomDAOImpl;
-import br.com.farofa.gm.dao.SchoolDAO;
-import br.com.farofa.gm.dao.SchoolDAOImpl;
-import br.com.farofa.gm.dao.SchoolDataDAO;
-import br.com.farofa.gm.dao.SchoolDataDAOImpl;
-import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.dao.StudentDAOImpl;
-import br.com.farofa.gm.dao.TeacherDAO;
-import br.com.farofa.gm.dao.TeacherDAOImpl;
+import br.com.farofa.gatopolisws.dao.BuildingDAO;
+import br.com.farofa.gatopolisws.dao.BuildingDAOImpl;
+import br.com.farofa.gatopolisws.dao.GameSuperCatChallengeDAO;
+import br.com.farofa.gatopolisws.dao.GameSuperCatChallengeDAOImpl;
+import br.com.farofa.gatopolisws.dao.GameSuperCatDAO;
+import br.com.farofa.gatopolisws.dao.GameSuperCatDAOImpl;
+import br.com.farofa.gatopolisws.dao.RoomDAO;
+import br.com.farofa.gatopolisws.dao.RoomDAOImpl;
+import br.com.farofa.gatopolisws.dao.SchoolDAO;
+import br.com.farofa.gatopolisws.dao.SchoolDAOImpl;
+import br.com.farofa.gatopolisws.dao.SchoolDataDAO;
+import br.com.farofa.gatopolisws.dao.SchoolDataDAOImpl;
+import br.com.farofa.gatopolisws.dao.StudentDAO;
+import br.com.farofa.gatopolisws.dao.StudentDAOImpl;
+import br.com.farofa.gatopolisws.dao.TeacherDAO;
+import br.com.farofa.gatopolisws.dao.TeacherDAOImpl;
+import br.com.farofa.gatopolisws.model.Building;
+import br.com.farofa.gatopolisws.model.GameSuperCat;
+import br.com.farofa.gatopolisws.model.GameSuperCatChallenge;
+import br.com.farofa.gatopolisws.model.Room;
+import br.com.farofa.gatopolisws.model.School;
+import br.com.farofa.gatopolisws.model.SchoolData;
+import br.com.farofa.gatopolisws.model.Student;
+import br.com.farofa.gatopolisws.model.Teacher;
+import br.com.farofa.gatopolisws.webservice.WebServiceExeptionManager;
 import br.com.farofa.gm.database.DatabaseManager;
-import br.com.farofa.gm.model.Building;
-import br.com.farofa.gm.model.GameSuperCat;
-import br.com.farofa.gm.model.GameSuperCatChallenge;
-import br.com.farofa.gm.model.Phase;
-import br.com.farofa.gm.model.Room;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.SchoolData;
-import br.com.farofa.gm.model.Student;
-import br.com.farofa.gm.model.Teacher;
 
 @Named("test")
 @RequestScoped
 public class DaoTest {
 	public static void main(String[] args) {
 		//testCreate();
-		testFindAll ();
+		testException ();
+	}
+	
+	public static void testException () {
+		try {
+			Teacher teacher = new Teacher ();
+			TeacherDAOImpl teacherDAO = new TeacherDAOImpl ();
+			teacherDAO.setEntityManager(DatabaseManager.getEntityManager());
+			teacherDAO.save(teacher);
+			System.out.println(teacher);
+		} catch (Exception e) {
+			System.out.println(WebServiceExeptionManager.getExceptionMessage(e));
+			throw e;
+		}
 	}
 	
 	public static void testFindAll () {
@@ -64,7 +77,7 @@ public class DaoTest {
 		Student s = new Student ();
 		s.setId(1);
 		
-		GameSuperCat word = new GameSuperCat ("Palavra", "Palabra", Phase.NOT_ENOUGH_INPUT.name(), 80, new Date(), s);
+		GameSuperCat word = new GameSuperCat ("Palavra", "Palabra", "NOT_ENOUGH_INPUT", 80, new Date(), s);
 		GameSuperCatDAO wordDAO = new GameSuperCatDAOImpl();
 		wordDAO.setEntityManager(DatabaseManager.getEntityManager());
 		wordDAO.save(word);
@@ -95,13 +108,13 @@ public class DaoTest {
 		rDAO.save(room);
 		System.out.println("Room: " + room);
 		
-		Student s = new Student ("Rodrigo", 'M', new Date(), Phase.NOT_ENOUGH_INPUT.name(), 1,1,1,1,null,room);
+		Student s = new Student ("Rodrigo", 'M', new Date(), "NOT_ENOUGH_INPUT", 1,1,1,1,null,room);
 		StudentDAO sDAO = new StudentDAOImpl();
 		sDAO.setEntityManager(DatabaseManager.getEntityManager());
 		sDAO.save(s);
 		System.out.println("Student: " + s);
 		
-		GameSuperCat word = new GameSuperCat ("Palavra", "Palabra", Phase.NOT_ENOUGH_INPUT.name(), 80, new Date(), s);
+		GameSuperCat word = new GameSuperCat ("Palavra", "Palabra", "NOT_ENOUGH_INPUT", 80, new Date(), s);
 		GameSuperCatDAO wordDAO = new GameSuperCatDAOImpl();
 		wordDAO.setEntityManager(DatabaseManager.getEntityManager());
 		wordDAO.save(word);

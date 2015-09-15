@@ -12,11 +12,11 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.farofa.gm.dao.RoomDAO;
-import br.com.farofa.gm.dao.StudentDAO;
-import br.com.farofa.gm.model.Room;
-import br.com.farofa.gm.model.School;
-import br.com.farofa.gm.model.Student;
+import br.com.farofa.gatopolisws.dao.RoomDAO;
+import br.com.farofa.gatopolisws.dao.StudentDAO;
+import br.com.farofa.gatopolisws.model.Room;
+import br.com.farofa.gatopolisws.model.School;
+import br.com.farofa.gatopolisws.model.Student;
 
 @Named
 @RequestScoped

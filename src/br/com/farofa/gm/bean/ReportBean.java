@@ -9,12 +9,12 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.farofa.gatopolisws.dao.ReportStudentDAO;
+import br.com.farofa.gatopolisws.dao.ReportTeacherDAO;
+import br.com.farofa.gatopolisws.dao.SchoolDataDAO;
+import br.com.farofa.gatopolisws.model.SchoolData;
 import br.com.farofa.gm.bean.item.ReportStudentItem;
 import br.com.farofa.gm.bean.item.ReportTeacherItem;
-import br.com.farofa.gm.dao.ReportStudentDAO;
-import br.com.farofa.gm.dao.ReportTeacherDAO;
-import br.com.farofa.gm.dao.SchoolDataDAO;
-import br.com.farofa.gm.model.SchoolData;
 
 @Named
 @RequestScoped
