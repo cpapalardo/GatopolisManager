@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -22,19 +22,6 @@
  <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
  <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
  <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
- <ns1:service name="StorageWS" provider="java:RPC" style="document" use="literal">
-  <ns2:operation name="savePhoto" qname="savePhoto" returnQName="ns1:savePhotoReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:value" type="xsd:string"/>
-  </ns2:operation>
-  <ns1:parameter name="allowedMethods" value="savePhoto"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="wsdlPortType" value="StorageWS"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.StorageWS"/>
-  <ns1:parameter name="wsdlServicePort" value="StorageWS"/>
-  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
-  <ns1:parameter name="wsdlServiceElement" value="StorageWSService"/>
- </ns1:service>
  <ns1:service name="AdminService" provider="java:MSG">
   <ns1:parameter name="allowedMethods" value="AdminService"/>
   <ns1:parameter name="enableRemoteAdmin" value="false"/>
@@ -46,94 +33,100 @@
   <ns1:parameter name="className" value="org.apache.axis.Version"/>
  </ns1:service>
  <ns1:service name="Server" provider="java:RPC" style="document" use="literal">
-  <ns1:operation name="saveOrUpdateReportStudent" qname="saveOrUpdateReportStudent" returnQName="ns2:saveOrUpdateReportStudentReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns2:operation name="findGameSuperCatChallengeByInep" qname="findGameSuperCatChallengeByInep" returnQName="ns1:findGameSuperCatChallengeByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:inep" type="xsd:string"/>
+  </ns2:operation>
+  <ns1:operation name="saveOrUpdateReportStudent" qname="saveOrUpdateReportStudent" returnQName="ns2:saveOrUpdateReportStudentReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns2:json" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findGameSuperCatChallengeByInep" qname="findGameSuperCatChallengeByInep" returnQName="ns3:findGameSuperCatChallengeByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns3:inep" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateGameSuperCatChallenge" qname="saveOrUpdateGameSuperCatChallenge" returnQName="ns3:saveOrUpdateGameSuperCatChallengeReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:json1" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateReportTeacher" qname="saveOrUpdateReportTeacher" returnQName="ns4:saveOrUpdateReportTeacherReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns4:json1" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateReportTeacher" qname="saveOrUpdateReportTeacher" returnQName="ns4:saveOrUpdateReportTeacherReturn" returnType="xsd:string" soapAction="" xmlns:ns4="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns4:json2" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateGameSuperCatChallenge" qname="saveOrUpdateGameSuperCatChallenge" returnQName="ns5:saveOrUpdateGameSuperCatChallengeReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns5:json2" type="xsd:string"/>
+  <ns1:operation name="saveSchool" qname="saveSchool" returnQName="ns5:saveSchoolReturn" returnType="xsd:string" soapAction="" xmlns:ns5="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns5:json3" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findTransitionByInep" qname="findTransitionByInep" returnQName="ns6:findTransitionByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="findSchoolDataByInep" qname="findSchoolDataByInep" returnQName="ns6:findSchoolDataByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns6:inep1" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateGameBird" qname="saveOrUpdateGameBird" returnQName="ns7:saveOrUpdateGameBirdReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns7:json3" type="xsd:string"/>
+  <ns1:operation name="findSchoolByInep" qname="findSchoolByInep" returnQName="ns7:findSchoolByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns7="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns7:inep2" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateTeacher" qname="saveOrUpdateTeacher" returnQName="ns8:saveOrUpdateTeacherReturn" returnType="xsd:string" soapAction="" xmlns:ns8="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="updateSchool" qname="updateSchool" returnQName="ns8:updateSchoolReturn" returnType="xsd:string" soapAction="" xmlns:ns8="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns8:json4" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findSchoolByInep" qname="findSchoolByInep" returnQName="ns9:findSchoolByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns9:inep2" type="xsd:string"/>
+  <ns1:operation name="findSchoolBySyncCode" qname="findSchoolBySyncCode" returnQName="ns9:findSchoolBySyncCodeReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:syncCode" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateBuilding" qname="saveOrUpdateBuilding" returnQName="ns10:saveOrUpdateBuildingReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="saveOrUpdateTeacher" qname="saveOrUpdateTeacher" returnQName="ns10:saveOrUpdateTeacherReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns10:json5" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findRoomByInep" qname="findRoomByInep" returnQName="ns11:findRoomByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns11="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns11:inep3" type="xsd:string"/>
+  <ns1:operation name="findSchoolByName" qname="findSchoolByName" returnQName="ns11:findSchoolByNameReturn" returnType="xsd:string" soapAction="" xmlns:ns11="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns11:name" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateNote" qname="saveOrUpdateNote" returnQName="ns12:saveOrUpdateNoteReturn" returnType="xsd:string" soapAction="" xmlns:ns12="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns12:json6" type="xsd:string"/>
+  <ns1:operation name="findTeacherByInep" qname="findTeacherByInep" returnQName="ns12:findTeacherByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns12="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns12:inep3" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateSchool" qname="saveOrUpdateSchool" returnQName="ns13:saveOrUpdateSchoolReturn" returnType="xsd:string" soapAction="" xmlns:ns13="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns13:json7" type="xsd:string"/>
+  <ns1:operation name="findRoomByInep" qname="findRoomByInep" returnQName="ns13:findRoomByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns13="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns13:inep4" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findSchoolBySyncCode" qname="findSchoolBySyncCode" returnQName="ns14:findSchoolBySyncCodeReturn" returnType="xsd:string" soapAction="" xmlns:ns14="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns14:syncCode" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateRoom" qname="saveOrUpdateRoom" returnQName="ns14:saveOrUpdateRoomReturn" returnType="xsd:string" soapAction="" xmlns:ns14="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns14:json6" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateStudent" qname="saveOrUpdateStudent" returnQName="ns15:saveOrUpdateStudentReturn" returnType="xsd:string" soapAction="" xmlns:ns15="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns15:json8" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateStudent" qname="saveOrUpdateStudent" returnQName="ns15:saveOrUpdateStudentReturn" returnType="xsd:string" soapAction="" xmlns:ns15="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns15:json7" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findReportStudentByInep" qname="findReportStudentByInep" returnQName="ns16:findReportStudentByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns16="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns16:inep4" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateGameSuperCat" qname="saveOrUpdateGameSuperCat" returnQName="ns16:saveOrUpdateGameSuperCatReturn" returnType="xsd:string" soapAction="" xmlns:ns16="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns16:json8" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findTeacherByInep" qname="findTeacherByInep" returnQName="ns17:findTeacherByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns17="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="findStudentByInep" qname="findStudentByInep" returnQName="ns17:findStudentByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns17="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns17:inep5" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findStudentByInep" qname="findStudentByInep" returnQName="ns18:findStudentByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns18="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="findGameSuperCatByInep" qname="findGameSuperCatByInep" returnQName="ns18:findGameSuperCatByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns18="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns18:inep6" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findReportTeacherByInep" qname="findReportTeacherByInep" returnQName="ns19:findReportTeacherByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns19:inep7" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateGameBird" qname="saveOrUpdateGameBird" returnQName="ns19:saveOrUpdateGameBirdReturn" returnType="xsd:string" soapAction="" xmlns:ns19="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns19:json9" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findBuildingByInep" qname="findBuildingByInep" returnQName="ns20:findBuildingByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns20="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns20:inep8" type="xsd:string"/>
+  <ns1:operation name="findGameBirdByInep" qname="findGameBirdByInep" returnQName="ns20:findGameBirdByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns20="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns20:inep7" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateRoom" qname="saveOrUpdateRoom" returnQName="ns21:saveOrUpdateRoomReturn" returnType="xsd:string" soapAction="" xmlns:ns21="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns21:json9" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateBuilding" qname="saveOrUpdateBuilding" returnQName="ns21:saveOrUpdateBuildingReturn" returnType="xsd:string" soapAction="" xmlns:ns21="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns21:json10" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findSchoolByName" qname="findSchoolByName" returnQName="ns22:findSchoolByNameReturn" returnType="xsd:string" soapAction="" xmlns:ns22="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns22:name" type="xsd:string"/>
+  <ns1:operation name="findBuildingByInep" qname="findBuildingByInep" returnQName="ns22:findBuildingByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns22="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns22:inep8" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateGameSuperCat" qname="saveOrUpdateGameSuperCat" returnQName="ns23:saveOrUpdateGameSuperCatReturn" returnType="xsd:string" soapAction="" xmlns:ns23="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns23:json10" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateNote" qname="saveOrUpdateNote" returnQName="ns23:saveOrUpdateNoteReturn" returnType="xsd:string" soapAction="" xmlns:ns23="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns23:json11" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findGameBirdByInep" qname="findGameBirdByInep" returnQName="ns24:findGameBirdByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns24="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ns1:operation name="findNoteByInep" qname="findNoteByInep" returnQName="ns24:findNoteByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns24="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns24:inep9" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findNoteByInep" qname="findNoteByInep" returnQName="ns25:findNoteByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns25="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns25:inep10" type="xsd:string"/>
+  <ns1:operation name="saveOrUpdateTransition" qname="saveOrUpdateTransition" returnQName="ns25:saveOrUpdateTransitionReturn" returnType="xsd:string" soapAction="" xmlns:ns25="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns25:json12" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findSchoolDataByInep" qname="findSchoolDataByInep" returnQName="ns26:findSchoolDataByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns26="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns26:inep11" type="xsd:string"/>
+  <ns1:operation name="findTransitionByInep" qname="findTransitionByInep" returnQName="ns26:findTransitionByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns26="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns26:inep10" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="findGameSuperCatByInep" qname="findGameSuperCatByInep" returnQName="ns27:findGameSuperCatByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns27="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns27:inep12" type="xsd:string"/>
+  <ns1:operation name="findReportTeacherByInep" qname="findReportTeacherByInep" returnQName="ns27:findReportTeacherByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns27="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns27:inep11" type="xsd:string"/>
   </ns1:operation>
-  <ns1:operation name="saveOrUpdateTransition" qname="saveOrUpdateTransition" returnQName="ns28:saveOrUpdateTransitionReturn" returnType="xsd:string" soapAction="" xmlns:ns28="http://ws.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns28:json11" type="xsd:string"/>
+  <ns1:operation name="findReportStudentByInep" qname="findReportStudentByInep" returnQName="ns28:findReportStudentByInepReturn" returnType="xsd:string" soapAction="" xmlns:ns28="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns28:inep12" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="saveOrUpdateStudent saveOrUpdateRoom saveOrUpdateNote findReportTeacherByInep findBuildingByInep findRoomByInep findSchoolBySyncCode saveOrUpdateGameSuperCat findGameBirdByInep saveOrUpdateTransition saveOrUpdateBuilding saveOrUpdateReportTeacher findSchoolDataByInep findSchoolByInep findGameSuperCatByInep findTransitionByInep findNoteByInep saveOrUpdateTeacher findReportStudentByInep saveOrUpdateReportStudent saveOrUpdateGameBird saveOrUpdateSchool findTeacherByInep findStudentByInep findSchoolByName findGameSuperCatChallengeByInep saveOrUpdateGameSuperCatChallenge"/>
-  <ns1:parameter name="wsdlPortType" value="Server"/>
+  <ns1:operation name="savePhoto" qname="savePhoto" returnQName="ns29:savePhotoReturn" returnType="xsd:string" soapAction="" xmlns:ns29="http://webservice.gm.farofa.com.br" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns29:value" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="saveSchool saveOrUpdateStudent saveOrUpdateRoom saveOrUpdateNote findReportTeacherByInep findBuildingByInep findRoomByInep savePhoto findSchoolBySyncCode updateSchool saveOrUpdateGameSuperCat findGameBirdByInep saveOrUpdateTransition saveOrUpdateBuilding saveOrUpdateReportTeacher findSchoolDataByInep findSchoolByInep findGameSuperCatByInep findTransitionByInep findNoteByInep saveOrUpdateTeacher findReportStudentByInep saveOrUpdateReportStudent saveOrUpdateGameBird findTeacherByInep findStudentByInep findSchoolByName findGameSuperCatChallengeByInep saveOrUpdateGameSuperCatChallenge"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://ws.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlPortType" value="Server"/>
+  <ns1:parameter name="className" value="br.com.farofa.gm.webservice.Server"/>
   <ns1:parameter name="wsdlServicePort" value="Server"/>
-  <ns1:parameter name="className" value="br.com.farofa.gm.ws.Server"/>
-  <ns1:parameter name="wsdlTargetNamespace" value="http://ws.gm.farofa.com.br"/>
+  <ns1:parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
   <ns1:parameter name="wsdlServiceElement" value="ServerService"/>
  </ns1:service>
  <ns1:transport name="http">

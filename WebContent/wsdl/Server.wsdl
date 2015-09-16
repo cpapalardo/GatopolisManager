@@ -1,285 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://ws.gm.farofa.com.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://ws.gm.farofa.com.br" xmlns:intf="http://ws.gm.farofa.com.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions targetNamespace="http://webservice.gm.farofa.com.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservice.gm.farofa.com.br" xmlns:intf="http://webservice.gm.farofa.com.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
-  <schema elementFormDefault="qualified" targetNamespace="http://ws.gm.farofa.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
-   <element name="json" type="xsd:string"/>
-   <element name="saveOrUpdateReportStudentReturn" type="xsd:string"/>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservice.gm.farofa.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
    <element name="inep" type="xsd:string"/>
    <element name="findGameSuperCatChallengeByInepReturn" type="xsd:string"/>
+   <element name="json" type="xsd:string"/>
+   <element name="saveOrUpdateReportStudentReturn" type="xsd:string"/>
    <element name="json1" type="xsd:string"/>
-   <element name="saveOrUpdateReportTeacherReturn" type="xsd:string"/>
-   <element name="json2" type="xsd:string"/>
    <element name="saveOrUpdateGameSuperCatChallengeReturn" type="xsd:string"/>
-   <element name="inep1" type="xsd:string"/>
-   <element name="findTransitionByInepReturn" type="xsd:string"/>
+   <element name="json2" type="xsd:string"/>
+   <element name="saveOrUpdateReportTeacherReturn" type="xsd:string"/>
    <element name="json3" type="xsd:string"/>
-   <element name="saveOrUpdateGameBirdReturn" type="xsd:string"/>
-   <element name="json4" type="xsd:string"/>
-   <element name="saveOrUpdateTeacherReturn" type="xsd:string"/>
+   <element name="saveSchoolReturn" type="xsd:string"/>
+   <element name="inep1" type="xsd:string"/>
+   <element name="findSchoolDataByInepReturn" type="xsd:string"/>
    <element name="inep2" type="xsd:string"/>
    <element name="findSchoolByInepReturn" type="xsd:string"/>
-   <element name="json5" type="xsd:string"/>
-   <element name="saveOrUpdateBuildingReturn" type="xsd:string"/>
-   <element name="inep3" type="xsd:string"/>
-   <element name="findRoomByInepReturn" type="xsd:string"/>
-   <element name="json6" type="xsd:string"/>
-   <element name="saveOrUpdateNoteReturn" type="xsd:string"/>
-   <element name="json7" type="xsd:string"/>
-   <element name="saveOrUpdateSchoolReturn" type="xsd:string"/>
+   <element name="json4" type="xsd:string"/>
+   <element name="updateSchoolReturn" type="xsd:string"/>
    <element name="syncCode" type="xsd:string"/>
    <element name="findSchoolBySyncCodeReturn" type="xsd:string"/>
-   <element name="json8" type="xsd:string"/>
-   <element name="saveOrUpdateStudentReturn" type="xsd:string"/>
-   <element name="inep4" type="xsd:string"/>
-   <element name="findReportStudentByInepReturn" type="xsd:string"/>
-   <element name="inep5" type="xsd:string"/>
-   <element name="findTeacherByInepReturn" type="xsd:string"/>
-   <element name="inep6" type="xsd:string"/>
-   <element name="findStudentByInepReturn" type="xsd:string"/>
-   <element name="inep7" type="xsd:string"/>
-   <element name="findReportTeacherByInepReturn" type="xsd:string"/>
-   <element name="inep8" type="xsd:string"/>
-   <element name="findBuildingByInepReturn" type="xsd:string"/>
-   <element name="json9" type="xsd:string"/>
-   <element name="saveOrUpdateRoomReturn" type="xsd:string"/>
+   <element name="json5" type="xsd:string"/>
+   <element name="saveOrUpdateTeacherReturn" type="xsd:string"/>
    <element name="name" type="xsd:string"/>
    <element name="findSchoolByNameReturn" type="xsd:string"/>
-   <element name="json10" type="xsd:string"/>
+   <element name="inep3" type="xsd:string"/>
+   <element name="findTeacherByInepReturn" type="xsd:string"/>
+   <element name="inep4" type="xsd:string"/>
+   <element name="findRoomByInepReturn" type="xsd:string"/>
+   <element name="json6" type="xsd:string"/>
+   <element name="saveOrUpdateRoomReturn" type="xsd:string"/>
+   <element name="json7" type="xsd:string"/>
+   <element name="saveOrUpdateStudentReturn" type="xsd:string"/>
+   <element name="json8" type="xsd:string"/>
    <element name="saveOrUpdateGameSuperCatReturn" type="xsd:string"/>
-   <element name="inep9" type="xsd:string"/>
-   <element name="findGameBirdByInepReturn" type="xsd:string"/>
-   <element name="inep10" type="xsd:string"/>
-   <element name="findNoteByInepReturn" type="xsd:string"/>
-   <element name="inep11" type="xsd:string"/>
-   <element name="findSchoolDataByInepReturn" type="xsd:string"/>
-   <element name="inep12" type="xsd:string"/>
+   <element name="inep5" type="xsd:string"/>
+   <element name="findStudentByInepReturn" type="xsd:string"/>
+   <element name="inep6" type="xsd:string"/>
    <element name="findGameSuperCatByInepReturn" type="xsd:string"/>
+   <element name="json9" type="xsd:string"/>
+   <element name="saveOrUpdateGameBirdReturn" type="xsd:string"/>
+   <element name="inep7" type="xsd:string"/>
+   <element name="findGameBirdByInepReturn" type="xsd:string"/>
+   <element name="json10" type="xsd:string"/>
+   <element name="saveOrUpdateBuildingReturn" type="xsd:string"/>
+   <element name="inep8" type="xsd:string"/>
+   <element name="findBuildingByInepReturn" type="xsd:string"/>
    <element name="json11" type="xsd:string"/>
+   <element name="saveOrUpdateNoteReturn" type="xsd:string"/>
+   <element name="inep9" type="xsd:string"/>
+   <element name="findNoteByInepReturn" type="xsd:string"/>
+   <element name="json12" type="xsd:string"/>
    <element name="saveOrUpdateTransitionReturn" type="xsd:string"/>
+   <element name="inep10" type="xsd:string"/>
+   <element name="findTransitionByInepReturn" type="xsd:string"/>
+   <element name="inep11" type="xsd:string"/>
+   <element name="findReportTeacherByInepReturn" type="xsd:string"/>
+   <element name="inep12" type="xsd:string"/>
+   <element name="findReportStudentByInepReturn" type="xsd:string"/>
+   <element name="value" type="xsd:string"/>
+   <element name="savePhotoReturn" type="xsd:string"/>
   </schema>
  </wsdl:types>
 
-   <wsdl:message name="saveOrUpdateTransitionRequest">
-
-      <wsdl:part element="impl:json11" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findRoomByInepRequest">
-
-      <wsdl:part element="impl:inep3" name="inep">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateNoteRequest">
-
-      <wsdl:part element="impl:json6" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findBuildingByInepRequest">
-
-      <wsdl:part element="impl:inep8" name="inep">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateTransitionResponse">
-
-      <wsdl:part element="impl:saveOrUpdateTransitionReturn" name="saveOrUpdateTransitionReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateStudentRequest">
-
-      <wsdl:part element="impl:json8" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateRoomResponse">
-
-      <wsdl:part element="impl:saveOrUpdateRoomReturn" name="saveOrUpdateRoomReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findNoteByInepRequest">
-
-      <wsdl:part element="impl:inep10" name="inep">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findTransitionByInepRequest">
-
-      <wsdl:part element="impl:inep1" name="inep">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateReportTeacherResponse">
-
-      <wsdl:part element="impl:saveOrUpdateReportTeacherReturn" name="saveOrUpdateReportTeacherReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findNoteByInepResponse">
-
-      <wsdl:part element="impl:findNoteByInepReturn" name="findNoteByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateReportTeacherRequest">
-
-      <wsdl:part element="impl:json1" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateTeacherRequest">
-
-      <wsdl:part element="impl:json4" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateTeacherResponse">
-
-      <wsdl:part element="impl:saveOrUpdateTeacherReturn" name="saveOrUpdateTeacherReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findBuildingByInepResponse">
-
-      <wsdl:part element="impl:findBuildingByInepReturn" name="findBuildingByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateNoteResponse">
-
-      <wsdl:part element="impl:saveOrUpdateNoteReturn" name="saveOrUpdateNoteReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateGameSuperCatResponse">
-
-      <wsdl:part element="impl:saveOrUpdateGameSuperCatReturn" name="saveOrUpdateGameSuperCatReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateGameSuperCatChallengeRequest">
-
-      <wsdl:part element="impl:json2" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findTransitionByInepResponse">
-
-      <wsdl:part element="impl:findTransitionByInepReturn" name="findTransitionByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateBuildingRequest">
-
-      <wsdl:part element="impl:json5" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findSchoolByNameRequest">
-
-      <wsdl:part element="impl:name" name="name">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateSchoolResponse">
-
-      <wsdl:part element="impl:saveOrUpdateSchoolReturn" name="saveOrUpdateSchoolReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findSchoolDataByInepRequest">
-
-      <wsdl:part element="impl:inep11" name="inep">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateBuildingResponse">
-
-      <wsdl:part element="impl:saveOrUpdateBuildingReturn" name="saveOrUpdateBuildingReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findSchoolByInepRequest">
-
-      <wsdl:part element="impl:inep2" name="inep">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateRoomRequest">
-
-      <wsdl:part element="impl:json9" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findGameBirdByInepResponse">
-
-      <wsdl:part element="impl:findGameBirdByInepReturn" name="findGameBirdByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="findGameSuperCatByInepRequest">
 
-      <wsdl:part element="impl:inep12" name="inep">
+      <wsdl:part element="impl:inep6" name="inep">
 
       </wsdl:part>
 
@@ -293,25 +81,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findSchoolByNameResponse">
+   <wsdl:message name="saveOrUpdateRoomRequest">
 
-      <wsdl:part element="impl:findSchoolByNameReturn" name="findSchoolByNameReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateReportStudentResponse">
-
-      <wsdl:part element="impl:saveOrUpdateReportStudentReturn" name="saveOrUpdateReportStudentReturn">
+      <wsdl:part element="impl:json6" name="json">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="findGameSuperCatChallengeByInepResponse">
+   <wsdl:message name="findGameBirdByInepResponse">
 
-      <wsdl:part element="impl:findGameSuperCatChallengeByInepReturn" name="findGameSuperCatChallengeByInepReturn">
+      <wsdl:part element="impl:findGameBirdByInepReturn" name="findGameBirdByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findReportStudentByInepRequest">
+
+      <wsdl:part element="impl:inep12" name="inep">
 
       </wsdl:part>
 
@@ -325,9 +113,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findReportStudentByInepRequest">
+   <wsdl:message name="findGameSuperCatChallengeByInepResponse">
 
-      <wsdl:part element="impl:inep4" name="inep">
+      <wsdl:part element="impl:findGameSuperCatChallengeByInepReturn" name="findGameSuperCatChallengeByInepReturn">
 
       </wsdl:part>
 
@@ -335,13 +123,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:message name="findStudentByInepRequest">
 
-      <wsdl:part element="impl:inep6" name="inep">
+      <wsdl:part element="impl:inep5" name="inep">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="saveOrUpdateGameBirdRequest">
+   <wsdl:message name="saveSchoolRequest">
 
       <wsdl:part element="impl:json3" name="json">
 
@@ -349,65 +137,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="saveOrUpdateGameSuperCatRequest">
+   <wsdl:message name="saveOrUpdateReportStudentResponse">
 
-      <wsdl:part element="impl:json10" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findSchoolBySyncCodeResponse">
-
-      <wsdl:part element="impl:findSchoolBySyncCodeReturn" name="findSchoolBySyncCodeReturn">
+      <wsdl:part element="impl:saveOrUpdateReportStudentReturn" name="saveOrUpdateReportStudentReturn">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="findSchoolByInepResponse">
+   <wsdl:message name="findSchoolByNameResponse">
 
-      <wsdl:part element="impl:findSchoolByInepReturn" name="findSchoolByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findReportStudentByInepResponse">
-
-      <wsdl:part element="impl:findReportStudentByInepReturn" name="findReportStudentByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findRoomByInepResponse">
-
-      <wsdl:part element="impl:findRoomByInepReturn" name="findRoomByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateSchoolRequest">
-
-      <wsdl:part element="impl:json7" name="json">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findStudentByInepResponse">
-
-      <wsdl:part element="impl:findStudentByInepReturn" name="findStudentByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="saveOrUpdateReportStudentRequest">
-
-      <wsdl:part element="impl:json" name="json">
+      <wsdl:part element="impl:findSchoolByNameReturn" name="findSchoolByNameReturn">
 
       </wsdl:part>
 
@@ -429,6 +169,38 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="saveOrUpdateReportStudentRequest">
+
+      <wsdl:part element="impl:json" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findRoomByInepResponse">
+
+      <wsdl:part element="impl:findRoomByInepReturn" name="findRoomByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findStudentByInepResponse">
+
+      <wsdl:part element="impl:findStudentByInepReturn" name="findStudentByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="savePhotoResponse">
+
+      <wsdl:part element="impl:savePhotoReturn" name="savePhotoReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="findSchoolDataByInepResponse">
 
       <wsdl:part element="impl:findSchoolDataByInepReturn" name="findSchoolDataByInepReturn">
@@ -437,33 +209,49 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findTeacherByInepResponse">
+   <wsdl:message name="saveOrUpdateGameSuperCatRequest">
 
-      <wsdl:part element="impl:findTeacherByInepReturn" name="findTeacherByInepReturn">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="findGameBirdByInepRequest">
-
-      <wsdl:part element="impl:inep9" name="inep">
+      <wsdl:part element="impl:json8" name="json">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="findGameSuperCatByInepResponse">
+   <wsdl:message name="saveOrUpdateGameBirdRequest">
 
-      <wsdl:part element="impl:findGameSuperCatByInepReturn" name="findGameSuperCatByInepReturn">
+      <wsdl:part element="impl:json9" name="json">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="findTeacherByInepRequest">
+   <wsdl:message name="findSchoolByInepResponse">
 
-      <wsdl:part element="impl:inep5" name="inep">
+      <wsdl:part element="impl:findSchoolByInepReturn" name="findSchoolByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findReportStudentByInepResponse">
+
+      <wsdl:part element="impl:findReportStudentByInepReturn" name="findReportStudentByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="savePhotoRequest">
+
+      <wsdl:part element="impl:value" name="value">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findSchoolBySyncCodeResponse">
+
+      <wsdl:part element="impl:findSchoolBySyncCodeReturn" name="findSchoolBySyncCodeReturn">
 
       </wsdl:part>
 
@@ -477,9 +265,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findReportTeacherByInepRequest">
+   <wsdl:message name="findTeacherByInepRequest">
 
-      <wsdl:part element="impl:inep7" name="inep">
+      <wsdl:part element="impl:inep3" name="inep">
 
       </wsdl:part>
 
@@ -493,19 +281,255 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="findReportTeacherByInepRequest">
+
+      <wsdl:part element="impl:inep11" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findGameSuperCatByInepResponse">
+
+      <wsdl:part element="impl:findGameSuperCatByInepReturn" name="findGameSuperCatByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findGameBirdByInepRequest">
+
+      <wsdl:part element="impl:inep7" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findTeacherByInepResponse">
+
+      <wsdl:part element="impl:findTeacherByInepReturn" name="findTeacherByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findTransitionByInepRequest">
+
+      <wsdl:part element="impl:inep10" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNoteByInepResponse">
+
+      <wsdl:part element="impl:findNoteByInepReturn" name="findNoteByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateReportTeacherResponse">
+
+      <wsdl:part element="impl:saveOrUpdateReportTeacherReturn" name="saveOrUpdateReportTeacherReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateNoteRequest">
+
+      <wsdl:part element="impl:json11" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findRoomByInepRequest">
+
+      <wsdl:part element="impl:inep4" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateTransitionRequest">
+
+      <wsdl:part element="impl:json12" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateRoomResponse">
+
+      <wsdl:part element="impl:saveOrUpdateRoomReturn" name="saveOrUpdateRoomReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateStudentRequest">
+
+      <wsdl:part element="impl:json7" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findNoteByInepRequest">
+
+      <wsdl:part element="impl:inep9" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateTransitionResponse">
+
+      <wsdl:part element="impl:saveOrUpdateTransitionReturn" name="saveOrUpdateTransitionReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findBuildingByInepRequest">
+
+      <wsdl:part element="impl:inep8" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateGameSuperCatResponse">
+
+      <wsdl:part element="impl:saveOrUpdateGameSuperCatReturn" name="saveOrUpdateGameSuperCatReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateNoteResponse">
+
+      <wsdl:part element="impl:saveOrUpdateNoteReturn" name="saveOrUpdateNoteReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateTeacherRequest">
+
+      <wsdl:part element="impl:json5" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateReportTeacherRequest">
+
+      <wsdl:part element="impl:json2" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateSchoolRequest">
+
+      <wsdl:part element="impl:json4" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findBuildingByInepResponse">
+
+      <wsdl:part element="impl:findBuildingByInepReturn" name="findBuildingByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateTeacherResponse">
+
+      <wsdl:part element="impl:saveOrUpdateTeacherReturn" name="saveOrUpdateTeacherReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveSchoolResponse">
+
+      <wsdl:part element="impl:saveSchoolReturn" name="saveSchoolReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findTransitionByInepResponse">
+
+      <wsdl:part element="impl:findTransitionByInepReturn" name="findTransitionByInepReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateGameSuperCatChallengeRequest">
+
+      <wsdl:part element="impl:json1" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateBuildingRequest">
+
+      <wsdl:part element="impl:json10" name="json">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findSchoolByInepRequest">
+
+      <wsdl:part element="impl:inep2" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="saveOrUpdateBuildingResponse">
+
+      <wsdl:part element="impl:saveOrUpdateBuildingReturn" name="saveOrUpdateBuildingReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="updateSchoolResponse">
+
+      <wsdl:part element="impl:updateSchoolReturn" name="updateSchoolReturn">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findSchoolDataByInepRequest">
+
+      <wsdl:part element="impl:inep1" name="inep">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findSchoolByNameRequest">
+
+      <wsdl:part element="impl:name" name="name">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="Server">
-
-      <wsdl:operation name="saveOrUpdateReportStudent" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateReportStudentRequest" name="saveOrUpdateReportStudentRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateReportStudentResponse" name="saveOrUpdateReportStudentResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="findGameSuperCatChallengeByInep" parameterOrder="inep">
 
@@ -519,13 +543,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="saveOrUpdateReportTeacher" parameterOrder="json">
+      <wsdl:operation name="saveOrUpdateReportStudent" parameterOrder="json">
 
-         <wsdl:input message="impl:saveOrUpdateReportTeacherRequest" name="saveOrUpdateReportTeacherRequest">
+         <wsdl:input message="impl:saveOrUpdateReportStudentRequest" name="saveOrUpdateReportStudentRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:saveOrUpdateReportTeacherResponse" name="saveOrUpdateReportTeacherResponse">
+         <wsdl:output message="impl:saveOrUpdateReportStudentResponse" name="saveOrUpdateReportStudentResponse">
 
        </wsdl:output>
 
@@ -543,241 +567,25 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="findTransitionByInep" parameterOrder="inep">
+      <wsdl:operation name="saveOrUpdateReportTeacher" parameterOrder="json">
 
-         <wsdl:input message="impl:findTransitionByInepRequest" name="findTransitionByInepRequest">
+         <wsdl:input message="impl:saveOrUpdateReportTeacherRequest" name="saveOrUpdateReportTeacherRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:findTransitionByInepResponse" name="findTransitionByInepResponse">
+         <wsdl:output message="impl:saveOrUpdateReportTeacherResponse" name="saveOrUpdateReportTeacherResponse">
 
        </wsdl:output>
 
       </wsdl:operation>
 
-      <wsdl:operation name="saveOrUpdateGameBird" parameterOrder="json">
+      <wsdl:operation name="saveSchool" parameterOrder="json">
 
-         <wsdl:input message="impl:saveOrUpdateGameBirdRequest" name="saveOrUpdateGameBirdRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateGameBirdResponse" name="saveOrUpdateGameBirdResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateTeacher" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateTeacherRequest" name="saveOrUpdateTeacherRequest">
+         <wsdl:input message="impl:saveSchoolRequest" name="saveSchoolRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:saveOrUpdateTeacherResponse" name="saveOrUpdateTeacherResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findSchoolByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findSchoolByInepRequest" name="findSchoolByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findSchoolByInepResponse" name="findSchoolByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateBuilding" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateBuildingRequest" name="saveOrUpdateBuildingRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateBuildingResponse" name="saveOrUpdateBuildingResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findRoomByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findRoomByInepRequest" name="findRoomByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findRoomByInepResponse" name="findRoomByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateNote" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateNoteRequest" name="saveOrUpdateNoteRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateNoteResponse" name="saveOrUpdateNoteResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateSchool" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateSchoolRequest" name="saveOrUpdateSchoolRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateSchoolResponse" name="saveOrUpdateSchoolResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findSchoolBySyncCode" parameterOrder="syncCode">
-
-         <wsdl:input message="impl:findSchoolBySyncCodeRequest" name="findSchoolBySyncCodeRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findSchoolBySyncCodeResponse" name="findSchoolBySyncCodeResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateStudent" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateStudentRequest" name="saveOrUpdateStudentRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateStudentResponse" name="saveOrUpdateStudentResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findReportStudentByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findReportStudentByInepRequest" name="findReportStudentByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findReportStudentByInepResponse" name="findReportStudentByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findTeacherByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findTeacherByInepRequest" name="findTeacherByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findTeacherByInepResponse" name="findTeacherByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findStudentByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findStudentByInepRequest" name="findStudentByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findStudentByInepResponse" name="findStudentByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findReportTeacherByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findReportTeacherByInepRequest" name="findReportTeacherByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findReportTeacherByInepResponse" name="findReportTeacherByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findBuildingByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findBuildingByInepRequest" name="findBuildingByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findBuildingByInepResponse" name="findBuildingByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateRoom" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateRoomRequest" name="saveOrUpdateRoomRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateRoomResponse" name="saveOrUpdateRoomResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findSchoolByName" parameterOrder="name">
-
-         <wsdl:input message="impl:findSchoolByNameRequest" name="findSchoolByNameRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findSchoolByNameResponse" name="findSchoolByNameResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateGameSuperCat" parameterOrder="json">
-
-         <wsdl:input message="impl:saveOrUpdateGameSuperCatRequest" name="saveOrUpdateGameSuperCatRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:saveOrUpdateGameSuperCatResponse" name="saveOrUpdateGameSuperCatResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findGameBirdByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findGameBirdByInepRequest" name="findGameBirdByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findGameBirdByInepResponse" name="findGameBirdByInepResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findNoteByInep" parameterOrder="inep">
-
-         <wsdl:input message="impl:findNoteByInepRequest" name="findNoteByInepRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findNoteByInepResponse" name="findNoteByInepResponse">
+         <wsdl:output message="impl:saveSchoolResponse" name="saveSchoolResponse">
 
        </wsdl:output>
 
@@ -795,6 +603,138 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="findSchoolByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findSchoolByInepRequest" name="findSchoolByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findSchoolByInepResponse" name="findSchoolByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateSchool" parameterOrder="json">
+
+         <wsdl:input message="impl:updateSchoolRequest" name="updateSchoolRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateSchoolResponse" name="updateSchoolResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findSchoolBySyncCode" parameterOrder="syncCode">
+
+         <wsdl:input message="impl:findSchoolBySyncCodeRequest" name="findSchoolBySyncCodeRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findSchoolBySyncCodeResponse" name="findSchoolBySyncCodeResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateTeacher" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateTeacherRequest" name="saveOrUpdateTeacherRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateTeacherResponse" name="saveOrUpdateTeacherResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findSchoolByName" parameterOrder="name">
+
+         <wsdl:input message="impl:findSchoolByNameRequest" name="findSchoolByNameRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findSchoolByNameResponse" name="findSchoolByNameResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findTeacherByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findTeacherByInepRequest" name="findTeacherByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findTeacherByInepResponse" name="findTeacherByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findRoomByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findRoomByInepRequest" name="findRoomByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findRoomByInepResponse" name="findRoomByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateRoom" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateRoomRequest" name="saveOrUpdateRoomRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateRoomResponse" name="saveOrUpdateRoomResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateStudent" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateStudentRequest" name="saveOrUpdateStudentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateStudentResponse" name="saveOrUpdateStudentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateGameSuperCat" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateGameSuperCatRequest" name="saveOrUpdateGameSuperCatRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateGameSuperCatResponse" name="saveOrUpdateGameSuperCatResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findStudentByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findStudentByInepRequest" name="findStudentByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findStudentByInepResponse" name="findStudentByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="findGameSuperCatByInep" parameterOrder="inep">
 
          <wsdl:input message="impl:findGameSuperCatByInepRequest" name="findGameSuperCatByInepRequest">
@@ -802,6 +742,78 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:findGameSuperCatByInepResponse" name="findGameSuperCatByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateGameBird" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateGameBirdRequest" name="saveOrUpdateGameBirdRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateGameBirdResponse" name="saveOrUpdateGameBirdResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findGameBirdByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findGameBirdByInepRequest" name="findGameBirdByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findGameBirdByInepResponse" name="findGameBirdByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateBuilding" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateBuildingRequest" name="saveOrUpdateBuildingRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateBuildingResponse" name="saveOrUpdateBuildingResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findBuildingByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findBuildingByInepRequest" name="findBuildingByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findBuildingByInepResponse" name="findBuildingByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateNote" parameterOrder="json">
+
+         <wsdl:input message="impl:saveOrUpdateNoteRequest" name="saveOrUpdateNoteRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:saveOrUpdateNoteResponse" name="saveOrUpdateNoteResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNoteByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findNoteByInepRequest" name="findNoteByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findNoteByInepResponse" name="findNoteByInepResponse">
 
        </wsdl:output>
 
@@ -819,29 +831,59 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="findTransitionByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findTransitionByInepRequest" name="findTransitionByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findTransitionByInepResponse" name="findTransitionByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findReportTeacherByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findReportTeacherByInepRequest" name="findReportTeacherByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findReportTeacherByInepResponse" name="findReportTeacherByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findReportStudentByInep" parameterOrder="inep">
+
+         <wsdl:input message="impl:findReportStudentByInepRequest" name="findReportStudentByInepRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findReportStudentByInepResponse" name="findReportStudentByInepResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="savePhoto" parameterOrder="value">
+
+         <wsdl:input message="impl:savePhotoRequest" name="savePhotoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:savePhotoResponse" name="savePhotoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="ServerSoapBinding" type="impl:Server">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="saveOrUpdateReportStudent">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateReportStudentRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateReportStudentResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="findGameSuperCatChallengeByInep">
 
@@ -861,17 +903,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="saveOrUpdateReportTeacher">
+      <wsdl:operation name="saveOrUpdateReportStudent">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="saveOrUpdateReportTeacherRequest">
+         <wsdl:input name="saveOrUpdateReportStudentRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="saveOrUpdateReportTeacherResponse">
+         <wsdl:output name="saveOrUpdateReportStudentResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -897,17 +939,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="findTransitionByInep">
+      <wsdl:operation name="saveOrUpdateReportTeacher">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="findTransitionByInepRequest">
+         <wsdl:input name="saveOrUpdateReportTeacherRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="findTransitionByInepResponse">
+         <wsdl:output name="saveOrUpdateReportTeacherResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -915,341 +957,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="saveOrUpdateGameBird">
+      <wsdl:operation name="saveSchool">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="saveOrUpdateGameBirdRequest">
+         <wsdl:input name="saveSchoolRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="saveOrUpdateGameBirdResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateTeacher">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateTeacherRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateTeacherResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findSchoolByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findSchoolByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findSchoolByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateBuilding">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateBuildingRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateBuildingResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findRoomByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findRoomByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findRoomByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateNote">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateNoteRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateNoteResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateSchool">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateSchoolRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateSchoolResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findSchoolBySyncCode">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findSchoolBySyncCodeRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findSchoolBySyncCodeResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateStudent">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateStudentRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateStudentResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findReportStudentByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findReportStudentByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findReportStudentByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findTeacherByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findTeacherByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findTeacherByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findStudentByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findStudentByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findStudentByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findReportTeacherByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findReportTeacherByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findReportTeacherByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findBuildingByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findBuildingByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findBuildingByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateRoom">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateRoomRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateRoomResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findSchoolByName">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findSchoolByNameRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findSchoolByNameResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="saveOrUpdateGameSuperCat">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="saveOrUpdateGameSuperCatRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="saveOrUpdateGameSuperCatResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findGameBirdByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findGameBirdByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findGameBirdByInepResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="findNoteByInep">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findNoteByInepRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findNoteByInepResponse">
+         <wsdl:output name="saveSchoolResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -1275,6 +993,204 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="findSchoolByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findSchoolByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findSchoolByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateSchool">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateSchoolRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateSchoolResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findSchoolBySyncCode">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findSchoolBySyncCodeRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findSchoolBySyncCodeResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateTeacher">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateTeacherRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateTeacherResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findSchoolByName">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findSchoolByNameRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findSchoolByNameResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findTeacherByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findTeacherByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findTeacherByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findRoomByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findRoomByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findRoomByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateRoom">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateRoomRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateRoomResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateStudent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateStudentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateStudentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateGameSuperCat">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateGameSuperCatRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateGameSuperCatResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findStudentByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findStudentByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findStudentByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="findGameSuperCatByInep">
 
          <wsdlsoap:operation soapAction=""/>
@@ -1293,6 +1209,114 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="saveOrUpdateGameBird">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateGameBirdRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateGameBirdResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findGameBirdByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findGameBirdByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findGameBirdByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateBuilding">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateBuildingRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateBuildingResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findBuildingByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findBuildingByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findBuildingByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="saveOrUpdateNote">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="saveOrUpdateNoteRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="saveOrUpdateNoteResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findNoteByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findNoteByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findNoteByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="saveOrUpdateTransition">
 
          <wsdlsoap:operation soapAction=""/>
@@ -1304,6 +1328,78 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="saveOrUpdateTransitionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findTransitionByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findTransitionByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findTransitionByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findReportTeacherByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findReportTeacherByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findReportTeacherByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findReportStudentByInep">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findReportStudentByInepRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findReportStudentByInepResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="savePhoto">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="savePhotoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="savePhotoResponse">
 
             <wsdlsoap:body use="literal"/>
 

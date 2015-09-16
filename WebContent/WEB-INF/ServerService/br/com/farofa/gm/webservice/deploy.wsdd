@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from ServerService WSDL service -->
+
+  <service name="Server" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservice.gm.farofa.com.br"/>
+      <parameter name="wsdlServiceElement" value="ServerService"/>
+      <parameter name="schemaQualified" value="http://webservice.gm.farofa.com.br"/>
+      <parameter name="wsdlServicePort" value="Server"/>
+      <parameter name="className" value="br.com.farofa.gm.webservice.Server"/>
+      <parameter name="wsdlPortType" value="Server"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findGameSuperCatChallengeByInep" qname="findGameSuperCatChallengeByInep" returnQName="retNS:findGameSuperCatChallengeByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateReportStudent" qname="saveOrUpdateReportStudent" returnQName="retNS:saveOrUpdateReportStudentReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateGameSuperCatChallenge" qname="saveOrUpdateGameSuperCatChallenge" returnQName="retNS:saveOrUpdateGameSuperCatChallengeReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json1" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateReportTeacher" qname="saveOrUpdateReportTeacher" returnQName="retNS:saveOrUpdateReportTeacherReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json2" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveSchool" qname="saveSchool" returnQName="retNS:saveSchoolReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json3" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findSchoolDataByInep" qname="findSchoolDataByInep" returnQName="retNS:findSchoolDataByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep1" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findSchoolByInep" qname="findSchoolByInep" returnQName="retNS:findSchoolByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep2" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateSchool" qname="updateSchool" returnQName="retNS:updateSchoolReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json4" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findSchoolBySyncCode" qname="findSchoolBySyncCode" returnQName="retNS:findSchoolBySyncCodeReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:syncCode" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateTeacher" qname="saveOrUpdateTeacher" returnQName="retNS:saveOrUpdateTeacherReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json5" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findSchoolByName" qname="findSchoolByName" returnQName="retNS:findSchoolByNameReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:name" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findTeacherByInep" qname="findTeacherByInep" returnQName="retNS:findTeacherByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep3" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findRoomByInep" qname="findRoomByInep" returnQName="retNS:findRoomByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep4" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateRoom" qname="saveOrUpdateRoom" returnQName="retNS:saveOrUpdateRoomReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json6" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateStudent" qname="saveOrUpdateStudent" returnQName="retNS:saveOrUpdateStudentReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json7" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateGameSuperCat" qname="saveOrUpdateGameSuperCat" returnQName="retNS:saveOrUpdateGameSuperCatReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json8" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findStudentByInep" qname="findStudentByInep" returnQName="retNS:findStudentByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep5" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findGameSuperCatByInep" qname="findGameSuperCatByInep" returnQName="retNS:findGameSuperCatByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep6" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateGameBird" qname="saveOrUpdateGameBird" returnQName="retNS:saveOrUpdateGameBirdReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json9" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findGameBirdByInep" qname="findGameBirdByInep" returnQName="retNS:findGameBirdByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep7" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateBuilding" qname="saveOrUpdateBuilding" returnQName="retNS:saveOrUpdateBuildingReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json10" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findBuildingByInep" qname="findBuildingByInep" returnQName="retNS:findBuildingByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep8" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateNote" qname="saveOrUpdateNote" returnQName="retNS:saveOrUpdateNoteReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json11" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findNoteByInep" qname="findNoteByInep" returnQName="retNS:findNoteByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep9" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="saveOrUpdateTransition" qname="saveOrUpdateTransition" returnQName="retNS:saveOrUpdateTransitionReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:json12" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findTransitionByInep" qname="findTransitionByInep" returnQName="retNS:findTransitionByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep10" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findReportTeacherByInep" qname="findReportTeacherByInep" returnQName="retNS:findReportTeacherByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep11" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findReportStudentByInep" qname="findReportStudentByInep" returnQName="retNS:findReportStudentByInepReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:inep12" type="tns:string"/>
+      </operation>
+      <operation xmlns:retNS="http://webservice.gm.farofa.com.br" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="savePhoto" qname="savePhoto" returnQName="retNS:savePhotoReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://webservice.gm.farofa.com.br" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:value" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="saveSchool saveOrUpdateStudent saveOrUpdateRoom saveOrUpdateNote findReportTeacherByInep findBuildingByInep findRoomByInep savePhoto findSchoolBySyncCode updateSchool saveOrUpdateGameSuperCat findGameBirdByInep saveOrUpdateTransition saveOrUpdateBuilding saveOrUpdateReportTeacher findSchoolDataByInep findSchoolByInep findGameSuperCatByInep findTransitionByInep findNoteByInep saveOrUpdateTeacher findReportStudentByInep saveOrUpdateReportStudent saveOrUpdateGameBird findTeacherByInep findStudentByInep findSchoolByName findGameSuperCatChallengeByInep saveOrUpdateGameSuperCatChallenge"/>
+
+  </service>
+</deployment>
