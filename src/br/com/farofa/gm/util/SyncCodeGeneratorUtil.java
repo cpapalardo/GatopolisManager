@@ -14,8 +14,8 @@ public class SyncCodeGeneratorUtil {
 		if(month.length() == 1)
 			month = "0" + month;
 		
-		String random = String.valueOf (new Random ().nextInt(9999));
-		if (random.length() < 4) {
+		String random = String.valueOf (new Random ().nextInt(999));
+		if (random.length() < 3) {
 			random = "0" + random;
 		}
 		
