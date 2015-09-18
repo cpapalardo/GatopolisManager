@@ -40,26 +40,31 @@
 			
 			<h3><p:outputLabel value="Professor" /></h3>
 			
-			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
+			<h:panelGrid id="grid" columns="3" cellpadding="1"> 			
 				<p:outputLabel for="name" value="Nome Completo" />
 				<p:inputText id="name" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.name}" 
-						onkeypress="return validateAlphabet (event)" requiredMessage="O campo nome deve ser preenchido!"/>
+						onkeypress="return validateAlphabet (event)" requiredMessage="O campo Nome deve ser preenchido!"/>
 				<p:message for="name" display="tooltip" />
+				
+				<p:outputLabel for="nickname" value="Apelido" />
+				<p:inputText id="nickname" maxlength="100" size="15" value="#{teacherManageBean.teacher.nickname}" 
+						onkeypress="return validateAlphabet (event)"/>
+				<p:message for="nickname" display="tooltip" />
+				
+				<p:outputLabel for="email" value="E-mail" />
+				<p:inputText id="email" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.email}"
+						requiredMessage="O campo E-mail deve ser preenchido!" />
+				<p:message for="email" display="tooltip" />
 					
 				<p:outputLabel for="passcode" value="Senha" />
-				<p:password id="passcode" maxlength="4" size="4" required="true" value="#{teacherManageBean.teacher.password}" 
-						onkeypress="return validateNumbers (event)" requiredMessage="O campo senha deve ser preenchido!" />
+				<p:password id="passcode" minlength="4" maxlength="50" size="4" required="true" value="#{teacherManageBean.teacher.password}" 
+						onkeypress="return validateNumbers (event)" requiredMessage="O campo Senha deve ser preenchido!" />
 				<p:message for="passcode" display="tooltip" />
 					
-				<p:outputLabel for="confirmPassword" value="Confirma Senha" />
-				<p:password id="confirmPassword" maxlength="4" size="4" required="true" value="#{teacherManageBean.confirmPassword}" 
-						onkeypress="return validateNumbers (event)" requiredMessage="O campo confirma senha deve ser preenchido!" />
-				<p:message for="confirmPassword" display="tooltip" />
-					
-				<p:outputLabel for="email" value="E-mail" />
-				<p:inputText id="email" maxlength="100" size="15" required="true" value="#{teacherManageBean.teacher.email}" requiredMessage="O campo e-mail deve ser preenchido!" />
-				<p:message for="email" display="tooltip" />
-				
+				<p:outputLabel for="confirmPassword" value="Confirme a Senha" />
+				<p:password id="confirmPassword" minlength="4" maxlength="50" size="4" required="true" value="#{teacherManageBean.confirmPassword}" 
+						onkeypress="return validateNumbers (event)" requiredMessage="O campo Confirme a Senha deve ser preenchido!" />
+				<p:message for="confirmPassword" display="tooltip" />				
 	    	</h:panelGrid>
 	
 			<p:commandButton value="Salvar" type="submit" update="grid" action="#{teacherManageBean.save}" style="margin-top:10px" />

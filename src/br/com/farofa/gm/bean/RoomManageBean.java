@@ -39,7 +39,9 @@ public class RoomManageBean {
 		
 		//Load teachers
 		teacherItens = new ArrayList<SelectItem>();
+		teacherItens.add(new SelectItem(0, "Escolha"));
 		List<Teacher> teachers = teacherDAO.findByInep(school.getSchoolData().getInep());
+		
 		for (Teacher teacher : teachers) {
 			teacherItens.add(new SelectItem (teacher.getId(), teacher.getName()));
 		}
@@ -51,13 +53,21 @@ public class RoomManageBean {
 			room = new Room ();
 			room.setTerm('M');
 			room.setTeacher(new Teacher());
+			room.setIsDeleted(false);
 		}
 	}
 	
 	public String save () {
 		if(room.getId() == null) {
-			roomDAO.save(room);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma adicionada com sucesso!"));
+			if(room.getTeacher().getId() == 0){
+				FacesMessage faceMsg = new FacesMessage("Você deve escolher um professor.");
+				faceMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+				FacesContext.getCurrentInstance().addMessage(null, faceMsg);
+				return "";
+			}else{
+				roomDAO.save(room);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Turma adicionada com sucesso!"));
+			}
 		} else {
 			roomDAO.update(room);
 			sessionMap.remove("room");

@@ -1,6 +1,7 @@
 package br.com.farofa.gm.bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +38,14 @@ public class StudentManageBean {
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		
-		//Define se Ã© isert ou update
+		//Define se é insert ou update
 		if(!sessionMap.containsKey("student")){
 			student = new Student();
 			student.setGender('M');
 			student.setPhase("NOT_ENOUGH_INPUT");
 			student.setRoom(new Room());
+			student.setCreatedAt(new Date());
+			student.setIsDeleted(false);
 		}else{
 			student = (Student) sessionMap.get("student");
 		}
@@ -50,8 +53,9 @@ public class StudentManageBean {
 		//Load groups
 		List<Room> groups = groupDAO.findByInep (school.getSchoolData().getInep());
 		studentGroupItens = new ArrayList <SelectItem> ();
+		studentGroupItens.add(new SelectItem(0, "Escolha"));
 		for (Room group : groups) {
-			String periodo = "ManhÃ£";
+			String periodo = "Manhã";
 			if (group.getTerm() == 'T')
 				periodo = "Tarde";
 			else if (group.getTerm() == 'I')
@@ -63,8 +67,16 @@ public class StudentManageBean {
 	public String save () {
 		if (student.getId() == null) {
 			//student.setDiagnosis_level("NOT_ENOUGH_INPUT");
-			studentDAO.save(student);
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno adicionado com sucesso!"));
+			
+			if(student.getRoom().getId() == 0){
+				FacesMessage faceMsg = new FacesMessage("Você deve escolher uma turma.");
+				faceMsg.setSeverity(FacesMessage.SEVERITY_ERROR);
+				FacesContext.getCurrentInstance().addMessage(null, faceMsg);
+				return "";
+			}else{
+				studentDAO.save(student);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Aluno adicionado com sucesso!"));
+			}
 		} else {
 			studentDAO.update (student);
 			sessionMap.remove("student");

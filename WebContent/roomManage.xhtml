@@ -12,20 +12,22 @@
 <h:body>
 	<h:form id="room">
 		<p:panel>
-			<h3>
-				<p:outputLabel value="Turma" />
-			</h3>
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			
+			<h3><p:outputLabel value="Turma" /></h3>
+			
 			<h:panelGrid id="grid" columns="3" cellpadding="1"> 
-				
 				<p:outputLabel for="name" value="Nome" />
-				<p:inputText id="name" size="25" maxlength="75" value="#{roomManageBean.room.name}" />
+				<p:inputText id="name" value="#{roomManageBean.room.name}" required="true" size="25" maxlength="75"   
+					requiredMessage="O campo Nome deve ser preenchido!"/>
 				<p:message for="name" display="tooltip" />
 				
-				<p:outputLabel for="serie" value="Serie" />
-				<p:inputText id="serie" size="25" maxlength="75" value="#{roomManageBean.room.serie}" />
+				<p:outputLabel for="serie" value="Série" />
+				<p:inputText id="serie" size="25" maxlength="75" required="true" value="#{roomManageBean.room.serie}"
+					requiredMessage="O campo Série deve ser preenchido!"/>
 				<p:message for="serie" display="tooltip" />
 				
-				<p:outputLabel for="term" value="Periodo" />
+				<p:outputLabel for="term" value="Período" />
 				<p:selectOneRadio id="term" value="#{roomManageBean.room.term}">
 		            <f:selectItem itemLabel="Manhã" itemValue="M" />
 		            <f:selectItem itemLabel="Tarde" itemValue="T" />
@@ -33,14 +35,14 @@
 				<p:outputLabel value="" />
 				
 				<p:outputLabel for="teacher" value="Professor" />
-				<p:selectOneMenu id="teacher" value="#{roomManageBean.room.teacher.id}">
+				<p:selectOneMenu id="teacher" required="true" value="#{roomManageBean.room.teacher.id}">
 					<f:selectItems value="#{roomManageBean.teacherItens}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="" />
 				
 			</h:panelGrid>
 	
-			<p:commandButton value="Salvar" type="submit" action="#{roomManageBean.save}" />
+			<p:commandButton value="Salvar" type="submit" update="grid" action="#{roomManageBean.save}" />
 			<p:commandButton value="Voltar" action="#{roomManageBean.back}" immediate="true" style="margin-left:10px; margin-top:10px" />
 		</p:panel>
 	</h:form>

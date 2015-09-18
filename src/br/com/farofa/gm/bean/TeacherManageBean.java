@@ -47,6 +47,7 @@ public class TeacherManageBean {
 		} else {
 			teacher = new Teacher ();
 			isEdited = false;
+			teacher.setIsDeleted(false);
 		}
 	}
 

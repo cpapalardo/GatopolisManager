@@ -84,14 +84,14 @@ public class GeralImportBean {
     public void upload () {
     	if (uploadedFile != null) {
     		try {
-    			proccessExcel(uploadedFile);
+    			proccessExcel(uploadedFile);	
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sucesso!", "O arquivo " + uploadedFile.getFileName() + " foi adicionado com sucesso."));
     		}catch(Exception e){
     			e.printStackTrace();
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Erro no envio do Excel!"));
     		}
     	}else{
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "N√£o foi poss√≠vel concluir o envio do arquivo!"));
+        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "N„o foi possÌvel concluir o envio do arquivo!"));
         }
     }
     
@@ -117,8 +117,12 @@ public class GeralImportBean {
 		while (rowIterator.hasNext()) {
 			//Pula o header
 			Row row = rowIterator.next();
-			
-			//Declara√ß√£o dos campos do excel
+
+			if(!rowIterator.hasNext()){
+				continue;
+			}
+						
+			//DeclaraÁ„o dos campos do excel
 			String codigoInepDaEscola = null;
 			String nomeDaTurma = null;
 			String serie = null;
@@ -139,7 +143,7 @@ public class GeralImportBean {
 				Cell cell = cellIterator.next();
 				int columnIndex = cell.getColumnIndex();
 				
-				//C√≥digo inep da escola
+				//CÛdigo inep da escola
 				if (columnIndex == 0) {
 					if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						codigoInepDaEscola = String.valueOf((int)cell.getNumericCellValue());
@@ -151,7 +155,7 @@ public class GeralImportBean {
 					if (sdList == null || sdList.size() == 0) {
 						System.out.println("Inep = " + codigoInepDaEscola);
 						System.out.println("sdList == null: " + (sdList == null) + " sdList.size() == 0: " + (sdList.size() == 0));
-						System.out.println("Inep n√£o cadastrado no banco de dados!");
+						System.out.println("Inep n„o cadastrado no banco de dados!");
 						flagError = true;
 					}
 					
@@ -228,7 +232,7 @@ public class GeralImportBean {
 			
 			//Validate sexo
 			char sexoChar = 'M';
-			if(sexo.equals("Menina"))
+			if("Menina".equals(sexo))
 				sexoChar = 'F';
 			
 			//Validate data nascimento
@@ -262,26 +266,25 @@ public class GeralImportBean {
 			}
 			//TeacherMap
 			if(!teacherMap.containsKey(teacherKey)){
-				teacher = new Teacher(professor, null, null, emailProfessor, null, school);
+				teacher = new Teacher(false, professor, null, null, emailProfessor, null, school);
 				teacherMap.put(teacherKey, teacher);
 			}else{
 				teacher = teacherMap.get(teacherKey);
 			}
 			//RoomMap
 			if(!roomMap.containsKey(roomKey)){
-				room = new Room(nomeDaTurma, serie, periodoChar, teacher, null);
+				room = new Room(false, nomeDaTurma, serie, periodoChar, teacher, null);
 				roomMap.put(roomKey, room);
 			}else{
 				room = roomMap.get(roomKey);
 			}
 			
 			//StudentList
-			Student student = new Student(nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+			Student student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
 			studentList.add(student);
-		}
+		}		
 		
-		
-		//Start Updating de DataBase
+		//Start Updating the DataBase
 		
 		//School Data
 		for (SchoolData sd : schoolDataMap.values()){

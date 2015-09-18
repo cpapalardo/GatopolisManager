@@ -41,12 +41,12 @@ xmlns:p="http://primefaces.org/ui">
 			<h:panelGrid id="grid" columns="3" cellpadding="2"> 
 				<p:outputLabel for="name" value="Nome Completo" />
 				<p:inputText id="name" value="#{studentManageBean.student.name}" required="true" size="25" maxlength="100" 
-						onkeypress="return validateAlphabet (event)" requiredMessage="O campo nome deve ser preenchido!"/>
+						onkeypress="return validateAlphabet (event)" requiredMessage="O campo Nome Completo deve ser preenchido!"/>
 				<p:message for="name" display="tooltip" />
 			
 				<p:outputLabel for="birthDate" value="Data de Nascimento" />
 				<p:calendar id="birthDate" value="#{studentManageBean.student.birth_date}" required="true" pattern="dd-MM-yyyy" mask="true" size="10" 
-						requiredMessage="O campo data de nascimento deve ser preenchido!"/>
+						requiredMessage="O campo Data de nascimento deve ser preenchido!"/>
 				<p:message for="birthDate" display="tooltip" />
 			
 				<p:outputLabel for="gender" value="Sexo" />
@@ -57,8 +57,8 @@ xmlns:p="http://primefaces.org/ui">
 				<p:outputLabel value="" />
 			
 				<p:outputLabel for="group" value="Turma" />
-				<p:selectOneMenu id="group" maxlength="15" value="#{studentManageBean.student.room.id}">
-					<f:selectItems value="#{studentManageBean.studentGroupItens}" />
+				<p:selectOneMenu id="group" maxlength="15" required="true" value="#{studentManageBean.student.room.id}">
+					<f:selectItems value="#{studentManageBean.studentGroupItens}" requiredMessage="O campo Turma deve ser preenchido!"/> />
 				</p:selectOneMenu>
 				<p:outputLabel value="" />
 			
