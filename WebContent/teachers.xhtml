@@ -24,13 +24,21 @@ xmlns:p="http://primefaces.org/ui">
 					<h:outputText value="#{teacher.name}" />
 				</p:column>
 				
+				<p:column headerText="Apelido">
+					<h:outputText value="#{teacher.nickname}" />
+				</p:column>
+				
 				<p:column headerText="Email">
         			<h:outputText value="#{teacher.email}" />
 				</p:column>
 				
-				<p:column>
+				<p:column headerText="Status">
+        			<h:outputText value="#{teacher.isDeleted == false ? 'Ativo' : 'Inativo'}" />
+				</p:column>
+				
+				<p:column headerText="Ações">
 					<p:commandLink id="Edit" ajax="false" action="#{teachersBean.edit(teacher)}">
-	        			<h:outputText value="Editar Professor" />
+	        			<h:outputText value="Editar" />
 	    			</p:commandLink>
 	    			
 					<p:commandButton value="Adicionar Arquivo" type="submit" action="#{teachersBean.addStudents (teacher)}" style="margin-left:20px" />

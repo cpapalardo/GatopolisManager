@@ -56,7 +56,7 @@ public class TeacherManageBean {
 		String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Pattern pattern = Pattern.compile(emailPattern);
 		if (!pattern.matcher(teacher.getEmail()).matches()) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email inv√°lido!", "Formato de email incorreto.");
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email inv·lido!", "Formato de email incorreto.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 			return "teacherManage";
 		}
@@ -118,5 +118,4 @@ public class TeacherManageBean {
 	public void setEdited(boolean isEdited) {
 		this.isEdited = isEdited;
 	}
-	
 }

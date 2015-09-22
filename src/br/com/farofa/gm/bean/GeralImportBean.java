@@ -101,7 +101,8 @@ public class GeralImportBean {
     	Map<String, School> schoolMap = new HashMap<String, School>();
     	Map<String, Teacher> teacherMap = new HashMap<String, Teacher>();
     	Map<String, Room> roomMap = new HashMap<String, Room>();
-    	List<Student> studentList = new ArrayList<Student>();
+    	Map<String, Student> studentMap = new HashMap<String, Student>();
+    	//List<Student> studentList = new ArrayList<Student>();
 		
 		// Finds the workbook instance for XLSX file
 		Workbook myWorkBook = WorkbookFactory.create(uploadedFile.getInputstream());
@@ -243,12 +244,14 @@ public class GeralImportBean {
 			String schoolKey = sdKey;
 			String teacherKey = professor + "-" + emailProfessor + "-" + codigoInepDaEscola;
 			String roomKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola;
+			String studentKey = nomeCompletoDoAluno + "-" + date + "-" + nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola; 
 			
 			//Declara objetos
 			SchoolData sd = null;
 			School school = null;
 			Teacher teacher = null;
 			Room room = null;
+			Student student = null;
 			
 			//SchoolDataMap
 			if(!schoolDataMap.containsKey(sdKey)){
@@ -259,7 +262,7 @@ public class GeralImportBean {
 			}
 			//SchoolMap
 			if(!schoolMap.containsKey(schoolKey)){
-				school = new School(null, null, null, null, sd);
+				school = new School(codigoInepDaEscola, null, null, null, sd);
 				schoolMap.put(schoolKey, school);
 			}else{
 				school = schoolMap.get(schoolKey);
@@ -278,10 +281,13 @@ public class GeralImportBean {
 			}else{
 				room = roomMap.get(roomKey);
 			}
-			
-			//StudentList
-			Student student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
-			studentList.add(student);
+			//StudentMap
+			if(!studentMap.containsKey(studentKey)){
+				student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+				studentMap.put(studentKey, student);
+			}else{
+				student = studentMap.get(studentKey);
+			}
 		}		
 		
 		//Start Updating the DataBase
@@ -331,9 +337,13 @@ public class GeralImportBean {
 		}
 		
 		//Student
-		for (Student student : studentList){
-			student.setPhase("NOT_ENOUGH_INPUT");
-			studentDAO.save(student);
+		for (Student student : studentMap.values()){
+			Student tmp = studentDAO.findByNameDateRoomInep(student.getName(), student.getBirth_date(), 
+					student.getRoom(), student.getRoom().getTeacher().getSchool().getSchoolData().getInep());
+			if(tmp != null)
+				student.setId(tmp.getId());
+			else
+				studentDAO.save(student);
 		}
 	}
     
