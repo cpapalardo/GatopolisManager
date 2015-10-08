@@ -31,7 +31,7 @@ public class TeachersBean {
 		sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
 		school = (School) sessionMap.get("school");
 		sessionMap.remove ("teacher");
-		teachers = teacherDAO.findByInep(school.getSchoolData().getInep());
+		teachers = teacherDAO.findByInepAndDeleted(school.getSchoolData().getInep());
 	}
 	
 	public String create () {

@@ -68,7 +68,7 @@ public class Student extends JsonBehaviour implements Serializable {
 		super.setJson(json);
 	}
 
-	public Student(String name, Character gender, Date birth_date, String phase,
+	public Student(boolean isdeleted, String name, Character gender, Date birth_date, String phase,
 			Integer buildings, Integer coins, Integer time_in_city,
 			Integer app_rating, String picture_url, Room room) {
 		super();
@@ -82,6 +82,8 @@ public class Student extends JsonBehaviour implements Serializable {
 		this.appRating = app_rating;
 		this.pictureUrl = picture_url;
 		this.room = room;
+		this.isDeleted = isdeleted;
+		this.createdAt = new Date();
 	}
 
 	public String getName() {

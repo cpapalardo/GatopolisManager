@@ -48,7 +48,7 @@ public class Teacher extends JsonBehaviour implements Serializable {
 		super.setJson(json);
 	}
 	
-	public Teacher(String name, String nickname, String password, String email,
+	public Teacher(boolean isdeleted, String name, String nickname, String password, String email,
 			String pictureUrl, School school) {
 		super();
 		this.name = name;
@@ -57,6 +57,7 @@ public class Teacher extends JsonBehaviour implements Serializable {
 		this.email = email;
 		this.pictureUrl = pictureUrl;
 		this.school = school;
+		this.isDeleted = isdeleted;
 	}
 
 	public String getName() {

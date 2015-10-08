@@ -11,7 +11,7 @@ public class JsonTests {
 	public static void testVerJson () {
 		School school = new School ();
 		school.setId("123456");
-		Teacher teacher = new Teacher ("Rodrigo", "Rodrigo","qwer1234", "email@email.com", null, school);
+		Teacher teacher = new Teacher (false, "Rodrigo", "Rodrigo","qwer1234", "email@email.com", null, school);
 		System.out.println(teacher.getJson());
 	}
 }

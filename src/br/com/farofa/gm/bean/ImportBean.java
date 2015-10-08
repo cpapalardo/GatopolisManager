@@ -171,14 +171,14 @@ public class ImportBean {
 			
 			//RoomMap
 			if(!roomMap.containsKey(roomKey)){
-				room = new Room(nomeDaTurma, serie, periodoChar, teacher, null);
+				room = new Room(false, nomeDaTurma, serie, periodoChar, teacher, null);
 				roomMap.put(roomKey, room);
 			}else{
 				room = roomMap.get(roomKey);
 			}
 			
 			//StudentList
-			Student student = new Student(nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+			Student student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
 			studentList.add(student);
 		}
 		

@@ -84,14 +84,14 @@ public class GeralImportBean {
     public void upload () {
     	if (uploadedFile != null) {
     		try {
-    			proccessExcel(uploadedFile);
+    			proccessExcel(uploadedFile);	
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Sucesso!", "O arquivo " + uploadedFile.getFileName() + " foi adicionado com sucesso."));
     		}catch(Exception e){
     			e.printStackTrace();
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Erro no envio do Excel!"));
     		}
     	}else{
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "N√£o foi poss√≠vel concluir o envio do arquivo!"));
+        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "N„o foi possÌvel concluir o envio do arquivo!"));
         }
     }
     
@@ -101,7 +101,8 @@ public class GeralImportBean {
     	Map<String, School> schoolMap = new HashMap<String, School>();
     	Map<String, Teacher> teacherMap = new HashMap<String, Teacher>();
     	Map<String, Room> roomMap = new HashMap<String, Room>();
-    	List<Student> studentList = new ArrayList<Student>();
+    	Map<String, Student> studentMap = new HashMap<String, Student>();
+    	//List<Student> studentList = new ArrayList<Student>();
 		
 		// Finds the workbook instance for XLSX file
 		Workbook myWorkBook = WorkbookFactory.create(uploadedFile.getInputstream());
@@ -117,8 +118,12 @@ public class GeralImportBean {
 		while (rowIterator.hasNext()) {
 			//Pula o header
 			Row row = rowIterator.next();
-			
-			//Declara√ß√£o dos campos do excel
+
+			if(!rowIterator.hasNext()){
+				continue;
+			}
+						
+			//DeclaraÁ„o dos campos do excel
 			String codigoInepDaEscola = null;
 			String nomeDaTurma = null;
 			String serie = null;
@@ -139,7 +144,7 @@ public class GeralImportBean {
 				Cell cell = cellIterator.next();
 				int columnIndex = cell.getColumnIndex();
 				
-				//C√≥digo inep da escola
+				//CÛdigo inep da escola
 				if (columnIndex == 0) {
 					if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						codigoInepDaEscola = String.valueOf((int)cell.getNumericCellValue());
@@ -151,7 +156,7 @@ public class GeralImportBean {
 					if (sdList == null || sdList.size() == 0) {
 						System.out.println("Inep = " + codigoInepDaEscola);
 						System.out.println("sdList == null: " + (sdList == null) + " sdList.size() == 0: " + (sdList.size() == 0));
-						System.out.println("Inep n√£o cadastrado no banco de dados!");
+						System.out.println("Inep n„o cadastrado no banco de dados!");
 						flagError = true;
 					}
 					
@@ -228,7 +233,7 @@ public class GeralImportBean {
 			
 			//Validate sexo
 			char sexoChar = 'M';
-			if(sexo.equals("Menina"))
+			if("Menina".equals(sexo))
 				sexoChar = 'F';
 			
 			//Validate data nascimento
@@ -239,12 +244,14 @@ public class GeralImportBean {
 			String schoolKey = sdKey;
 			String teacherKey = professor + "-" + emailProfessor + "-" + codigoInepDaEscola;
 			String roomKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola;
+			String studentKey = nomeCompletoDoAluno + "-" + date + "-" + nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola; 
 			
 			//Declara objetos
 			SchoolData sd = null;
 			School school = null;
 			Teacher teacher = null;
 			Room room = null;
+			Student student = null;
 			
 			//SchoolDataMap
 			if(!schoolDataMap.containsKey(sdKey)){
@@ -255,33 +262,35 @@ public class GeralImportBean {
 			}
 			//SchoolMap
 			if(!schoolMap.containsKey(schoolKey)){
-				school = new School(null, null, null, null, sd);
+				school = new School(codigoInepDaEscola, null, null, null, sd);
 				schoolMap.put(schoolKey, school);
 			}else{
 				school = schoolMap.get(schoolKey);
 			}
 			//TeacherMap
 			if(!teacherMap.containsKey(teacherKey)){
-				teacher = new Teacher(professor, null, null, emailProfessor, null, school);
+				teacher = new Teacher(false, professor, null, null, emailProfessor, null, school);
 				teacherMap.put(teacherKey, teacher);
 			}else{
 				teacher = teacherMap.get(teacherKey);
 			}
 			//RoomMap
 			if(!roomMap.containsKey(roomKey)){
-				room = new Room(nomeDaTurma, serie, periodoChar, teacher, null);
+				room = new Room(false, nomeDaTurma, serie, periodoChar, teacher, null);
 				roomMap.put(roomKey, room);
 			}else{
 				room = roomMap.get(roomKey);
 			}
-			
-			//StudentList
-			Student student = new Student(nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
-			studentList.add(student);
-		}
+			//StudentMap
+			if(!studentMap.containsKey(studentKey)){
+				student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+				studentMap.put(studentKey, student);
+			}else{
+				student = studentMap.get(studentKey);
+			}
+		}		
 		
-		
-		//Start Updating de DataBase
+		//Start Updating the DataBase
 		
 		//School Data
 		for (SchoolData sd : schoolDataMap.values()){
@@ -328,9 +337,13 @@ public class GeralImportBean {
 		}
 		
 		//Student
-		for (Student student : studentList){
-			student.setPhase("NOT_ENOUGH_INPUT");
-			studentDAO.save(student);
+		for (Student student : studentMap.values()){
+			Student tmp = studentDAO.findByNameDateRoomInep(student.getName(), student.getBirth_date(), 
+					student.getRoom(), student.getRoom().getTeacher().getSchool().getSchoolData().getInep());
+			if(tmp != null)
+				student.setId(tmp.getId());
+			else
+				studentDAO.save(student);
 		}
 	}
     

@@ -46,9 +46,10 @@ public class Room extends JsonBehaviour implements Serializable {
 		super.setJson(json);
 	}
 	
-	public Room(String name, String serie, Character term,
+	public Room(boolean isdeleted, String name, String serie, Character term,
 			Teacher teacher, Integer qtdeAlunos) {
 		super();
+		this.isDeleted = isdeleted;
 		this.name = name;
 		this.serie = serie;
 		this.term = term;
