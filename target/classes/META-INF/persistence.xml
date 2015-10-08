@@ -27,13 +27,13 @@
 		<properties>
 			<!-- dados da conexao -->
 			<property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://db08yd42ew.database.windows.net:1433;databaseName=gatopolis_db" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://db08yd42ew.database.windows.net:1433;database=gatopolis_db;" />
 			<property name="javax.persistence.jdbc.user" value="GatopolisAdmin@db08yd42ew" />
 			<property name="javax.persistence.jdbc.password" value="Lemann2015" />
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>
 	</persistence-unit>
@@ -67,7 +67,7 @@
 
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
-			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.show_sql" value="false" />
 			<property name="hibernate.format_sql" value="true" />
 		</properties>
 	</persistence-unit>

@@ -10,7 +10,7 @@ public interface GenericDAO<T extends Serializable, PK extends Serializable> {
 	
 	public void update(T entity);
 	
-	public void delete(T entity);
+	//public void delete(T entity);
 	
 	public T findById(PK pk);
 	

@@ -13,7 +13,15 @@ import br.com.farofa.gm.model.Teacher;
 
 public class DaoTests {
 	public static void main(String[] args) {
-		testClose();
+		testFind();
+	}
+	
+	public static void testFind () {
+		SchoolDAO schoolDAO = new SchoolDAOImpl();
+		schoolDAO.setEntityManager(DatabaseManager.getEntityManager());
+		
+		for (School school : schoolDAO.findAll())
+			System.out.println(school);
 	}
 	
 	public static void testClose () {

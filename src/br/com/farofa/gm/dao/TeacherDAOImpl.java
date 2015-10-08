@@ -11,10 +11,7 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher, Integer> implements 
 	@Override
 	public Teacher findByNameAndInep(String name, String inep) {
 		Teacher teacher = null;
-		try {
-			if (!manager.getTransaction().isActive())
-				manager.getTransaction().begin();
-			
+		try {			
 			String jpql = "select t from Teacher t where t.name = :name and t.school.schoolData.inep = :inep";
 			Query query = manager.createQuery(jpql);
 			query.setParameter("name", name);

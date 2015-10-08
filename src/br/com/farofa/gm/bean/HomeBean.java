@@ -28,7 +28,6 @@ public class HomeBean {
 	}
 	
 	public String access () {
-		System.out.println(syncCode);
 		if (syncCode != null && !syncCode.equals("")) {
 			School school = schoolDAO.findBySyncCode (syncCode);
 			

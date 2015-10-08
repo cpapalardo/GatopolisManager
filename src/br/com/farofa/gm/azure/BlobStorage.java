@@ -15,9 +15,13 @@ import com.microsoft.azure.storage.blob.CloudBlockBlob;
 
 public class BlobStorage {
 	// Define the connection-string with your values
-	public static final String storageConnectionString = "DefaultEndpointsProtocol=http;"
+	/*public static final String storageConnectionString = "DefaultEndpointsProtocol=http;"
 			+ "AccountName=gatopolis;"
-			+ "AccountKey=A9KF2NVT8ksN5xSpEm4NAreRwFOA+Ji5ITT4Bir5T/oiwsHDc5g+AGlQe8bbofW5KWrhT4zOP4VTKqjtBgYyzw==";
+			+ "AccountKey=A9KF2NVT8ksN5xSpEm4NAreRwFOA+Ji5ITT4Bir5T/oiwsHDc5g+AGlQe8bbofW5KWrhT4zOP4VTKqjtBgYyzw==";*/
+	
+	String storageConnectionString = "DefaultEndpointsProtocol=http;"
+			+ "AccountName=lemann;"
+			+ "AccountKey=+KNhW5Xp+LovxzBbqYJLec2TuKy1Do7t+4dRIIrheEusGLrh2F2BtJTKIHB2+1ehX2w5rxsheo8wrQs8ZvbZXA==";
 	
 	public static final String containerName = "photos";
 

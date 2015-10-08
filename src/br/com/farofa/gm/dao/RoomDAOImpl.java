@@ -16,9 +16,6 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 	public List<Room> findByInep(String inep) {
 		List<Room> result = null;
 		try {
-			if (!manager.getTransaction().isActive())
-				manager.getTransaction().begin();
-			
 			Query query = manager.createNamedQuery("Room.findByInepCode");
 			query.setParameter("inep", inep);
 			result = query.getResultList();
@@ -30,11 +27,8 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 				room.setQtdeAlunos(qtdeAlunos);
 			}
 			
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (manager.getTransaction().isActive())
-				manager.getTransaction().rollback();
 			throw e;
 		}
 		
@@ -45,20 +39,13 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 	public List<Room> findByTeacher(Teacher teacher) {
 		List<Room> result = null;
 		try {
-			if (!manager.getTransaction().isActive())
-				manager.getTransaction().begin();
-			
 			String jpql = "select g from Room g where g.teacher.id = :id";
 			Query query = manager.createQuery(jpql);
 			query.setParameter("id", teacher.getId());
 			
 			result = query.getResultList();
-			
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (manager.getTransaction().isActive())
-				manager.getTransaction().rollback();
 			throw e;
 		}
 		
@@ -69,9 +56,6 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 	public Room findByNameAndSerieAndPeriodAndInep(String name, String serie, Character term, String inep) {
 		Room room = null;
 		try {
-			if (!manager.getTransaction().isActive())
-				manager.getTransaction().begin();
-			
 			String jpql = "select g from Room g where g.name = :name and g.serie = :serie and g.term = :term and g.teacher.school.schoolData.inep = :inep";
 			Query query = manager.createQuery(jpql);
 			query.setParameter("name", name);
@@ -81,12 +65,8 @@ public class RoomDAOImpl extends GenericDAOImpl<Room, Integer> implements RoomDA
 			
 			if (query.getResultList().size() > 0)
 				room = (Room) query.getResultList().get(0);
-			
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (manager.getTransaction().isActive())
-				manager.getTransaction().rollback();
 			throw e;
 		}
 		

@@ -26,8 +26,11 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 			transaction.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
-			
+			try {
+				manager.getTransaction().rollback();
+			} catch (Exception e2) {
+				
+			}
 			throw e;
 		}
 	}
@@ -40,12 +43,16 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
+			try {
+				manager.getTransaction().rollback();
+			} catch (Exception e2) {
+				
+			}
 			throw e;
 		}
 	}
 	
-	@Override
+	/*@Override
 	public void delete(T entity) {
 		try{
 			manager.getTransaction().begin();
@@ -58,18 +65,15 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 			manager.getTransaction().rollback();
 			throw e;
 		}
-	}
+	}*/
 	
 	@Override
 	public T findById(PK pk) {
 		T result = null;
 		try {
-			manager.getTransaction().begin();
 			result = (T) manager.find(getEntityClass(), pk);
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
 		}
 		return result;
@@ -80,12 +84,9 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public List<T> findAll() {
 		List<T> result = null;
 		try {
-			manager.getTransaction().begin();
 			result = manager.createQuery(("FROM " + getEntityClass().getSimpleName())).getResultList();
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
 		}
 		return result;
@@ -96,16 +97,11 @@ public class GenericDAOImpl<T extends Serializable, PK extends Serializable> imp
 	public List<T> findByInep(String inep) {
 		List<T> result = null;
 		try {
-			manager.getTransaction().begin();
-			
 			Query query = manager.createNamedQuery(getEntityClass().getSimpleName() + ".findByInepCode");
 			query.setParameter("inep", inep);
 			result = query.getResultList();
-			
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			manager.getTransaction().rollback();
 			throw e;
 		}
 			
