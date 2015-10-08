@@ -35,8 +35,6 @@ public class StudentDAOImpl extends GenericDAOImpl<Student, Integer> implements 
 	public Student findByNameDateRoomInep(String name, Date date, Room room, String inep) {
 		Student student = null;
 		try{
-			if(!manager.getTransaction().isActive())
-				manager.getTransaction().begin();
 			String jpql = "select s from Student s where s.name = :name and s.birthDate = :date and s.room = :room and s.room.teacher.school.schoolData.inep = :inep";
 			Query query = manager.createQuery(jpql);
 			
@@ -47,12 +45,8 @@ public class StudentDAOImpl extends GenericDAOImpl<Student, Integer> implements 
 			
 			if(!query.getResultList().isEmpty())
 				student = (Student)query.getSingleResult();
-			
-			manager.getTransaction().commit();
 		}catch(Exception e){
 			e.printStackTrace();
-			if (manager.getTransaction().isActive())
-				manager.getTransaction().rollback();
 			throw e;
 		}
 		return student;

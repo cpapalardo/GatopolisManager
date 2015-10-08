@@ -22,35 +22,26 @@ public class TeacherDAOImpl extends GenericDAOImpl<Teacher, Integer> implements 
 			
 			if (query.getResultList().size() > 0)
 				teacher = (Teacher) query.getResultList().get(0);
-			
-			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-			if (manager.getTransaction().isActive())
-				manager.getTransaction().rollback();
 			throw e;
 		}
 		
 		return teacher;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Teacher> findByInepAndDeleted(String inep) {
 		List<Teacher> teachers = new ArrayList<Teacher>();
 		try{
-			if (!manager.getTransaction().isActive())
-				manager.getTransaction().begin();
-			
 			String jpql = "select t from Teacher t where t.school.schoolData.inep = :inep";
 			Query query = manager.createQuery(jpql);
 			query.setParameter("inep", inep);
 			
 			teachers = query.getResultList();
-			manager.getTransaction().commit();
 		}catch(Exception e){
 			e.printStackTrace();
-			if (manager.getTransaction().isActive())
-				manager.getTransaction().rollback();
 			throw e;
 		}
 		return teachers;
