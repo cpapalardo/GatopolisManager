@@ -33,6 +33,12 @@ public class Student extends JsonBehaviour implements Serializable {
 	@Column(nullable=false, length=100)
 	private String name;
 	
+	@Column(nullable=false, length=50, name="first_name")
+	private String firstName;
+	
+	@Column(nullable=true, length=100, name="last_name")
+	private String lastName;
+	
 	@Column(nullable=true)
 	private Character gender;
 	
@@ -68,11 +74,13 @@ public class Student extends JsonBehaviour implements Serializable {
 		super.setJson(json);
 	}
 
-	public Student(boolean isdeleted, String name, Character gender, Date birth_date, String phase,
+	public Student(boolean isdeleted, String firstName, String lastName, Character gender, Date birth_date, String phase,
 			Integer buildings, Integer coins, Integer time_in_city,
 			Integer app_rating, String picture_url, Room room) {
 		super();
-		this.name = name;
+		this.name = firstName + " " + lastName;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.gender = gender;
 		this.birthDate = birth_date;
 		this.phase = phase;
@@ -85,13 +93,29 @@ public class Student extends JsonBehaviour implements Serializable {
 		this.isDeleted = isdeleted;
 		this.createdAt = new Date();
 	}
-
+	
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Character getGender() {
@@ -193,10 +217,12 @@ public class Student extends JsonBehaviour implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Student [name=" + name + ", gender=" + gender + ", birth_date="
+		return "Student [firstName="+ firstName + ", lastName=" + lastName + ", gender=" + gender + ", birth_date="
 				+ birthDate + ", phase=" + phase + ", buildings=" + buildings
 				+ ", coins=" + coins + ", time_in_city=" + timeInCity
 				+ ", app_rating=" + appRating + ", picture_url=" + pictureUrl
 				+ ", room=" + room + "]";
 	}
+	
+	
 }

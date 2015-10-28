@@ -93,7 +93,8 @@ public class ImportBean {
 			//Pula o header
 			Row row = rowIterator.next();
 			
-			String nomeCompletoDoAluno = null;
+			String nomeDoAluno = null;
+			String sobrenomeDoAluno = null;
 			String dataDeNascimento = null;
 			String sexo = null;
 			String nomeDaTurma = null;
@@ -106,12 +107,17 @@ public class ImportBean {
 				Cell cell = cellIterator.next();
 				int columnIndex = cell.getColumnIndex();
 				
-				//Nome Completo do Aluno
+				//Nome do Aluno
 				if(columnIndex == 0){
-					nomeCompletoDoAluno = cell.getStringCellValue();
+					nomeDoAluno = cell.getStringCellValue();
+				}
+				
+				//Sobrenome do Aluno
+				if(columnIndex == 1){
+					sobrenomeDoAluno = cell.getStringCellValue();
 				}
 				//Data de Nascimento
-				else if(columnIndex == 1){
+				else if(columnIndex == 2){
 					if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
 						dataDeNascimento = cell.getStringCellValue();
 					}else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
@@ -123,19 +129,19 @@ public class ImportBean {
 					}
 				}
 				//Sexo
-				else if(columnIndex == 2){
+				else if(columnIndex == 3){
 					sexo = cell.getStringCellValue();
 				}
 				//Nome da Turma
-				else if(columnIndex == 3){
+				else if(columnIndex == 4){
 					nomeDaTurma = cell.getStringCellValue();
 				}
 				//Periodo
-				else if(columnIndex == 4){
+				else if(columnIndex == 5){
 					periodo = cell.getStringCellValue();
 				}
 				//Serie
-				else if(columnIndex == 5){
+				else if(columnIndex == 6){
 					serie = cell.getStringCellValue();
 				}
 			}
@@ -143,7 +149,8 @@ public class ImportBean {
 			System.out.print(nomeDaTurma + "\t");
 			System.out.print(serie + "\t");
 			System.out.print(periodo + "\t");
-			System.out.print(nomeCompletoDoAluno + "\t");
+			System.out.print(nomeDoAluno + "\t");
+			System.out.print(sobrenomeDoAluno + "\t");
 			System.out.print(dataDeNascimento + "\t");
 			System.out.print(sexo + "\t");
 			System.out.println();
@@ -178,7 +185,7 @@ public class ImportBean {
 			}
 			
 			//StudentList
-			Student student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+			Student student = new Student(false, nomeDoAluno, sobrenomeDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
 			studentList.add(student);
 		}
 		

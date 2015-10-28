@@ -91,7 +91,7 @@ public class GeralImportBean {
     			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Erro no envio do Excel!"));
     		}
     	}else{
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Não foi possível concluir o envio do arquivo!"));
+        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Erro!", "Nï¿½o foi possï¿½vel concluir o envio do arquivo!"));
         }
     }
     
@@ -123,14 +123,15 @@ public class GeralImportBean {
 				continue;
 			}
 						
-			//Declaração dos campos do excel
+			//Declaraï¿½ï¿½o dos campos do excel
 			String codigoInepDaEscola = null;
 			String nomeDaTurma = null;
 			String serie = null;
 			String periodo = null;
 			String professor = null;
 			String emailProfessor = null;
-			String nomeCompletoDoAluno = null;
+			String nomeDoAluno = null;
+			String sobrenomeDoAluno = null;
 			String dataDeNascimento = null;
 			String sexo = null;
 			
@@ -144,7 +145,7 @@ public class GeralImportBean {
 				Cell cell = cellIterator.next();
 				int columnIndex = cell.getColumnIndex();
 				
-				//Código inep da escola
+				//Cï¿½digo inep da escola
 				if (columnIndex == 0) {
 					if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						codigoInepDaEscola = String.valueOf((int)cell.getNumericCellValue());
@@ -156,7 +157,7 @@ public class GeralImportBean {
 					if (sdList == null || sdList.size() == 0) {
 						System.out.println("Inep = " + codigoInepDaEscola);
 						System.out.println("sdList == null: " + (sdList == null) + " sdList.size() == 0: " + (sdList.size() == 0));
-						System.out.println("Inep não cadastrado no banco de dados!");
+						System.out.println("Inep nï¿½o cadastrado no banco de dados!");
 						flagError = true;
 					}
 					
@@ -187,12 +188,17 @@ public class GeralImportBean {
 				else if (columnIndex == 5) {
 					emailProfessor = cell.getStringCellValue().trim();
 				} 
-				//Nome completo do aluno
+				//Nome do aluno
 				else if (columnIndex == 6) {
-					nomeCompletoDoAluno = cell.getStringCellValue().trim();
+					nomeDoAluno = cell.getStringCellValue().trim();
+				} 
+				
+				//Sobrenome do aluno
+				else if (columnIndex == 7) {
+					sobrenomeDoAluno = cell.getStringCellValue().trim();
 				} 
 				//Data de nascimento
-				else if (columnIndex == 7) {
+				else if (columnIndex == 8) {
 					if(cell.getCellType() == Cell.CELL_TYPE_STRING) {
 						dataDeNascimento = cell.getStringCellValue();
 					}else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
@@ -204,7 +210,7 @@ public class GeralImportBean {
 					}
 				} 
 				//Sexo
-				else if (columnIndex == 8) {
+				else if (columnIndex == 9) {
 					sexo = cell.getStringCellValue().trim();
 				}
 			}
@@ -219,7 +225,8 @@ public class GeralImportBean {
 			System.out.print(periodo + "\t");
 			System.out.print(professor + "\t");
 			System.out.print(emailProfessor + "\t");
-			System.out.print(nomeCompletoDoAluno + "\t");
+			System.out.print(nomeDoAluno + "\t");
+			System.out.println(sobrenomeDoAluno + "\t");
 			System.out.print(dataDeNascimento + "\t");
 			System.out.print(sexo + "\t");
 			System.out.println();
@@ -244,7 +251,7 @@ public class GeralImportBean {
 			String schoolKey = sdKey;
 			String teacherKey = professor + "-" + emailProfessor + "-" + codigoInepDaEscola;
 			String roomKey = nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola;
-			String studentKey = nomeCompletoDoAluno + "-" + date + "-" + nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola; 
+			String studentKey = nomeDoAluno + " " + sobrenomeDoAluno + "-" + date + "-" + nomeDaTurma + "-" + serie + "-" + periodoChar + "-" + codigoInepDaEscola; 
 			
 			//Declara objetos
 			SchoolData sd = null;
@@ -283,7 +290,7 @@ public class GeralImportBean {
 			}
 			//StudentMap
 			if(!studentMap.containsKey(studentKey)){
-				student = new Student(false, nomeCompletoDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+				student = new Student(false, nomeDoAluno, sobrenomeDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
 				studentMap.put(studentKey, student);
 			}else{
 				student = studentMap.get(studentKey);
@@ -338,7 +345,7 @@ public class GeralImportBean {
 		
 		//Student
 		for (Student student : studentMap.values()){
-			Student tmp = studentDAO.findByNameDateRoomInep(student.getName(), student.getBirth_date(), 
+			Student tmp = studentDAO.findByNameDateRoomInep(student.getFirstName(), student.getBirth_date(), 
 					student.getRoom(), student.getRoom().getTeacher().getSchool().getSchoolData().getInep());
 			if(tmp != null)
 				student.setId(tmp.getId());
