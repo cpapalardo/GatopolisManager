@@ -1,6 +1,7 @@
 package br.com.farofa.gm.webservice;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import br.com.farofa.gm.azure.BlobStorage;
 import br.com.farofa.gm.dao.BuildingDAO;
@@ -11,6 +12,10 @@ import br.com.farofa.gm.dao.GameSuperCatChallengeDAO;
 import br.com.farofa.gm.dao.GameSuperCatChallengeDAOImpl;
 import br.com.farofa.gm.dao.GameSuperCatDAO;
 import br.com.farofa.gm.dao.GameSuperCatDAOImpl;
+import br.com.farofa.gm.dao.GameTugOfWarChallengeDAO;
+import br.com.farofa.gm.dao.GameTugOfWarChallengeDAOImpl;
+import br.com.farofa.gm.dao.GameTugOfWarDAO;
+import br.com.farofa.gm.dao.GameTugOfWarDAOImpl;
 import br.com.farofa.gm.dao.NoteDAO;
 import br.com.farofa.gm.dao.NoteDAOImpl;
 import br.com.farofa.gm.dao.ReportStudentDAO;
@@ -34,6 +39,8 @@ import br.com.farofa.gm.model.Building;
 import br.com.farofa.gm.model.GameBird;
 import br.com.farofa.gm.model.GameSuperCat;
 import br.com.farofa.gm.model.GameSuperCatChallenge;
+import br.com.farofa.gm.model.GameTugOfWar;
+import br.com.farofa.gm.model.GameTugOfWarChallenge;
 import br.com.farofa.gm.model.JsonBehaviour;
 import br.com.farofa.gm.model.Note;
 import br.com.farofa.gm.model.ReportStudent;
@@ -262,6 +269,39 @@ public class Server {
 	}
 	
 	//Student
+	static final String splitCharacter = " ";
+	public String updateStudentName(){
+
+		String result = null;
+		StudentDAO dao = new StudentDAOImpl();
+		dao.setEntityManager(DatabaseManager.getEntityManager());
+		try{
+			
+			List<Student> list = dao.findAll();
+			result = JsonBehaviour.getJsonFromList(list);
+			for(int i = 0; i < list.size(); i++){
+				String[] argsArray = list.get(i).getName().split(Pattern.quote(splitCharacter));
+				
+				String firstName = argsArray[0];
+				String lastName = "";
+				for(int j = 1; j < argsArray.length; j++){
+					lastName+= argsArray[j] + " ";
+				}
+				
+				list.get(i).setFirstName(firstName);
+				list.get(i).setLastName(lastName);
+				
+				dao.update(list.get(i));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+			DatabaseManager.closeFactory();
+		} finally {
+			dao.close();
+		}
+		return result;
+	}
 	
 	public String saveOrUpdateStudent(String json) {
 		String result = null;
@@ -341,6 +381,51 @@ public class Server {
 			
 			List<GameSuperCat> gameSuperCats = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(gameSuperCats);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+			DatabaseManager.closeFactory();
+		} finally {
+			dao.close();
+		}
+		return result;
+	}
+	
+	//Game Tug Of War
+	
+	public String saveOrUpdateGameTugOfWar(String json) {
+		String result = null;
+		GameTugOfWarDAO dao = null;
+		try {
+			dao = new GameTugOfWarDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
+			
+			GameTugOfWar gameTugOfWar = new GameTugOfWar(json);
+			if (gameTugOfWar != null && (gameTugOfWar.getId() == null || gameTugOfWar.getId() == 0)) {
+				gameTugOfWar.setId(null);
+				dao.save(gameTugOfWar);
+			} else
+				dao.update(gameTugOfWar);
+			result = gameTugOfWar.getId().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+			DatabaseManager.closeFactory();
+		} finally {
+			dao.close();
+		}
+		return result;
+	}
+
+	public String findGameTugOfWarByInep(String inep) {
+		String result = null;
+		GameTugOfWarDAO dao = null;
+		try {
+			dao = new GameTugOfWarDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
+			
+			List<GameTugOfWar> gameList = dao.findByInep(inep);
+			result = JsonBehaviour.getJsonFromList(gameList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
@@ -655,6 +740,51 @@ public class Server {
 			
 			List<GameSuperCatChallenge> gameSuperCatChallenges = dao.findByInep(inep);
 			result = JsonBehaviour.getJsonFromList(gameSuperCatChallenges);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+			DatabaseManager.closeFactory();
+		} finally {
+			dao.close();
+		}
+		return result;
+	}
+	
+	//Game Super Cat Challenge
+	
+	public String saveOrUpdateGameTugOfWarChallenge(String json) {
+		String result = null;
+		GameTugOfWarChallengeDAO dao = null;
+		try {
+			dao = new GameTugOfWarChallengeDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
+			
+			GameTugOfWarChallenge gameTugOfWarChallenge = new GameTugOfWarChallenge(json);
+			if (gameTugOfWarChallenge != null && (gameTugOfWarChallenge.getId() == null || gameTugOfWarChallenge.getId() == 0)) {
+				gameTugOfWarChallenge.setId(null);
+				dao.save(gameTugOfWarChallenge);
+			} else
+				dao.update(gameTugOfWarChallenge);
+			result = gameTugOfWarChallenge.getId().toString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = WebServiceExeptionManager.getExceptionMessage(e);
+			DatabaseManager.closeFactory();
+		} finally {
+			dao.close();
+		}
+		return result;
+	}
+
+	public String findGameTugOfWarChallengeByInep(String inep) {
+		String result = null;
+		GameTugOfWarChallengeDAOImpl dao = null;
+		try {
+			dao = new GameTugOfWarChallengeDAOImpl();
+			dao.setEntityManager(DatabaseManager.getEntityManager());
+			
+			List<GameTugOfWarChallenge> gameList = dao.findByInep(inep);
+			result = JsonBehaviour.getJsonFromList(gameList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
