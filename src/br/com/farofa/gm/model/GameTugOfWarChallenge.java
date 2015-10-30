@@ -29,8 +29,8 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	@Column(name="total_correct", nullable=false)
 	private Integer totalCorrect;
 	
-	@Column(name="times_played", nullable=false)
-	private Integer timesPlayed;
+	@Column(name="total_played", nullable=false)
+	private Integer totalPlayed;
 	
 	@Column(name="consecutive_full_team", nullable=false)
 	private Integer consecutiveFullTeam;
@@ -54,7 +54,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.isDeleted = isDeleted;
 		this.name = name;
 		this.totalCorrect = totalCorrect;
-		this.timesPlayed = timesPlayed;
+		this.totalPlayed = timesPlayed;
 		this.consecutiveFullTeam = consecutiveFullTeam;
 		this.student = student;
 	}
@@ -92,11 +92,11 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	}
 
 	public Integer getTimesPlayed() {
-		return timesPlayed;
+		return totalPlayed;
 	}
 
 	public void setTimesPlayed(Integer timesPlayed) {
-		this.timesPlayed = timesPlayed;
+		this.totalPlayed = timesPlayed;
 	}
 
 	public Integer getConsecutiveFullTeam() {
@@ -118,7 +118,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	@Override
 	public String toString() {
 		return "GameTugOfWarChallenge [id=" + id + ", isDeleted=" + isDeleted + ", name=" + name + ", totalCorrect="
-				+ totalCorrect + ", timesPlayed=" + timesPlayed + ", consecutiveFullTeam=" + consecutiveFullTeam
+				+ totalCorrect + ", timesPlayed=" + totalPlayed + ", consecutiveFullTeam=" + consecutiveFullTeam
 				+ ", student=" + student + "]";
 	}
 	

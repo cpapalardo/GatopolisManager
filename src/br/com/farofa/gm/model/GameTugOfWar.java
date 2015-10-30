@@ -1,6 +1,7 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 @Entity
@@ -36,6 +39,10 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	@JoinColumn(name="student_id", nullable=false)
 	private Student student;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false, name="created_at")
+	private Date createdAt;
+	
 	public GameTugOfWar(){
 		super();
 	}
@@ -44,7 +51,7 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		super.setJson(json);
 	}
 
-	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Boolean name_is_correct, Integer level,
+	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Boolean name_is_correct, Integer level, Date createdAt,
 			Student student) {
 		super();
 		this.id = id;
@@ -53,6 +60,7 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		this.nameIsCorrect = name_is_correct;
 		this.level = level;
 		this.student = student;
+		this.createdAt = createdAt;
 	}
 
 	public Integer getId() {
@@ -101,6 +109,14 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override

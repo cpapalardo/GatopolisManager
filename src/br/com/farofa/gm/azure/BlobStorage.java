@@ -24,6 +24,7 @@ public class BlobStorage {
 			+ "AccountKey=+KNhW5Xp+LovxzBbqYJLec2TuKy1Do7t+4dRIIrheEusGLrh2F2BtJTKIHB2+1ehX2w5rxsheo8wrQs8ZvbZXA==";
 	
 	public static final String containerName = "photos";
+	public static final String containerNameAudio = "audio";
 
 	public String savePhoto(String encodedPhoto, String name) {
 		String url = null;
@@ -62,6 +63,46 @@ public class BlobStorage {
 			return WebServiceExeptionManager.getExceptionMessage(e);
 		}
 		
+		return url;
+	}
+	
+	public String saveAudio(String encodedAudioName, String name){
+		String url = null;
+		try{
+			if(!name.contains(".mp3"))
+				name += ".mp3";
+			
+			final String audioPath = "d:\\home\\site\\wwwroot\\webapps\\audio\\";
+			name = name.replace(' ', '_');
+			File file = new File(audioPath + name);
+			
+			URLCodec codec = new URLCodec();
+			byte[] data = codec.decode(encodedAudioName.getBytes());
+			
+			FileOutputStream out = new FileOutputStream(file);
+			out.write(data);
+			out.close();
+			
+			// Retrieve storage account from connection-string.
+			CloudStorageAccount storageAccount = CloudStorageAccount.parse(storageConnectionString);
+			
+			// Create the blob client.
+			CloudBlobClient blobClient = storageAccount.createCloudBlobClient();
+			
+
+			// Retrieve reference to a previously created container.
+			CloudBlobContainer container = blobClient.getContainerReference(containerNameAudio);
+			
+			// Create or overwrite the "myimage.jpg" blob with contents from a
+			CloudBlockBlob blob = container.getBlockBlobReference(file.getName());
+			blob.upload(new FileInputStream (file), file.length());
+			
+			url = container.getUri() + "/" + file.getName();
+			file.delete();
+		}catch(Exception e){
+			e.printStackTrace();
+			return WebServiceExeptionManager.getExceptionMessage(e);
+		}
 		return url;
 	}
 }

@@ -750,7 +750,7 @@ public class Server {
 		return result;
 	}
 	
-	//Game Super Cat Challenge
+	//Game Tug of War Challenge
 	
 	public String saveOrUpdateGameTugOfWarChallenge(String json) {
 		String result = null;
@@ -810,6 +810,25 @@ public class Server {
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = WebServiceExeptionManager.getExceptionMessage(e);
+		}
+		return result;
+	}
+	
+	//Audio
+	
+	public String saveAudio(String value){
+		String result = null;
+		try{
+			if(value != null && value.contains(";")){
+				String name = value.split(";")[0];
+				String encodedAudio = value.split(";")[1];
+				
+				BlobStorage bs = new BlobStorage();
+				result = bs.saveAudio(encodedAudio, name);
+			}
+		}catch(Exception e){
+				e.printStackTrace();
+				result = WebServiceExeptionManager.getExceptionMessage(e);
 		}
 		return result;
 	}
