@@ -1,6 +1,7 @@
 package br.com.farofa.gm.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @SuppressWarnings("serial")
 @Entity
@@ -41,6 +44,14 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	@ManyToOne()
 	@JoinColumn(name="student_id", nullable=false)
 	private Student student;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false, name="created_at")
+	private Date createdAt;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false, name="modified_at")
+	private Date modifiedAt;
 
 	public GameTugOfWarChallenge(){
 		super();
@@ -50,7 +61,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		setJson(json);
 	}
 	
-	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Integer phase, Integer totalCorrect, Integer timesPlayed,
+	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Integer phase, Integer totalCorrect, Integer timesPlayed, Date createdAt, Date modifiedAt,
 			Integer consecutiveFullTeam, Student student) {
 		super();
 		this.id = id;
@@ -59,6 +70,8 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.totalCorrect = totalCorrect;
 		this.totalPlayed = timesPlayed;
 		this.student = student;
+		this.createdAt = createdAt;
+		this.modifiedAt = modifiedAt;
 	}
 
 	public Integer getId() {
@@ -125,11 +138,27 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.percentageCorrect = percentageCorrect;
 	}
 
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getModifiedAt() {
+		return modifiedAt;
+	}
+
+	public void setModifiedAt(Date modifiedAt) {
+		this.modifiedAt = modifiedAt;
+	}
+
 	@Override
 	public String toString() {
 		return "GameTugOfWarChallenge [id=" + id + ", isDeleted=" + isDeleted + ", phase=" + phase + ", totalCorrect="
 				+ totalCorrect + ", totalPlayed=" + totalPlayed + ", level=" + level + ", percentageCorrect="
-				+ percentageCorrect + ", student=" + student + "]";
-	}	
-	
+				+ percentageCorrect + ", student=" + student + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
+				+ "]";
+	}
 }
