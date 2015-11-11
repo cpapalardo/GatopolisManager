@@ -24,16 +24,19 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	private Boolean isDeleted;
 	
 	@Column(nullable=false)
-	private String name;
+	private Integer phase;
 	
-	@Column(name="total_correct", nullable=false)
+	@Column(name="total_correct", nullable=true)
 	private Integer totalCorrect;
 	
-	@Column(name="total_played", nullable=false)
+	@Column(name="total_played", nullable=true)
 	private Integer totalPlayed;
 	
-	@Column(name="consecutive_full_team", nullable=false)
-	private Integer consecutiveFullTeam;
+	@Column(nullable = false)
+	private Integer level;
+	
+	@Column(name="percentage_correct", nullable=false)
+	private Float percentageCorrect;
 	
 	@ManyToOne()
 	@JoinColumn(name="student_id", nullable=false)
@@ -47,15 +50,14 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		setJson(json);
 	}
 	
-	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, String name, Integer totalCorrect, Integer timesPlayed,
+	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Integer phase, Integer totalCorrect, Integer timesPlayed,
 			Integer consecutiveFullTeam, Student student) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
-		this.name = name;
+		this.phase = phase;
 		this.totalCorrect = totalCorrect;
 		this.totalPlayed = timesPlayed;
-		this.consecutiveFullTeam = consecutiveFullTeam;
 		this.student = student;
 	}
 
@@ -75,12 +77,12 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.isDeleted = isDeleted;
 	}
 
-	public String getName() {
-		return name;
+	public Integer getPhase() {
+		return phase;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPhase(Integer phase) {
+		this.phase = phase;
 	}
 
 	public Integer getTotalCorrect() {
@@ -91,22 +93,6 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.totalCorrect = totalCorrect;
 	}
 
-	public Integer getTimesPlayed() {
-		return totalPlayed;
-	}
-
-	public void setTimesPlayed(Integer timesPlayed) {
-		this.totalPlayed = timesPlayed;
-	}
-
-	public Integer getConsecutiveFullTeam() {
-		return consecutiveFullTeam;
-	}
-
-	public void setConsecutiveFullTeam(Integer consecutiveFullTeam) {
-		this.consecutiveFullTeam = consecutiveFullTeam;
-	}
-
 	public Student getStudent() {
 		return student;
 	}
@@ -115,12 +101,35 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.student = student;
 	}
 
+	public Integer getTotalPlayed() {
+		return totalPlayed;
+	}
+
+	public void setTotalPlayed(Integer totalPlayed) {
+		this.totalPlayed = totalPlayed;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public Float getPercentageCorrect() {
+		return percentageCorrect;
+	}
+
+	public void setPercentageCorrect(Float percentageCorrect) {
+		this.percentageCorrect = percentageCorrect;
+	}
+
 	@Override
 	public String toString() {
-		return "GameTugOfWarChallenge [id=" + id + ", isDeleted=" + isDeleted + ", name=" + name + ", totalCorrect="
-				+ totalCorrect + ", timesPlayed=" + totalPlayed + ", consecutiveFullTeam=" + consecutiveFullTeam
-				+ ", student=" + student + "]";
-	}
-	
+		return "GameTugOfWarChallenge [id=" + id + ", isDeleted=" + isDeleted + ", phase=" + phase + ", totalCorrect="
+				+ totalCorrect + ", totalPlayed=" + totalPlayed + ", level=" + level + ", percentageCorrect="
+				+ percentageCorrect + ", student=" + student + "]";
+	}	
 	
 }

@@ -26,14 +26,11 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	@Column(name="is_deleted", nullable=false)
 	private Boolean isDeleted;
 	
-	@Column(name="audio_name", nullable=false)
-	private String audioName;
+	@Column(name="audio_url", nullable=false)
+	private String audioUrl;
 	
-	@Column(name="name_is_correct", nullable=false)
-	private Boolean nameIsCorrect;
-	
-	@Column(nullable=false)
-	private Integer level;
+	@Column(name="name_challenge", nullable=false)
+	private Integer nameChallenge;
 	
 	@ManyToOne()
 	@JoinColumn(name="student_id", nullable=false)
@@ -43,6 +40,13 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	@Column(nullable=false, name="created_at")
 	private Date createdAt;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false, name="modified_at")
+	private Date modifiedAt;
+	
+	@Column(nullable=false, name="time_wasted")
+	private Integer timeWasted;
+	
 	public GameTugOfWar(){
 		super();
 	}
@@ -51,16 +55,17 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		super.setJson(json);
 	}
 
-	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Boolean name_is_correct, Integer level, Date createdAt,
+	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Integer name_challenge, Integer level, Date createdAt, Date modifiedAt, Integer time_wasted,
 			Student student) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
-		this.audioName = audio_name;
-		this.nameIsCorrect = name_is_correct;
-		this.level = level;
+		this.audioUrl = audio_name;
+		this.nameChallenge = name_challenge;
 		this.student = student;
 		this.createdAt = createdAt;
+		this.modifiedAt = modifiedAt;
+		this.timeWasted = time_wasted;
 	}
 
 	public Integer getId() {
@@ -79,29 +84,22 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		this.isDeleted = isDeleted;
 	}
 
-	public String getAudio_name() {
-		return audioName;
+	public String getAudio_url() {
+		return audioUrl;
 	}
 
-	public void setAudio_name(String audio_name) {
-		this.audioName = audio_name;
+	public void setAudio_url(String audio_url) {
+		this.audioUrl = audio_url;
 	}
 
-	public Boolean getName_is_correct() {
-		return nameIsCorrect;
+	public Integer getName_challenge() {
+		return nameChallenge;
 	}
 
-	public void setName_is_correct(Boolean name_is_correct) {
-		this.nameIsCorrect = name_is_correct;
+	public void setName_is_correct(Integer nameChallenge) {
+		this.nameChallenge = nameChallenge;
 	}
 
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
 
 	public Student getStudent() {
 		return student;
@@ -118,11 +116,37 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
+	
+
+	public Integer getNameChallenge() {
+		return nameChallenge;
+	}
+
+	public void setNameChallenge(Integer nameChallenge) {
+		this.nameChallenge = nameChallenge;
+	}
+
+	public Date getModifiedAt() {
+		return modifiedAt;
+	}
+
+	public void setModifiedAt(Date modifiedAt) {
+		this.modifiedAt = modifiedAt;
+	}
+
+	public Integer getTimeWasted() {
+		return timeWasted;
+	}
+
+	public void setTimeWasted(Integer timeWasted) {
+		this.timeWasted = timeWasted;
+	}
 
 	@Override
 	public String toString() {
-		return "GameTugOfWar [id=" + id + ", isDeleted=" + isDeleted + ", audio_name=" + audioName
-				+ ", name_is_correct=" + nameIsCorrect + ", level=" + level + ", student=" + student + "]";
+		return "GameTugOfWar [id=" + id + ", isDeleted=" + isDeleted + ", audioUrl=" + audioUrl + ", nameChallenge="
+				+ nameChallenge + ", student=" + student + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
+				+ ", timeWasted=" + timeWasted + "]";
 	}
-
+	
 }
