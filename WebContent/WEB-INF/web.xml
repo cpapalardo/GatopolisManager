@@ -52,4 +52,20 @@
   <listener>
     <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>
   </listener>
+  
+  <!-- MAPEAMENTO DO RESTFUL -->
+	<servlet> <!-- mapeando o servlet -->
+		<servlet-name>Jersey RESTful</servlet-name>
+		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name> <!-- O SERVLET-CLASS E O PARAM-NAME NÃO SÃO MODIFICADOS, BASTA COPIAR E COLAR.. 
+				POIS ESTÁ UTILIZANDO O SERVLET QUE VEM NA BIBLIOTECA DO JERSEY -->
+			<param-value>br.com.farofa.gm.webservice.restful</param-value> <!-- JÁ O PARAM-VALUE É O ENDEREÇO DO PACOTE ONDE SE ENCONTRA O SEU RECURSO -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Jersey RESTful</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
 </web-app>
