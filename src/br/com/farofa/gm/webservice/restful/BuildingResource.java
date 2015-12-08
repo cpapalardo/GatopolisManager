@@ -30,6 +30,6 @@ public class BuildingResource {
 	@Produces("application/json")
 	@Path("/findBuildingByInep/{inep}")
 	public String findBuildingByInep(@PathParam("inep") String inep) {
-		return findBuildingByInep(inep);
+		return server.findBuildingByInep(inep);
 	}
 }
