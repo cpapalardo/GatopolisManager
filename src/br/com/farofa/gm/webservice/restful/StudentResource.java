@@ -19,10 +19,9 @@ public class StudentResource {
 	}
 	
 	@GET
-	@Produces("application/json")
 	@Path("/updateStudentName")
-	public String updateStudentName(){
-		return server.updateStudentName();
+	public void updateStudentName(){
+		server.updateStudentName();
 	}
 	
 	@POST
