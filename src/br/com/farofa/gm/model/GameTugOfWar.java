@@ -47,6 +47,12 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	@Column(nullable=false, name="time_wasted")
 	private Integer timeWasted;
 	
+	@Column(nullable=false, name="current_phase")
+	private String currentPhase;
+	
+	@Column(nullable=true, name="win_streak")
+	private Integer winStreak;
+	
 	public GameTugOfWar(){
 		super();
 	}
@@ -56,7 +62,7 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	}
 
 	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Integer name_challenge, Integer level, Date createdAt, Date modifiedAt, Integer time_wasted,
-			Student student) {
+			Student student, String current_phase, Integer win_streak) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
@@ -66,6 +72,8 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		this.createdAt = createdAt;
 		this.modifiedAt = modifiedAt;
 		this.timeWasted = time_wasted;
+		this.currentPhase = current_phase;
+		this.winStreak = win_streak;
 	}
 
 	public Integer getId() {
@@ -142,11 +150,35 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		this.timeWasted = timeWasted;
 	}
 
+	public String getAudioUrl() {
+		return audioUrl;
+	}
+
+	public void setAudioUrl(String audioUrl) {
+		this.audioUrl = audioUrl;
+	}
+
+	public String getCurrentPhase() {
+		return currentPhase;
+	}
+
+	public void setCurrentPhase(String currentPhase) {
+		this.currentPhase = currentPhase;
+	}
+
+	public Integer getWinStreak() {
+		return winStreak;
+	}
+
+	public void setWinStreak(Integer winStreak) {
+		this.winStreak = winStreak;
+	}
+
 	@Override
 	public String toString() {
 		return "GameTugOfWar [id=" + id + ", isDeleted=" + isDeleted + ", audioUrl=" + audioUrl + ", nameChallenge="
 				+ nameChallenge + ", student=" + student + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
-				+ ", timeWasted=" + timeWasted + "]";
+				+ ", timeWasted=" + timeWasted + "audioUrl=" + audioUrl+ "currentPhase=" + currentPhase + "winStreak="+ winStreak +"]";
 	}
 	
 }
