@@ -29,13 +29,17 @@ public class StudentResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateStudent(String json) {
-		return server.saveOrUpdateStudent(json);
+		String result = server.saveOrUpdateStudent(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findStudentByInep/{inep}")
 	public String findStudentByInep(@PathParam("inep") String inep) {
-		return server.findStudentByInep(inep);
+		String result = server.findStudentByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

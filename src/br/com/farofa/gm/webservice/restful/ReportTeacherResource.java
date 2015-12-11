@@ -23,13 +23,17 @@ public class ReportTeacherResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateReportTeacher(String json) {
-		return server.saveOrUpdateReportTeacher(json);
+		String result = server.saveOrUpdateReportTeacher(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findReportTeacherByInep/{inep}")
 	public String findReportTeacherByInep(@PathParam("inep") String inep) {
-		return server.findReportTeacherByInep(inep);
+		String result = server.findReportTeacherByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

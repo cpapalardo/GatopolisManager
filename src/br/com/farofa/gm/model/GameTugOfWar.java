@@ -48,7 +48,7 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	private Integer timeWasted;
 	
 	@Column(nullable=false, name="current_phase")
-	private String currentPhase;
+	private Integer currentPhase;
 	
 	@Column(nullable=true, name="win_streak")
 	private Integer winStreak;
@@ -62,7 +62,7 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	}
 
 	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Integer name_challenge, Integer level, Date createdAt, Date modifiedAt, Integer time_wasted,
-			Student student, String current_phase, Integer win_streak) {
+			Student student, Integer current_phase, Integer win_streak) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
@@ -158,11 +158,11 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		this.audioUrl = audioUrl;
 	}
 
-	public String getCurrentPhase() {
+	public Integer getCurrentPhase() {
 		return currentPhase;
 	}
 
-	public void setCurrentPhase(String currentPhase) {
+	public void setCurrentPhase(Integer currentPhase) {
 		this.currentPhase = currentPhase;
 	}
 

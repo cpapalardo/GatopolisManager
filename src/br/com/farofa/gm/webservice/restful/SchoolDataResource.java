@@ -20,6 +20,8 @@ public class SchoolDataResource {
 	@Path("/findSchoolDataByInep/{inep}")
 	@Produces("application/json")
 	public String findSchoolDataByInep (@PathParam("inep") String inep) {
-		return server.findSchoolDataByInep(inep);
+		String result = server.findSchoolDataByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

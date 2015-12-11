@@ -23,13 +23,17 @@ public class GameTugOfWarResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateGameTugOfWar(String json) {
-		return server.saveOrUpdateGameTugOfWar(json);
+		String result = server.saveOrUpdateGameTugOfWar(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findGameTugOfWarByInep/{inep}")
 	public String findGameTugOfWarByInep(@PathParam("inep") String inep) {
-		return server.findGameTugOfWarByInep(inep);
+		String result = server.findGameTugOfWarByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

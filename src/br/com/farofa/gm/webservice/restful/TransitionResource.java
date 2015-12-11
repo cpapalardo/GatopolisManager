@@ -23,13 +23,17 @@ public class TransitionResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateTransition(String json) {
-		return server.saveOrUpdateTransition(json);
+		String result = server.saveOrUpdateTransition(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findTransitionByInep/{inep}")
 	public String findTransitionByInep(@PathParam("inep") String inep) {
-		return server.findTransitionByInep(inep);
+		String result = server.findTransitionByInep(inep);
+		System.out.println(result);
+		return result; 
 	}
 }

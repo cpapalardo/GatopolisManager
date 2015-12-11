@@ -15,16 +15,9 @@ import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 import br.com.farofa.gm.azure.BlobStorage;
-import br.com.farofa.gm.webservice.Server;
 
 @Path("/Audio")
 public class AudioResource {
-
-	private Server server;
-	
-	public AudioResource(){
-		server = new Server();
-	}
 
 	@POST
 	@Path("/saveAudio")
@@ -47,6 +40,8 @@ public class AudioResource {
 		}
 		
 		String result = bs.saveAudio(data, name);
+		
+		System.out.println(result);
 		
 		return Response.status(200).entity(result).build();
 	}

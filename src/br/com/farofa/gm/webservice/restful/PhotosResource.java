@@ -15,16 +15,9 @@ import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
 import br.com.farofa.gm.azure.BlobStorage;
-import br.com.farofa.gm.webservice.Server;
 
 @Path("/Photos")
 public class PhotosResource {
-
-	private Server server;
-	
-	public PhotosResource(){
-		server = new Server();
-	}
 	
 	@POST
 	@Path("/saveAudio")
@@ -47,6 +40,8 @@ public class PhotosResource {
 		}
 		
 		String result = bs.savePhoto(data, name);
+		
+		System.out.println(result);
 		
 		return Response.status(200).entity(result).build();
 	}

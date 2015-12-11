@@ -23,7 +23,9 @@ public class SchoolResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveSchool (String json) {
-		return server.saveSchool(json);
+		String result = server.saveSchool(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@POST
@@ -31,27 +33,35 @@ public class SchoolResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String updateSchool (String json) {
-		return server.updateSchool(json);
+		String result = server.updateSchool(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findSchoolByInep/{inep}")
 	public String findSchoolByInep (@PathParam("inep")  String inep) {
-		return server.findSchoolByInep(inep);
+		String result = server.findSchoolByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findSchoolBySyncCode/{syncCode}")
 	public String findSchoolBySyncCode (@PathParam("syncCode")  String syncCode) {
-		return server.findSchoolBySyncCode(syncCode);
+		String result = server.findSchoolBySyncCode(syncCode);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findSchoolByName/{name}")
 	public String findSchoolByName (@PathParam("name")  String name) {
-		return server.findSchoolByName(name);
+		String result = server.findSchoolByName(name);
+		System.out.println(result);
+		return result;
 	}
 }

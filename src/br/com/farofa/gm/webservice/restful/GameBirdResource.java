@@ -23,13 +23,17 @@ public class GameBirdResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateGameBird(String json) {
-		return server.saveOrUpdateGameBird(json);
+		String result = server.saveOrUpdateGameBird(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findGameBirdByInep/{inep}")
 	public String findGameBirdByInep(@PathParam("inep") String inep) {
-		return server.findGameBirdByInep(inep);
+		String result = server.findGameBirdByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

@@ -23,13 +23,17 @@ public class NoteResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateNote(String json) {
-		return server.saveOrUpdateNote(json);
+		String result = server.saveOrUpdateNote(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findNoteByInep/{inep}")
 	public String findNoteByInep(@PathParam("inep") String inep) {
-		return server.findNoteByInep(inep);
+		String result = server.findNoteByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

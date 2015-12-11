@@ -22,13 +22,17 @@ public class TeacherResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateTeacher (String json) {
-		return server.saveOrUpdateTeacher(json);
+		String result = server.saveOrUpdateTeacher(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findTeacherByInep/{inep}")
 	public String findTeacherByInep (@PathParam("inep") String inep) {
-		return server.findTeacherByInep(inep);
+		String result = server.findTeacherByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

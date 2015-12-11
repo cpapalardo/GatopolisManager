@@ -23,13 +23,17 @@ public class BuildingResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateBuilding(String json) {
-		return server.saveOrUpdateBuilding(json);
+		String result = server.saveOrUpdateBuilding(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findBuildingByInep/{inep}")
 	public String findBuildingByInep(@PathParam("inep") String inep) {
-		return server.findBuildingByInep(inep);
+		String result = server.findBuildingByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }

@@ -23,13 +23,16 @@ public class RoomResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateRoom(String json) {
-		return server.saveOrUpdateRoom(json);
+		String result = server.saveOrUpdateRoom(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findRoomByInep/{inep}")
 	public String findRoomByInep(@PathParam("inep") String inep) {
-		return server.findRoomByInep(inep);
+		String result = server.findRoomByInep(inep);
+		return result;
 	}
 }

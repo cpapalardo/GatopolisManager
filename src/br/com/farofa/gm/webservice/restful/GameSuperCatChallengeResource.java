@@ -23,13 +23,17 @@ public class GameSuperCatChallengeResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public String saveOrUpdateGameSuperCatChallenge(String json) {
-		return server.saveOrUpdateGameSuperCatChallenge(json);
+		String result = server.saveOrUpdateGameSuperCatChallenge(json);
+		System.out.println(result);
+		return result;
 	}
 	
 	@GET
 	@Produces("application/json")
 	@Path("/findGameSuperCatChallengeByInep/{inep}")
 	public String findGameSuperCatChallengeByInep(@PathParam("inep") String inep) {
-		return server.findGameSuperCatChallengeByInep(inep);
+		String result = server.findGameSuperCatChallengeByInep(inep);
+		System.out.println(result);
+		return result;
 	}
 }
