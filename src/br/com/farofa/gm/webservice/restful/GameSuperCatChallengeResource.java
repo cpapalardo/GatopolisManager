@@ -24,7 +24,7 @@ public class GameSuperCatChallengeResource {
 	@Produces("application/json")
 	public String saveOrUpdateGameSuperCatChallenge(String json) {
 		String result = server.saveOrUpdateGameSuperCatChallenge(json);
-		System.out.println(result);
+		System.out.println("GameSuperCatChallenge/saveOrUpdateGameSuperCatChallenge:\n"+ result);
 		return result;
 	}
 	
@@ -33,7 +33,7 @@ public class GameSuperCatChallengeResource {
 	@Path("/findGameSuperCatChallengeByInep/{inep}")
 	public String findGameSuperCatChallengeByInep(@PathParam("inep") String inep) {
 		String result = server.findGameSuperCatChallengeByInep(inep);
-		System.out.println(result);
+		System.out.println("GameSuperCatChallenge/findGameSuperCatChallengeByInep:\n"+result);
 		return result;
 	}
 }

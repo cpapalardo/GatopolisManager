@@ -41,7 +41,7 @@ public class AudioResource {
 		
 		String result = bs.saveAudio(data, name);
 		
-		System.out.println(result);
+		System.out.println("Audio/saveAudio:\n" + result);
 		
 		return Response.status(200).entity(result).build();
 	}

@@ -30,7 +30,7 @@ public class StudentResource {
 	@Produces("application/json")
 	public String saveOrUpdateStudent(String json) {
 		String result = server.saveOrUpdateStudent(json);
-		System.out.println(result);
+		System.out.println("Student/saveOrUpdateStudent:\n" + result);
 		return result;
 	}
 	
@@ -39,7 +39,7 @@ public class StudentResource {
 	@Path("/findStudentByInep/{inep}")
 	public String findStudentByInep(@PathParam("inep") String inep) {
 		String result = server.findStudentByInep(inep);
-		System.out.println(result);
+		System.out.println("Student/findStudentByInep:\n" + result);;
 		return result;
 	}
 }

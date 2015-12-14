@@ -33,7 +33,7 @@ public class BuildingResource {
 	@Path("/findBuildingByInep/{inep}")
 	public String findBuildingByInep(@PathParam("inep") String inep) {
 		String result = server.findBuildingByInep(inep);
-		System.out.println(result);
+		System.out.println("Building/findBuildingByInep:\n"+result);
 		return result;
 	}
 }

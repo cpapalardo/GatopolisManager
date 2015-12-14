@@ -41,7 +41,7 @@ public class PhotosResource {
 		
 		String result = bs.savePhoto(data, name);
 		
-		System.out.println(result);
+		System.out.println("saveAudio/saveAudio:\n" + result);
 		
 		return Response.status(200).entity(result).build();
 	}

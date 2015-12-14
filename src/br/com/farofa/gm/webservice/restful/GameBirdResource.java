@@ -24,7 +24,7 @@ public class GameBirdResource {
 	@Produces("application/json")
 	public String saveOrUpdateGameBird(String json) {
 		String result = server.saveOrUpdateGameBird(json);
-		System.out.println(result);
+		System.out.println("GameBird/saveOrUpdateGameBird:\n"+ result);
 		return result;
 	}
 	
@@ -33,7 +33,7 @@ public class GameBirdResource {
 	@Path("/findGameBirdByInep/{inep}")
 	public String findGameBirdByInep(@PathParam("inep") String inep) {
 		String result = server.findGameBirdByInep(inep);
-		System.out.println(result);
+		System.out.println("GameBird/findGameBirdByInep:\n"+ result);
 		return result;
 	}
 }

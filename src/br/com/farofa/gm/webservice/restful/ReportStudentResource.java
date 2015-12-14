@@ -24,7 +24,7 @@ public class ReportStudentResource {
 	@Produces("application/json")
 	public String saveOrUpdateReportStudent(String json) {
 		String result = server.saveOrUpdateReportStudent(json);
-		System.out.println(result);
+		System.out.println("ReportStudent/saveOrUpdateReportStudent:\n" + result);
 		return result;
 	}
 	
@@ -33,7 +33,7 @@ public class ReportStudentResource {
 	@Path("/findReportStudentByInep/{inep}")
 	public String findReportStudentByInep(@PathParam("inep") String inep) {
 		String result = server.findReportStudentByInep(inep);
-		System.out.println(result);
+		System.out.println("ReportStudent/findReportStudentByInep:\n" +result);
 		return result;
 	}
 }

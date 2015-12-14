@@ -24,7 +24,7 @@ public class GameTugOfWarChallengeResource {
 	@Produces("application/json")
 	public String saveOrUpdateGameTugOfWarChallenge(String json) {
 		String result = server.saveOrUpdateGameTugOfWarChallenge(json);
-		System.out.println(result);
+		System.out.println("GameTugOfWarChallenge/saveOrUpdateGameTugOfWarChallenge:\n" + result);
 		return result;
 	}
 	
@@ -33,7 +33,7 @@ public class GameTugOfWarChallengeResource {
 	@Path("/findGameTugOfWarChallengeByInep/{inep}")
 	public String findGameTugOfWarChallengeByInep(@PathParam("inep") String inep) {
 		String result = server.findGameTugOfWarChallengeByInep(inep);
-		System.out.println(result);
+		System.out.println("GameTugOfWarChallenge/findGameTugOfWarChallengeByInep:\n" + result);
 		return result;
 	}
 }

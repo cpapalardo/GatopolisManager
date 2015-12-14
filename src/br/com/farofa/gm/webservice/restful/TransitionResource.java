@@ -24,7 +24,7 @@ public class TransitionResource {
 	@Produces("application/json")
 	public String saveOrUpdateTransition(String json) {
 		String result = server.saveOrUpdateTransition(json);
-		System.out.println(result);
+		System.out.println("Transition/saveOrUpdateTransition:\n" + result);
 		return result;
 	}
 	
@@ -33,7 +33,7 @@ public class TransitionResource {
 	@Path("/findTransitionByInep/{inep}")
 	public String findTransitionByInep(@PathParam("inep") String inep) {
 		String result = server.findTransitionByInep(inep);
-		System.out.println(result);
+		System.out.println("Transition/findTransitionByInep:\n" + result);
 		return result; 
 	}
 }

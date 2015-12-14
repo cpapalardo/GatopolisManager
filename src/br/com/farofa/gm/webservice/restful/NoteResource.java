@@ -24,7 +24,7 @@ public class NoteResource {
 	@Produces("application/json")
 	public String saveOrUpdateNote(String json) {
 		String result = server.saveOrUpdateNote(json);
-		System.out.println(result);
+		System.out.println("Note/saveOrUpdateNote:\n" + result);
 		return result;
 	}
 	
@@ -33,7 +33,7 @@ public class NoteResource {
 	@Path("/findNoteByInep/{inep}")
 	public String findNoteByInep(@PathParam("inep") String inep) {
 		String result = server.findNoteByInep(inep);
-		System.out.println(result);
+		System.out.println("Note/findNoteByInep:\n" +result);
 		return result;
 	}
 }
