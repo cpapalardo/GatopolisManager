@@ -26,9 +26,6 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	@Column(name="is_deleted", nullable=false)
 	private Boolean isDeleted;
 	
-	@Column(nullable=false)
-	private Integer phase;
-	
 	@Column(name="percentage_correct", nullable=false)
 	private Float percentageCorrect;
 	
@@ -39,6 +36,12 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false, name="created_at")
 	private Date createdAt;
+	
+	@Column(name="name_challenge", nullable=false)
+	private Integer nameChallenge;
+	
+	@Column(nullable=false, name="current_phase")
+	private Integer currentPhase;
 
 	public GameTugOfWarChallenge(){
 		super();
@@ -48,12 +51,11 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		setJson(json);
 	}
 	
-	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Integer phase, Integer totalCorrect, Integer timesPlayed, Date createdAt, Date modifiedAt,
+	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Integer totalCorrect, Integer timesPlayed, Date createdAt, Date modifiedAt,
 			Integer consecutiveFullTeam, Student student, String name) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
-		this.phase = phase;
 		this.student = student;
 		this.createdAt = createdAt;
 	}
@@ -73,15 +75,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
-
-	public Integer getPhase() {
-		return phase;
-	}
-
-	public void setPhase(Integer phase) {
-		this.phase = phase;
-	}
-
+	
 	public Student getStudent() {
 		return student;
 	}
@@ -108,9 +102,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 
 	@Override
 	public String toString() {
-		return "GameTugOfWarChallenge [id=" + id + ", isDeleted=" + isDeleted + ", phase=" + phase
+		return "GameTugOfWarChallenge [id=" + id + ", isDeleted=" + isDeleted
 				+ ", percentageCorrect=" + percentageCorrect + ", student=" + student + ", createdAt=" + createdAt;
 	}
-
-
 }
