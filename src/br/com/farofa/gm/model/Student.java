@@ -68,6 +68,17 @@ public class Student extends JsonBehaviour implements Serializable {
 	@JoinColumn(name="room_id", nullable=false)
 	private Room room;
 	
+	@Column(name="audio_url", nullable=false)
+	private String audioUrl;
+	
+	public String getAudioUrl() {
+		return audioUrl;
+	}
+
+	public void setAudioUrl(String audioUrl) {
+		this.audioUrl = audioUrl;
+	}
+
 	public Student() {}
 	
 	public Student(String json) {
@@ -76,7 +87,7 @@ public class Student extends JsonBehaviour implements Serializable {
 
 	public Student(boolean isdeleted, String firstName, String lastName, Character gender, Date birth_date, String phase,
 			Integer buildings, Integer coins, Integer time_in_city,
-			Integer app_rating, String picture_url, Room room) {
+			Integer app_rating, String picture_url, Room room, String audio_url) {
 		super();
 		this.name = firstName + " " + lastName;
 		this.firstName = firstName;
@@ -92,6 +103,7 @@ public class Student extends JsonBehaviour implements Serializable {
 		this.room = room;
 		this.isDeleted = isdeleted;
 		this.createdAt = new Date();
+		this.audioUrl = audio_url;
 	}
 	
 	public String getName() {
@@ -221,7 +233,7 @@ public class Student extends JsonBehaviour implements Serializable {
 				+ birthDate + ", phase=" + phase + ", buildings=" + buildings
 				+ ", coins=" + coins + ", time_in_city=" + timeInCity
 				+ ", app_rating=" + appRating + ", picture_url=" + pictureUrl
-				+ ", room=" + room + "]";
+				+ ", room=" + room + ",audio_url=" + audioUrl + "]";
 	}
 	
 	

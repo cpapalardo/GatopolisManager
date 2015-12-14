@@ -25,10 +25,7 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 	
 	@Column(name="is_deleted", nullable=false)
 	private Boolean isDeleted;
-	
-	@Column(name="audio_url", nullable=false)
-	private String audioUrl;
-	
+		
 	@Column(name="name_challenge", nullable=false)
 	private Integer nameChallenge;
 	
@@ -61,12 +58,11 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		super.setJson(json);
 	}
 
-	public GameTugOfWar(Integer id, Boolean isDeleted, String audio_name, Integer name_challenge, Integer level, Date createdAt, Date modifiedAt, Integer time_wasted,
+	public GameTugOfWar(Integer id, Boolean isDeleted, Integer name_challenge, Integer level, Date createdAt, Date modifiedAt, Integer time_wasted,
 			Student student, Integer current_phase, Integer win_streak) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
-		this.audioUrl = audio_name;
 		this.nameChallenge = name_challenge;
 		this.student = student;
 		this.createdAt = createdAt;
@@ -90,14 +86,6 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 
 	public void setIsDeleted(Boolean isDeleted) {
 		this.isDeleted = isDeleted;
-	}
-
-	public String getAudio_url() {
-		return audioUrl;
-	}
-
-	public void setAudio_url(String audio_url) {
-		this.audioUrl = audio_url;
 	}
 
 	public Integer getName_challenge() {
@@ -150,14 +138,6 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 		this.timeWasted = timeWasted;
 	}
 
-	public String getAudioUrl() {
-		return audioUrl;
-	}
-
-	public void setAudioUrl(String audioUrl) {
-		this.audioUrl = audioUrl;
-	}
-
 	public Integer getCurrentPhase() {
 		return currentPhase;
 	}
@@ -176,9 +156,9 @@ public class GameTugOfWar extends JsonBehaviour implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GameTugOfWar [id=" + id + ", isDeleted=" + isDeleted + ", audioUrl=" + audioUrl + ", nameChallenge="
+		return "GameTugOfWar [id=" + id + ", isDeleted=" + isDeleted + ",nameChallenge="
 				+ nameChallenge + ", student=" + student + ", createdAt=" + createdAt + ", modifiedAt=" + modifiedAt
-				+ ", timeWasted=" + timeWasted + "audioUrl=" + audioUrl+ "currentPhase=" + currentPhase + "winStreak="+ winStreak +"]";
+				+ ", timeWasted=" + timeWasted + "zcurrentPhase=" + currentPhase + "winStreak="+ winStreak +"]";
 	}
 	
 }
