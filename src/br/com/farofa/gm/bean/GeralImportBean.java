@@ -290,7 +290,7 @@ public class GeralImportBean {
 			}
 			//StudentMap
 			if(!studentMap.containsKey(studentKey)){
-				student = new Student(false, nomeDoAluno, sobrenomeDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+				student = new Student(false, nomeDoAluno, sobrenomeDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room, "");
 				studentMap.put(studentKey, student);
 			}else{
 				student = studentMap.get(studentKey);

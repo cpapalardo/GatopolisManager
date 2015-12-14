@@ -185,7 +185,7 @@ public class ImportBean {
 			}
 			
 			//StudentList
-			Student student = new Student(false, nomeDoAluno, sobrenomeDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room);
+			Student student = new Student(false, nomeDoAluno, sobrenomeDoAluno, sexoChar, date, "NOT_ENOUGH_INPUT", null, null, null, null, null, room, "");
 			studentList.add(student);
 		}
 		
