@@ -42,6 +42,33 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 
 	@Column(nullable = false, name = "current_phase")
 	private Integer currentPhase;
+	
+	@Column(nullable=false, name="time_wasted")
+	private Integer timeWasted;
+
+	public Integer getNameChallenge() {
+		return nameChallenge;
+	}
+
+	public void setNameChallenge(Integer nameChallenge) {
+		this.nameChallenge = nameChallenge;
+	}
+
+	public Integer getCurrentPhase() {
+		return currentPhase;
+	}
+
+	public void setCurrentPhase(Integer currentPhase) {
+		this.currentPhase = currentPhase;
+	}
+
+	public Integer getTimeWasted() {
+		return timeWasted;
+	}
+
+	public void setTimeWasted(Integer timeWasted) {
+		this.timeWasted = timeWasted;
+	}
 
 	public GameTugOfWarChallenge() {
 		super();
@@ -52,7 +79,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	}
 
 	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Date createdAt, Student student, Integer name_challenge,
-			Integer current_phase) {
+			Integer current_phase, Integer time_wasted) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
@@ -60,6 +87,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.createdAt = createdAt;
 		this.nameChallenge = name_challenge;
 		this.currentPhase = current_phase;
+		this.timeWasted = time_wasted;
 	}
 
 	public Integer getId() {
