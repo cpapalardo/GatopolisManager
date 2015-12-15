@@ -25,7 +25,7 @@ public class JsonBehaviour implements Serializable {
 					continue;
 				} else if (field.get(this) instanceof Date) {
 					Date date = (Date) field.get(this);
-					DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+					DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 					Object value = df.format(date);
 					jObj.put(name, value);
 				} else if (field.get(this) instanceof JsonBehaviour) {
@@ -51,7 +51,7 @@ public class JsonBehaviour implements Serializable {
 						continue;
 					} else if (field.get(this) instanceof Date) {
 						Date date = (Date) field.get(this);
-						DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+						DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 						Object value = df.format(date);
 						jObj.put(name, value);
 					} else if (field.get(this) instanceof JsonBehaviour) {
@@ -83,7 +83,7 @@ public class JsonBehaviour implements Serializable {
 						continue;
 					} else if (field.getType().equals(Date.class)) {
 						String value = jObj.getString(name);
-						DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+						DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 						Date date = df.parse(value);
 						field.set(this, date);
 					} else if (JsonBehaviour.class.equals(field.getType().getSuperclass()) ||
@@ -120,7 +120,7 @@ public class JsonBehaviour implements Serializable {
 							continue;
 						} else if (field.getType().equals(Date.class)) {
 							String value = jObj.getString(name);
-							DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+							DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 							Date date = df.parse(value);
 							field.set(this, date);
 						} else if (JsonBehaviour.class.equals(field.getType().getSuperclass()) ||
