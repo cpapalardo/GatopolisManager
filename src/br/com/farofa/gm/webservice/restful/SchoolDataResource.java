@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 
 import br.com.farofa.gm.webservice.Server;
 
-@Path("/ScholData")
+@Path("/SchoolData")
 public class SchoolDataResource {
 	
 	private Server server;
