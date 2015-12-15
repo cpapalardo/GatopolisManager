@@ -68,7 +68,7 @@ public class Student extends JsonBehaviour implements Serializable {
 	@JoinColumn(name="room_id", nullable=false)
 	private Room room;
 	
-	@Column(name="audio_url", nullable=false)
+	@Column(name="audio_url", nullable=true)
 	private String audioUrl;
 	
 	public String getAudioUrl() {
