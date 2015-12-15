@@ -27,7 +27,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	private Boolean isDeleted;
 
 	@Column(name = "percentage_correct", nullable = false)
-	private Float percentageCorrect;
+	private Integer percentageCorrect;
 
 	@ManyToOne()
 	@JoinColumn(name = "student_id", nullable = false)
@@ -79,7 +79,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 	}
 
 	public GameTugOfWarChallenge(Integer id, Boolean isDeleted, Date createdAt, Student student, Integer name_challenge,
-			Integer current_phase, Integer time_wasted) {
+			Integer current_phase, Integer time_wasted, Integer percentage_correct) {
 		super();
 		this.id = id;
 		this.isDeleted = isDeleted;
@@ -88,6 +88,7 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.nameChallenge = name_challenge;
 		this.currentPhase = current_phase;
 		this.timeWasted = time_wasted;
+		this.percentageCorrect = percentage_correct;
 	}
 
 	public Integer getId() {
@@ -114,11 +115,11 @@ public class GameTugOfWarChallenge extends JsonBehaviour implements Serializable
 		this.student = student;
 	}
 
-	public Float getPercentageCorrect() {
+	public Integer getPercentageCorrect() {
 		return percentageCorrect;
 	}
 
-	public void setPercentageCorrect(Float percentageCorrect) {
+	public void setPercentageCorrect(Integer percentageCorrect) {
 		this.percentageCorrect = percentageCorrect;
 	}
 
