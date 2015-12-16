@@ -20,7 +20,7 @@ import br.com.farofa.gm.azure.BlobStorage;
 public class PhotosResource {
 	
 	@POST
-	@Path("/saveAudio")
+	@Path("/savePhoto")
 	@Consumes("multipart/form-data")
 	@Produces("application/json")
 	public Response saveAudio (FormDataMultiPart form) {
