@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 
 
 public class EntityManagerProducer {
-	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("gatopolis_db");
+	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("gatopolis_teste");
 	
 	@Produces
 	@RequestScoped

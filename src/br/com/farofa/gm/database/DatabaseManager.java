@@ -9,7 +9,7 @@ public class DatabaseManager {
 	
 	public static EntityManagerFactory getFactory () {
 		if (factory == null || !factory.isOpen()) 
-			factory = Persistence.createEntityManagerFactory("gatopolis_db");
+			factory = Persistence.createEntityManagerFactory("gatopolis_teste");
 		return factory;
 	}
 	
